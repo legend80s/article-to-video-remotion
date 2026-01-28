@@ -1,13 +1,14 @@
-import "./index.css";
-import { Composition } from "remotion";
-import { HelloWorld, myCompSchema } from "./HelloWorld";
-import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
+import "./index.css"
+import { Composition } from "remotion"
+import { HelloWorld, myCompSchema } from "./HelloWorld"
+import { Logo, myCompSchema2 } from "./HelloWorld/Logo"
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/** biome-ignore lint/nursery/useUniqueElementIds: <explanation> */}
       <Composition
         // You can take the "id" to render a video:
         // npx remotion render HelloWorld
@@ -29,6 +30,7 @@ export const RemotionRoot: React.FC = () => {
       />
 
       {/* Mount any React component to make it show up in the sidebar and work on it individually! */}
+      {/** biome-ignore lint/nursery/useUniqueElementIds: <explanation> */}
       <Composition
         id="OnlyLogo"
         component={Logo}
@@ -43,5 +45,5 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
     </>
-  );
-};
+  )
+}
