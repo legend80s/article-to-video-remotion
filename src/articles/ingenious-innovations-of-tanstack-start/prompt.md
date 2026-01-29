@@ -1,9 +1,11 @@
 # Remotion 视频制作 Prompt
 
 ## 🎯 项目概述
-基于文章《Tanstack Start 的天才创新之处》制作一个2分钟的技术演示视频，重点展示“一键打开源码”和“文件自动生成”两个核心功能。
+
+基于文章《Tanstack Start 的天才创新之处》制作一个**2分钟左右**的技术演示视频，重点展示“一键打开源码”和“文件自动生成”两个核心功能。**必须使用 remotion-best-practices skill**。
 
 ## 📁 项目结构
+
 ```
 src/articles/ingenious-innovations-of-tanstack-start/
 ├── index.tsx                    # 主视频组件入口
@@ -35,9 +37,6 @@ src/articles/ingenious-innovations-of-tanstack-start/
 - **帧率**: 30fps
 - **分辨率**: 1920x1080
 - **背景色**: #0d1117 (GitHub Dark)
-- **字体**: 
-  - 主字体: 'Inter', -apple-system, sans-serif
-  - 代码字体: 'JetBrains Mono', 'Fira Code', monospace
 
 ### 2. 配色方案
 ```typescript
@@ -175,138 +174,3 @@ const COLORS = {
 3. GitHub 星星动画
 4. 二维码/链接浮现
 
-## 🔧 技术实现要求
-
-### 1. 使用 Remotion 最佳实践
-```typescript
-// 正确示例
-import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
-
-const MyComponent = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  
-  // 使用 spring 物理动画
-  const scale = spring({
-    frame,
-    fps,
-    from: 0,
-    to: 1,
-  });
-  
-  return <div style={{ transform: `scale(${scale})` }} />;
-};
-```
-
-### 2. 组件设计原则
-- 每个场景组件接受 `frame: number` 作为 prop
-- 使用 `interpolate` 进行数值映射
-- 导出 `SCENE_DURATION` 常量
-- 所有文本内容使用常量，方便后续国际化
-
-### 3. 性能优化
-- 使用 `Img` 组件代替原生 `img` 标签
-- 复杂动画使用 `useMemo` 缓存
-- 避免在渲染函数中创建新对象
-- 使用 `measureSpring` 预计算弹簧动画
-
-### 4. 代码示例结构
-```typescript
-// Scene 组件模板
-import React from 'react';
-import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
-
-export const SCENE_DURATION = 50; // 50帧，约1.67秒
-
-interface Props {
-  frame: number;
-}
-
-export const MyScene: React.FC<Props> = ({ frame }) => {
-  const { fps, width, height } = useVideoConfig();
-  
-  // 计算场景内相对帧数
-  const sceneFrame = frame % SCENE_DURATION;
-  
-  // 入场动画
-  const opacity = interpolate(
-    sceneFrame,
-    [0, 10], // 前10帧淡入
-    [0, 1],
-    { extrapolateRight: 'clamp' }
-  );
-  
-  return (
-    <div style={{
-      width,
-      height,
-      opacity,
-      backgroundColor: COLORS.background,
-      fontFamily: 'Inter, sans-serif'
-    }}>
-      {/* 场景内容 */}
-    </div>
-  );
-};
-```
-
-## 📝 生成要求
-
-请先生成以下文件（按优先级）:
-
-1. **先创建**: `src/articles/ingenious-innovations-of-tanstack-start/index.tsx`
-   - 主视频组件，组合所有场景
-   - 处理场景切换逻辑
-   - 导出视频配置
-
-2. **然后创建**: `src/articles/ingenious-innovations-of-tanstack-start/scenes/0-PainPointScene.tsx`
-   - 实现痛点对比场景
-   - 包含 SplitScreenComparison 组件
-
-3. **接着创建**: `src/articles/ingenious-innovations-of-tanstack-start/scenes/1-ClickToCodeScene.tsx`
-   - 实现一键打开核心演示
-   - 包含编辑器打开动画
-
-4. **最后创建**: 共享组件和工具函数
-
-## 🎯 输出格式
-请严格按照以下格式生成代码：
-
-```typescript
-// 文件头部注释
-/**
- * @file 文件描述
- * @author 你的名字
- * @date 创建日期
- */
-
-// 导入语句分组：React、Remotion、组件、样式
-import React from 'react';
-import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
-
-// 常量定义
-export const SCENE_DURATION = 50; // 单位：帧
-
-// 类型定义
-interface Props {
-  frame: number;
-}
-
-// 主组件
-export const MyComponent: React.FC<Props> = ({ frame }) => {
-  // 状态和 Hook
-  const { fps, width, height } = useVideoConfig();
-  
-  // 动画计算
-  const opacity = spring({ frame, fps, from: 0, to: 1 });
-  
-  // 渲染
-  return (
-    <div style={/* 内联样式对象 */}>
-      {/* JSX */}
-    </div>
-  );
-};
-```
-
-请先生成 `index.tsx` 主文件，然后按顺序生成各场景。准备好后请告诉我，我会提供详细的内容数据（代码片段、文案等）。
