@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
 import "./index.css"
 import { Composition } from "remotion"
+import { TanStackStartComposition } from "./articles/ingenious-innovations-of-tanstack-start"
 import { HelloWorld, myCompSchema } from "./HelloWorld"
 import { Logo, myCompSchema2 } from "./HelloWorld/Logo"
 import { MyComposition } from "./MyComposition"
@@ -54,6 +55,8 @@ export const RemotionRoot: React.FC = () => {
           logoColor2: "#86A8E7" as const,
         }}
       />
+
+      <TanStackStartComposition />
     </>
   )
 }

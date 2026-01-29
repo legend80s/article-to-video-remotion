@@ -1,11 +1,4 @@
-import {
-  AbsoluteFill,
-  interpolate,
-  Sequence,
-  spring,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion"
+import { Sequence, spring, useCurrentFrame, useVideoConfig } from "remotion"
 
 export const MyComposition = () => {
   return (
