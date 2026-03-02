@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
+import "./handwritten-fonts.css"
 import type React from "react"
 import {
   Composition,
@@ -57,8 +58,11 @@ const StarGrowthChart: React.FC = () => {
     if (visibleData.length < 2) return ""
     return visibleData
       .map((point, i) => {
-        const x = CHART_MARGIN.left + i * xScale
-        const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale
+        // Add slight random offset for hand-drawn effect
+        const randomX = (Math.random() - 0.5) * 3
+        const randomY = (Math.random() - 0.5) * 3
+        const x = CHART_MARGIN.left + i * xScale + randomX
+        const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale + randomY
         return `${i === 0 ? "M" : "L"} ${x} ${y}`
       })
       .join(" ")
@@ -69,8 +73,11 @@ const StarGrowthChart: React.FC = () => {
     if (visibleData.length < 2) return ""
     const linePath = visibleData
       .map((point, i) => {
-        const x = CHART_MARGIN.left + i * xScale
-        const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale
+        // Add slight random offset for hand-drawn effect
+        const randomX = (Math.random() - 0.5) * 3
+        const randomY = (Math.random() - 0.5) * 3
+        const x = CHART_MARGIN.left + i * xScale + randomX
+        const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale + randomY
         return `${i === 0 ? "M" : "L"} ${x} ${y}`
       })
       .join(" ")
@@ -96,8 +103,11 @@ const StarGrowthChart: React.FC = () => {
         width: WIDTH,
         height: HEIGHT,
         background:
-          "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
-        fontFamily: "system-ui, -apple-system, sans-serif",
+          "linear-gradient(135deg, #f8f5e6 0%, #f0e6d2 50%, #e8d9b6 100%)",
+        boxShadow: "0 0 20px rgba(0,0,0,0.1)",
+        fontFamily: "'Comic Neue', 'Architects Daughter', cursive",
+        // Add font-face for handwritten fonts
+        WebkitFontSmoothing: "antialiased",
         position: "relative",
       }}
     >
@@ -109,7 +119,7 @@ const StarGrowthChart: React.FC = () => {
           left: 0,
           right: 0,
           textAlign: "center",
-          color: "white",
+          color: "#333",
         }}
       >
         <h1
@@ -117,14 +127,21 @@ const StarGrowthChart: React.FC = () => {
             fontSize: 48,
             fontWeight: "bold",
             margin: 0,
-            background: "linear-gradient(90deg, #61dafb, #21a9c4)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            fontFamily: "'Architects Daughter', cursive",
+            color: "#333",
+            textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
           React GitHub Stars Growth (2013-2026)
         </h1>
-        <p style={{ fontSize: 20, color: "#888", margin: "10px 0 0 0" }}>
+        <p
+          style={{
+            fontSize: 20,
+            color: "#666",
+            margin: "10px 0 0 0",
+            fontFamily: "'Comic Neue', cursive",
+          }}
+        >
           From 0 to{" "}
           {formatNumber(reactStarsMonthly[reactStarsMonthly.length - 1].stars)}{" "}
           stars
@@ -140,36 +157,53 @@ const StarGrowthChart: React.FC = () => {
         {/* 渐变定义 */}
         <defs>
           <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#61dafb" stopOpacity={0.4} />
-            <stop offset="100%" stopColor="#61dafb" stopOpacity={0.05} />
+            <stop offset="0%" stopColor="#ff6b6b" stopOpacity={0.2} />
+            <stop offset="100%" stopColor="#ff6b6b" stopOpacity={0.05} />
           </linearGradient>
-          <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#61dafb" />
-            <stop offset="100%" stopColor="#21a9c4" />
-          </linearGradient>
+          <filter id="sketchFilter">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.01"
+              numOctaves="3"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="1"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
         </defs>
 
         {/* 网格线 */}
         {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => {
           const y = HEIGHT - CHART_MARGIN.bottom - CHART_HEIGHT * ratio
           const value = maxStars * ratio
+          // Add random offset for hand-drawn effect
+          const randomY = (Math.random() - 0.5) * 2
           return (
             <g key={i}>
               <line
                 x1={CHART_MARGIN.left}
-                y1={y}
+                y1={y + randomY}
                 x2={WIDTH - CHART_MARGIN.right}
-                y2={y}
-                stroke="#333"
-                strokeWidth={1}
-                strokeDasharray="5,5"
+                y2={y + (Math.random() - 0.5) * 2}
+                stroke="#444"
+                strokeWidth={1.2}
+                strokeLinecap="round"
+                style={{
+                  strokeDasharray: `${Math.random() * 2 + 4}, ${Math.random() * 2 + 2}`,
+                }}
               />
               <text
-                x={CHART_MARGIN.left - 20}
-                y={y + 5}
-                fill="#666"
+                x={CHART_MARGIN.left - 20 + (Math.random() - 0.5) * 2}
+                y={y + 5 + (Math.random() - 0.5) * 2}
+                fill="#888"
                 fontSize={14}
                 textAnchor="end"
+                fontFamily="'Comic Neue', cursive"
               >
                 {formatNumber(value)}
               </text>
@@ -187,22 +221,30 @@ const StarGrowthChart: React.FC = () => {
           )
           if (yearIndex === -1) return null
           const x = CHART_MARGIN.left + yearIndex * xScale
+          // Add random offset for hand-drawn effect
+          const randomX = (Math.random() - 0.5) * 2
           return (
             <g key={year}>
               <line
-                x1={x}
+                x1={x + randomX}
                 y1={HEIGHT - CHART_MARGIN.bottom}
-                x2={x}
-                y2={HEIGHT - CHART_MARGIN.bottom + 10}
+                x2={x + (Math.random() - 0.5) * 2}
+                y2={
+                  HEIGHT - CHART_MARGIN.bottom + 10 + (Math.random() - 0.5) * 2
+                }
                 stroke="#666"
-                strokeWidth={1}
+                strokeWidth={1.2}
+                strokeLinecap="round"
               />
               <text
-                x={x}
-                y={HEIGHT - CHART_MARGIN.bottom + 35}
+                x={x + (Math.random() - 0.5) * 3}
+                y={
+                  HEIGHT - CHART_MARGIN.bottom + 35 + (Math.random() - 0.5) * 2
+                }
                 fill="#888"
                 fontSize={16}
                 textAnchor="middle"
+                fontFamily="'Comic Neue', cursive"
               >
                 {year}
               </text>
@@ -230,17 +272,32 @@ const StarGrowthChart: React.FC = () => {
           <path
             d={generatePath()}
             fill="none"
-            stroke="url(#lineGradient)"
-            strokeWidth={4}
+            stroke="#ff6b6b"
+            strokeWidth={3}
             strokeLinecap="round"
             strokeLinejoin="round"
+            style={{
+              filter: "url(#sketchFilter)",
+              strokeDasharray: "0.5, 1.5",
+              strokeLinejoin: "round",
+              opacity: spring({
+                frame,
+                fps,
+                config: { damping: 100, stiffness: 100 },
+              }),
+              transform: `scale(${interpolate(frame, [0, 100], [0.98, 1])})`,
+            }}
           />
         )}
 
         {/* 数据点 */}
         {visibleData.map((point, i) => {
-          const x = CHART_MARGIN.left + i * xScale
-          const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale
+          const x = CHART_MARGIN.left + i * xScale + (Math.random() - 0.5) * 2
+          const y =
+            HEIGHT -
+            CHART_MARGIN.bottom -
+            point.stars * yScale +
+            (Math.random() - 0.5) * 2
           const isMilestone = milestones.some(
             (m) => m.year === point.year && m.month === point.month,
           )
@@ -252,16 +309,17 @@ const StarGrowthChart: React.FC = () => {
               key={i}
               cx={x}
               cy={y}
-              r={isMilestone ? 8 : 4}
-              fill={isMilestone ? "#ff6b6b" : "#61dafb"}
-              stroke="white"
-              strokeWidth={2}
+              r={isMilestone ? 6 : 3}
+              fill={isMilestone ? "#ff6b6b" : "#ff6b6b"}
+              stroke="#333"
+              strokeWidth={1.5}
               style={{
                 opacity: spring({
                   frame: frame - i * 0.5,
                   fps,
                   config: { damping: 100 },
                 }),
+                filter: "url(#sketchFilter)",
               }}
             />
           )
@@ -297,19 +355,24 @@ const StarGrowthChart: React.FC = () => {
                 stroke="#ff6b6b"
                 strokeWidth={3}
                 style={{
-                  opacity: labelProgress,
-                  transform: `scale(${labelProgress})`,
-                  transformOrigin: `${x}px ${y}px`,
+                  opacity: spring({
+                    frame: frame - index * 0.5,
+                    fps,
+                    config: { damping: 100 },
+                  }),
                 }}
               />
               <text
-                x={x}
-                y={y - 25}
+                x={x + 25}
+                y={y - 15}
                 fill="#ff6b6b"
                 fontSize={14}
                 fontWeight="bold"
-                textAnchor="middle"
-                style={{ opacity: labelProgress }}
+                fontFamily="'Comic Neue', cursive"
+                style={{
+                  opacity: labelProgress,
+                  transform: `translateX(${labelProgress * 10}px)`,
+                }}
               >
                 {milestone.event}
               </text>
