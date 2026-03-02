@@ -321,7 +321,7 @@ const StarGrowthChart: React.FC = () => {
               cx={x}
               cy={y}
               r={isMilestone ? 6 : 3}
-              fill={isMilestone ? "blueviolet" : "#ff6b6b"}
+              fill={isMilestone ? "#ec1313" : "#ff6b6b"}
               stroke="#333"
               strokeWidth={1.5}
               style={{
@@ -369,8 +369,8 @@ const StarGrowthChart: React.FC = () => {
                 cy={y}
                 r={12}
                 fill="none"
-                stroke="blueviolet"
-                strokeWidth={3}
+                stroke="#ec1313"
+                strokeWidth={1.5}
                 style={{
                   opacity: spring({
                     frame: frame - milestoneAppearFrame,
@@ -382,8 +382,8 @@ const StarGrowthChart: React.FC = () => {
               <text
                 x={x + 25}
                 y={y - 15}
-                fill="blue"
-                fontSize={22}
+                fill="rgb(51, 51, 51)"
+                fontSize={20}
                 fontWeight="bold"
                 fontFamily="'Comic Neue', cursive"
                 style={{
@@ -391,7 +391,7 @@ const StarGrowthChart: React.FC = () => {
                   transform: `translateX(${labelProgress * 10}px)`,
                 }}
               >
-                {milestone.event}
+                {milestone.year}-{milestone.month} {milestone.event}
               </text>
             </g>
           )
