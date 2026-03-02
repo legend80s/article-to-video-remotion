@@ -47,12 +47,21 @@ const IntroScene: React.FC = () => {
     { extrapolateRight: "clamp" },
   )
 
+  // 背景从黑色渐变到白色 (第5帧到第25帧)
+  const backgroundOpacity = interpolate(
+    frame,
+    [startFrame, startFrame + 20],
+    [0, 1],
+    { extrapolateRight: "clamp" },
+  )
+  const backgroundColor = `rgb(${Math.round(backgroundOpacity * 255)}, ${Math.round(backgroundOpacity * 255)}, ${Math.round(backgroundOpacity * 255)})`
+
   return (
     <div
       style={{
         width: WIDTH,
         height: HEIGHT,
-        background: "rgb(0, 0, 0)", // 纯黑背景
+        background: backgroundColor,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -583,7 +592,7 @@ const StarGrowthChart: React.FC = () => {
           style={{
             fontSize: 48,
             fontWeight: "bold",
-            color: "#61dafb",
+            color: "#ff6b6b",
           }}
         >
           {currentStars.toLocaleString()}
