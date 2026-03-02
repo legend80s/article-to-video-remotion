@@ -453,10 +453,48 @@ const StarGrowthChart: React.FC = () => {
             const y =
               HEIGHT - CHART_MARGIN.bottom - lastPoint.stars * yScale + randomY
 
+            // 呼吸浮动动画 - 上下浮动
+            const breathe = interpolate(
+              frame % 60,
+              [0, 30, 60],
+              [0, -8, 0],
+              { extrapolateRight: "clamp" },
+            )
+            // 摆动动画 - 轻微左右摇摆
+            const wobble = interpolate(
+              frame % 45,
+              [0, 22, 45],
+              [0, 5, 0],
+              { extrapolateRight: "clamp" },
+            )
+            // 缩放脉冲动画
+            const scale = interpolate(
+              frame % 90,
+              [0, 45, 90],
+              [1, 1.15, 1],
+              { extrapolateRight: "clamp" },
+            )
+
             return (
-              <text x={x} y={y - 15} fontSize={28} textAnchor="middle">
-                🦞
-              </text>
+              <g
+                style={{
+                  transform: `translate(${wobble}px, ${breathe}px) scale(${scale})`,
+                  transformOrigin: `${x}px ${y - 15}px`,
+                }}
+              >
+                <text
+                  x={x}
+                  y={y - 15}
+                  fontSize={28}
+                  textAnchor="middle"
+                  style={{
+                    // 添加轻微的阴影增加立体感
+                    filter: "drop-shadow(0px 2px 3px rgba(0,0,0,0.3))",
+                  }}
+                >
+                  🦞
+                </text>
+              </g>
             )
           })()}
       </svg>
