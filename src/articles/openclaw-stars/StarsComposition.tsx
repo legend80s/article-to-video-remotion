@@ -649,12 +649,12 @@ const StarGrowthChartWithIntro: React.FC = () => {
   return (
     <>
       {/* 开场动画 - 60帧 = 2秒 */}
-      <Sequence from={0} durationInFrames={30}>
+      <Sequence from={0} durationInFrames={40}>
         <IntroScene />
       </Sequence>
 
       {/* 主增长曲线 - 开场动画后开始 */}
-      <Sequence from={30}>
+      <Sequence from={40}>
         <StarGrowthChart />
       </Sequence>
     </>
