@@ -453,43 +453,56 @@ const StarGrowthChart: React.FC = () => {
             const y =
               HEIGHT - CHART_MARGIN.bottom - lastPoint.stars * yScale + randomY
 
+            // 根据星星数量计算基础缩放（星星越多，龙虾越大）
+            // 假设最大约 3000 stars，映射到 1.0-3.0 的缩放范围
+            const starsScale = interpolate(
+              lastPoint.stars,
+              [0, 500, 1000, 2000, 3000],
+              [0.8, 1.2, 1.8, 2.5, 3.2],
+              { extrapolateRight: "clamp" },
+            )
+
             // 呼吸浮动动画 - 上下浮动
-            const breathe = interpolate(
-              frame % 60,
-              [0, 30, 60],
-              [0, -8, 0],
-              { extrapolateRight: "clamp" },
-            )
+            const breathe = interpolate(frame % 60, [0, 30, 60], [0, -8, 0], {
+              extrapolateRight: "clamp",
+            })
             // 摆动动画 - 轻微左右摇摆
-            const wobble = interpolate(
-              frame % 45,
-              [0, 22, 45],
-              [0, 5, 0],
-              { extrapolateRight: "clamp" },
-            )
-            // 缩放脉冲动画
-            const scale = interpolate(
+            const wobble = interpolate(frame % 45, [0, 22, 45], [0, 5, 0], {
+              extrapolateRight: "clamp",
+            })
+            // 缩放脉冲动画（与星星数量缩放相乘）
+            const pulseScale = interpolate(
               frame % 90,
               [0, 45, 90],
               [1, 1.15, 1],
               { extrapolateRight: "clamp" },
             )
+            const finalScale = starsScale * pulseScale
+
+            // 根据星星数量调整字体大小（基础28px，最大80px）
+            const baseFontSize = interpolate(
+              lastPoint.stars,
+              [0, 500, 1000, 2000, 3000, 6000, 10_000],
+              [20, 22, 24, 26, 28, 30, 80],
+              { extrapolateRight: "clamp" },
+            )
+            // console.log("baseFontSize", baseFontSize)
 
             return (
               <g
                 style={{
-                  transform: `translate(${wobble}px, ${breathe}px) scale(${scale})`,
+                  transform: `translate(${wobble}px, ${breathe}px) scale(${finalScale})`,
                   transformOrigin: `${x}px ${y - 15}px`,
                 }}
               >
                 <text
                   x={x}
                   y={y - 15}
-                  fontSize={28}
+                  fontSize={baseFontSize}
                   textAnchor="middle"
                   style={{
                     // 添加轻微的阴影增加立体感
-                    filter: "drop-shadow(0px 2px 3px rgba(0,0,0,0.3))",
+                    filter: "drop-shadow(0px 6px 0px rgba(0,0,0,0.4))",
                   }}
                 >
                   🦞
@@ -529,7 +542,7 @@ const StarGrowthChart: React.FC = () => {
             color: "#61dafb",
           }}
         >
-          {currentStars}
+          {currentStars.toLocaleString()}
 
           <span
             className="text-2xl ms-2"
