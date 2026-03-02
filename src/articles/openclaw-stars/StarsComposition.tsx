@@ -440,6 +440,29 @@ const StarGrowthChart: React.FC = () => {
             </g>
           )
         })}
+
+        {/* 曲线顶端的 🦞 - 跟随曲线顶点移动 */}
+        {visibleData.length > 0 && (
+          (() => {
+            // 使用当前动画位置的数据点，让🦞跟随曲线移动
+            const lastIndex = visibleData.length - 1
+            const lastPoint = visibleData[lastIndex]
+            if (!lastPoint) return null
+            const { randomX, randomY } = getRandomOffset(lastIndex, 2)
+            const x = CHART_MARGIN.left + lastIndex * xScale + randomX
+            const y =
+              HEIGHT -
+              CHART_MARGIN.bottom -
+              lastPoint.stars * yScale +
+              randomY
+
+            return (
+              <text x={x} y={y - 25} fontSize={28} textAnchor="middle">
+                🦞
+              </text>
+            )
+          })()
+        )}
       </svg>
 
       {/* 当前数据展示 */}
