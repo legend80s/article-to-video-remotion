@@ -321,7 +321,7 @@ const StarGrowthChart: React.FC = () => {
               cx={x}
               cy={y}
               r={isMilestone ? 6 : 3}
-              fill={isMilestone ? "#ff6b6b" : "#ff6b6b"}
+              fill={isMilestone ? "blueviolet" : "#ff6b6b"}
               stroke="#333"
               strokeWidth={1.5}
               style={{
@@ -369,7 +369,7 @@ const StarGrowthChart: React.FC = () => {
                 cy={y}
                 r={12}
                 fill="none"
-                stroke="#ff6b6b"
+                stroke="blueviolet"
                 strokeWidth={3}
                 style={{
                   opacity: spring({
@@ -382,8 +382,8 @@ const StarGrowthChart: React.FC = () => {
               <text
                 x={x + 25}
                 y={y - 15}
-                fill="#ff6b6b"
-                fontSize={14}
+                fill="blue"
+                fontSize={22}
                 fontWeight="bold"
                 fontFamily="'Comic Neue', cursive"
                 style={{
@@ -436,7 +436,7 @@ const StarGrowthChart: React.FC = () => {
       </div>
 
       {/* 图例 */}
-      <div
+      {/* <div
         style={{
           position: "absolute",
           bottom: 40,
@@ -473,7 +473,7 @@ const StarGrowthChart: React.FC = () => {
             重要里程碑
           </span>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
