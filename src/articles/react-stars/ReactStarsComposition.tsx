@@ -437,24 +437,28 @@ const StarGrowthChart: React.FC = () => {
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div
             style={{
-              width: 12,
-              height: 12,
+              width: 14,
+              height: 14,
               borderRadius: "50%",
               background: "#61dafb",
             }}
           />
-          <span>Stars Growth</span>
+          <span style={{ fontSize: 16, fontWeight: "bold", color: "#333" }}>
+            星标增长
+          </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div
             style={{
-              width: 12,
-              height: 12,
+              width: 14,
+              height: 14,
               borderRadius: "50%",
               background: "#ff6b6b",
             }}
           />
-          <span>Major Milestones</span>
+          <span style={{ fontSize: 16, fontWeight: "bold", color: "#333" }}>
+            重要里程碑
+          </span>
         </div>
       </div>
     </div>
