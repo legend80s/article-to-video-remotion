@@ -669,7 +669,7 @@ const OutroScene: React.FC = () => {
       <Img
         src={staticFile("imgs/openclaw-star-history.png")}
         style={{
-          width: 1400,
+          width: "90%",
           height: "auto",
           objectFit: "contain",
           opacity: outroOpacity,
