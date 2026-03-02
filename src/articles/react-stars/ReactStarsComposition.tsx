@@ -282,7 +282,7 @@ const StarGrowthChart: React.FC = () => {
             d={generatePath()}
             fill="none"
             stroke="#ff6b6b"
-            strokeWidth={3}
+            strokeWidth={5}
             strokeLinecap="round"
             strokeLinejoin="round"
             style={{
