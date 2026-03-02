@@ -650,9 +650,20 @@ const OutroScene: React.FC = () => {
 
   // 结束场景从第 490 帧开始（Sequence 的 from=490）
   // 图片渐现动画 - 从第 0 帧开始（相对于 Sequence），30 帧内渐现
-  const outroOpacity = interpolate(frame, [0, 30], [0, 1], {
-    extrapolateRight: "clamp",
-  })
+  const outroOpacity = interpolate(
+    frame,
+    [0, 30],
+    [0, 1],
+    { extrapolateRight: "clamp" },
+  )
+
+  // 遮罩揭示动画 - 从第 30 帧开始，40 帧内从完全不透明到完全透明
+  const maskOpacity = interpolate(
+    frame,
+    [30, 70],
+    [1, 0],
+    { extrapolateRight: "clamp" },
+  )
 
   return (
     <div
@@ -664,17 +675,30 @@ const OutroScene: React.FC = () => {
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
+        position: "relative",
       }}
     >
       <Img
         src={staticFile("imgs/openclaw-star-history.png")}
         style={{
-          width: "90%",
+          width: 1400,
           height: "auto",
           objectFit: "contain",
           opacity: outroOpacity,
         }}
         alt="OpenClaw Star History"
+      />
+      {/* 右半部分遮罩 - 慢慢揭示效果 */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          width: "50%",
+          height: "100%",
+          background: "rgb(248, 245, 230)", // 与背景相同的米色
+          opacity: maskOpacity,
+        }}
       />
     </div>
   )
