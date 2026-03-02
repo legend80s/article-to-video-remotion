@@ -1,41 +1,42 @@
-import React from "react";
+/** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
+import React from "react"
 import {
   useCurrentFrame,
   useVideoConfig,
   spring,
   interpolate,
   Composition,
-} from "remotion";
+} from "remotion"
 import {
   reactStarsMonthly,
   reactStarsYearly,
   milestones,
-} from "./data/starData";
+} from "./data/starData"
 
-const WIDTH = 1920;
-const HEIGHT = 1080;
-const CHART_HEIGHT = 600;
-const CHART_WIDTH = 1600;
-const CHART_MARGIN = { top: 100, right: 100, bottom: 150, left: 150 };
+const WIDTH = 1920
+const HEIGHT = 1080
+const CHART_HEIGHT = 600
+const CHART_WIDTH = 1600
+const CHART_MARGIN = { top: 100, right: 100, bottom: 150, left: 150 }
 
 // 格式化数字
 const formatNumber = (num: number): string => {
   if (num >= 1000000) {
-    return `${(num / 1000000).toFixed(1)}M`;
+    return `${(num / 1000000).toFixed(1)}M`
   }
   if (num >= 1000) {
-    return `${(num / 1000).toFixed(0)}K`;
+    return `${(num / 1000).toFixed(0)}K`
   }
-  return num.toString();
-};
+  return num.toString()
+}
 
 // 主图表组件
 const StarGrowthChart: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
+  const frame = useCurrentFrame()
+  const { fps, durationInFrames } = useVideoConfig()
 
-  const maxStars = Math.max(...reactStarsMonthly.map((d) => d.stars));
-  const dataLength = reactStarsMonthly.length;
+  const maxStars = Math.max(...reactStarsMonthly.map((d) => d.stars))
+  const dataLength = reactStarsMonthly.length
   const animationProgress = interpolate(
     frame,
     [0, durationInFrames * 0.85],
@@ -43,51 +44,51 @@ const StarGrowthChart: React.FC = () => {
     {
       extrapolateRight: "clamp",
     },
-  );
+  )
 
-  const visibleDataCount = Math.floor(animationProgress * dataLength);
-  const visibleData = reactStarsMonthly.slice(0, visibleDataCount + 1);
+  const visibleDataCount = Math.floor(animationProgress * dataLength)
+  const visibleData = reactStarsMonthly.slice(0, visibleDataCount + 1)
 
-  const xScale = CHART_WIDTH / (dataLength - 1);
-  const yScale = CHART_HEIGHT / maxStars;
+  const xScale = CHART_WIDTH / (dataLength - 1)
+  const yScale = CHART_HEIGHT / maxStars
 
   // 生成路径
   const generatePath = () => {
-    if (visibleData.length < 2) return "";
+    if (visibleData.length < 2) return ""
     return visibleData
       .map((point, i) => {
-        const x = CHART_MARGIN.left + i * xScale;
-        const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale;
-        return `${i === 0 ? "M" : "L"} ${x} ${y}`;
+        const x = CHART_MARGIN.left + i * xScale
+        const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale
+        return `${i === 0 ? "M" : "L"} ${x} ${y}`
       })
-      .join(" ");
-  };
+      .join(" ")
+  }
 
   // 生成填充区域路径
   const generateAreaPath = () => {
-    if (visibleData.length < 2) return "";
+    if (visibleData.length < 2) return ""
     const linePath = visibleData
       .map((point, i) => {
-        const x = CHART_MARGIN.left + i * xScale;
-        const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale;
-        return `${i === 0 ? "M" : "L"} ${x} ${y}`;
+        const x = CHART_MARGIN.left + i * xScale
+        const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale
+        return `${i === 0 ? "M" : "L"} ${x} ${y}`
       })
-      .join(" ");
+      .join(" ")
 
-    const lastX = CHART_MARGIN.left + (visibleData.length - 1) * xScale;
-    const bottomY = HEIGHT - CHART_MARGIN.bottom;
-    const firstX = CHART_MARGIN.left;
+    const lastX = CHART_MARGIN.left + (visibleData.length - 1) * xScale
+    const bottomY = HEIGHT - CHART_MARGIN.bottom
+    const firstX = CHART_MARGIN.left
 
-    return `${linePath} L ${lastX} ${bottomY} L ${firstX} ${bottomY} Z`;
-  };
+    return `${linePath} L ${lastX} ${bottomY} L ${firstX} ${bottomY} Z`
+  }
 
   // 当前显示的 star 数
   const currentStars =
-    visibleData.length > 0 ? visibleData[visibleData.length - 1].stars : 0;
+    visibleData.length > 0 ? visibleData[visibleData.length - 1].stars : 0
   const currentDate =
     visibleData.length > 0
       ? visibleData[visibleData.length - 1].date
-      : "2013-05";
+      : "2013-05"
 
   return (
     <div
@@ -150,8 +151,8 @@ const StarGrowthChart: React.FC = () => {
 
         {/* 网格线 */}
         {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => {
-          const y = HEIGHT - CHART_MARGIN.bottom - CHART_HEIGHT * ratio;
-          const value = maxStars * ratio;
+          const y = HEIGHT - CHART_MARGIN.bottom - CHART_HEIGHT * ratio
+          const value = maxStars * ratio
           return (
             <g key={i}>
               <line
@@ -173,7 +174,7 @@ const StarGrowthChart: React.FC = () => {
                 {formatNumber(value)}
               </text>
             </g>
-          );
+          )
         })}
 
         {/* 年份标记 */}
@@ -183,9 +184,9 @@ const StarGrowthChart: React.FC = () => {
         ].map((year) => {
           const yearIndex = reactStarsMonthly.findIndex(
             (d) => d.year === year && d.month === 1,
-          );
-          if (yearIndex === -1) return null;
-          const x = CHART_MARGIN.left + yearIndex * xScale;
+          )
+          if (yearIndex === -1) return null
+          const x = CHART_MARGIN.left + yearIndex * xScale
           return (
             <g key={year}>
               <line
@@ -206,7 +207,7 @@ const StarGrowthChart: React.FC = () => {
                 {year}
               </text>
             </g>
-          );
+          )
         })}
 
         {/* 填充区域 */}
@@ -238,13 +239,13 @@ const StarGrowthChart: React.FC = () => {
 
         {/* 数据点 */}
         {visibleData.map((point, i) => {
-          const x = CHART_MARGIN.left + i * xScale;
-          const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale;
+          const x = CHART_MARGIN.left + i * xScale
+          const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale
           const isMilestone = milestones.some(
             (m) => m.year === point.year && m.month === point.month,
-          );
+          )
 
-          if (!isMilestone && i % 6 !== 0) return null;
+          if (!isMilestone && i % 6 !== 0) return null
 
           return (
             <circle
@@ -263,18 +264,18 @@ const StarGrowthChart: React.FC = () => {
                 }),
               }}
             />
-          );
+          )
         })}
 
         {/* 里程碑标记 */}
         {milestones.map((milestone, i) => {
           const index = reactStarsMonthly.findIndex(
             (d) => d.year === milestone.year && d.month === milestone.month,
-          );
-          if (index === -1 || index > visibleDataCount) return null;
+          )
+          if (index === -1 || index > visibleDataCount) return null
 
-          const x = CHART_MARGIN.left + index * xScale;
-          const y = HEIGHT - CHART_MARGIN.bottom - milestone.stars * yScale;
+          const x = CHART_MARGIN.left + index * xScale
+          const y = HEIGHT - CHART_MARGIN.bottom - milestone.stars * yScale
 
           const labelProgress = interpolate(
             frame,
@@ -284,7 +285,7 @@ const StarGrowthChart: React.FC = () => {
             ],
             [0, 1],
             { extrapolateRight: "clamp" },
-          );
+          )
 
           return (
             <g key={i}>
@@ -313,7 +314,7 @@ const StarGrowthChart: React.FC = () => {
                 {milestone.event}
               </text>
             </g>
-          );
+          )
         })}
       </svg>
 
@@ -381,17 +382,17 @@ const StarGrowthChart: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // 年度增长柱状图组件
 const YearlyGrowthChart: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const frame = useCurrentFrame()
+  const { fps } = useVideoConfig()
 
-  const maxGrowth = Math.max(...reactStarsYearly.map((d) => d.yearlyGrowth));
-  const barWidth = 80;
-  const gap = 40;
+  const maxGrowth = Math.max(...reactStarsYearly.map((d) => d.yearlyGrowth))
+  const barWidth = 80
+  const gap = 40
 
   return (
     <div
@@ -423,13 +424,13 @@ const YearlyGrowthChart: React.FC = () => {
 
       <div style={{ display: "flex", alignItems: "flex-end", height: 500 }}>
         {reactStarsYearly.map((year, i) => {
-          const barHeight = (year.yearlyGrowth / maxGrowth) * 400;
-          const delay = i * 3;
+          const barHeight = (year.yearlyGrowth / maxGrowth) * 400
+          const delay = i * 3
           const heightProgress = spring({
             frame: frame - delay,
             fps,
             config: { damping: 100 },
-          });
+          })
 
           return (
             <div
@@ -475,7 +476,7 @@ const YearlyGrowthChart: React.FC = () => {
                 {year.year}
               </div>
             </div>
-          );
+          )
         })}
       </div>
 
@@ -490,21 +491,21 @@ const YearlyGrowthChart: React.FC = () => {
         Stars added each year
       </div>
     </div>
-  );
-};
+  )
+}
 
 // 总结组件
 const SummaryScene: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const frame = useCurrentFrame()
+  const { fps } = useVideoConfig()
 
   const fadeIn = spring({
     frame,
     fps,
     config: { damping: 100 },
-  });
+  })
 
-  const finalStars = reactStarsMonthly[reactStarsMonthly.length - 1].stars;
+  const finalStars = reactStarsMonthly[reactStarsMonthly.length - 1].stars
 
   return (
     <div
@@ -587,8 +588,8 @@ const SummaryScene: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // 主 Composition 组件
 export const ReactStarsComposition: React.FC = () => {
@@ -624,5 +625,5 @@ export const ReactStarsComposition: React.FC = () => {
         height={1080}
       />
     </>
-  );
-};
+  )
+}

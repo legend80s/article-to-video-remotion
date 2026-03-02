@@ -9,3 +9,11 @@ import { enableTailwind } from '@remotion/tailwind-v4';
 Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
 Config.overrideWebpackConfig(enableTailwind);
+
+// Config.setBrowserExecutable("~/AppData/Local/Google/Chrome/Application/chrome.exe");
+// Config.setBrowserExecutable("~/AppData/Local/Google/Chrome/Application/chrome");
+// Config.setBrowserExecutable("C:\\Users\\liuchuanzong\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe");
+// Config.setBrowserExecutable("C:\\Users\\liuchuanzong\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe");
+
+
+// F:\workspace\github\article-to-video-remotion\node_modules\.remotion\chrome-headless-shell\win64\chrome-headless-shell-win64\chrome-headless-shell.exe
