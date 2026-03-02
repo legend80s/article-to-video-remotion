@@ -143,7 +143,7 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          OpenClaw GitHub Stars ⭐ Growth (2025.11 —— 2026.01)
+          OpenClaw GitHub Stars ⭐ Growth (2025.11 —— 2026.03)
         </h1>
         <p
           style={{
@@ -442,8 +442,8 @@ const StarGrowthChart: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: 40,
-          right: 100,
+          bottom: 700,
+          right: 872,
           background: "rgba(0,0,0,0.6)",
           padding: "20px 30px",
           borderRadius: 12,
@@ -453,7 +453,7 @@ const StarGrowthChart: React.FC = () => {
       >
         <div
           style={{
-            fontSize: 16,
+            fontSize: 24,
             color: "#eee",
             marginBottom: 5,
             fontWeight: "bold",
@@ -468,10 +468,14 @@ const StarGrowthChart: React.FC = () => {
             color: "#61dafb",
           }}
         >
-          {formatNumber(currentStars)}
-        </div>
-        <div style={{ fontSize: 16, color: "#eee", fontWeight: "bold" }}>
-          stars
+          {currentStars}
+
+          <span
+            className="text-2xl ms-2"
+            style={{ color: "#eee", fontWeight: "bold" }}
+          >
+            stars
+          </span>
         </div>
       </div>
 

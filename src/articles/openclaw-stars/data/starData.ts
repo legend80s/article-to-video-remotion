@@ -2,11 +2,11 @@
 // 基于历史里程碑和增长趋势的估算数据
 
 export interface StarDataPoint {
-  date: string;
-  year: number;
-  month: number;
-  stars: number;
-  monthlyGrowth: number;
+  date: string
+  year: number
+  month: number
+  stars: number
+  monthlyGrowth: number
 }
 
 // 月度累计 star 数据
@@ -14,13 +14,13 @@ export const reactStarsMonthly: StarDataPoint[] = [
   { date: "2025-11", year: 2025, month: 11, stars: 231, monthlyGrowth: 231 },
   { date: "2025-12", year: 2025, month: 12, stars: 907, monthlyGrowth: 676 },
   { date: "2026-01", year: 2026, month: 1, stars: 63500, monthlyGrowth: 62593 },
-];
+]
 
 // 日度累计 star 数据
 export interface DailyStarData {
-  date: string;
-  stars: number;
-  dailyGrowth: number;
+  date: string
+  stars: number
+  dailyGrowth: number
 }
 
 export const starsDaily: DailyStarData[] = [
@@ -89,14 +89,15 @@ export const starsDaily: DailyStarData[] = [
   { date: "2026-01-25", stars: 14690, dailyGrowth: 7268 },
   { date: "2026-01-26", stars: 38560, dailyGrowth: 23870 },
   { date: "2026-01-27", stars: 63500, dailyGrowth: 24940 },
-];
+  { date: "2026-03-2", stars: 246262, dailyGrowth: -1 },
+]
 
 // 季度统计
 export interface QuarterData {
-  year: number;
-  quarter: number;
-  stars: number;
-  growth: number;
+  year: number
+  quarter: number
+  stars: number
+  growth: number
 }
 
 export const reactStarsQuarterly: QuarterData[] = [
@@ -152,13 +153,13 @@ export const reactStarsQuarterly: QuarterData[] = [
   { year: 2025, quarter: 3, stars: 4344900, growth: 193500 },
   { year: 2025, quarter: 4, stars: 4542900, growth: 198000 },
   { year: 2026, quarter: 1, stars: 4677400, growth: 134500 },
-];
+]
 
 // 年度统计
 export interface YearData {
-  year: number;
-  stars: number;
-  yearlyGrowth: number;
+  year: number
+  stars: number
+  yearlyGrowth: number
 }
 
 export const reactStarsYearly: YearData[] = [
@@ -176,15 +177,14 @@ export const reactStarsYearly: YearData[] = [
   { year: 2024, stars: 3777900, yearlyGrowth: 693000 },
   { year: 2025, stars: 4542900, yearlyGrowth: 765000 },
   { year: 2026, stars: 4677400, yearlyGrowth: 134500 },
-];
-
+]
 
 interface IMilestone {
-  year: number;
-  month: number;
-  event: string;
-  stars: number;
+  year: number
+  month: number
+  event: string
+  stars: number
 }
 
 // 重要里程碑
-export const milestones: IMilestone[] = [];
+export const milestones: IMilestone[] = []
