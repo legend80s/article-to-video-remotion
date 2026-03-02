@@ -685,12 +685,13 @@ const SummaryScene: React.FC = () => {
 }
 
 // 主 Composition 组件
-export const ReactStarsComposition: React.FC = () => {
+export const StarsComposition: React.FC = () => {
+  const repoName = "OpenClaw"
   return (
     <>
       {/* 主增长曲线 */}
       <Composition
-        id="ReactStarsGrowth"
+        id={`${repoName}StarsGrowth`}     
         component={StarGrowthChart}
         durationInFrames={450}
         fps={30}
@@ -699,24 +700,14 @@ export const ReactStarsComposition: React.FC = () => {
       />
 
       {/* 年度增长 */}
-      <Composition
-        id="ReactYearlyGrowth"
+      {/* <Composition
+        id={`${repoName}YearlyGrowth`}
         component={YearlyGrowthChart}
         durationInFrames={120}
         fps={30}
         width={1920}
         height={1080}
-      />
-
-      {/* 总结 */}
-      <Composition
-        id="ReactStarsSummary"
-        component={SummaryScene}
-        durationInFrames={90}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
+      /> */}
     </>
   )
 }

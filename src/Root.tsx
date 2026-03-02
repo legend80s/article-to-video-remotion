@@ -6,6 +6,7 @@ import { HelloWorld, myCompSchema } from "./HelloWorld";
 import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
 import { MyComposition } from "./MyComposition";
 import { ReactStarsComposition } from "./articles/react-stars/ReactStarsComposition";
+import { StarsComposition as OpenClawStarsComposition } from "./articles/openclaw-stars/StarsComposition";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -59,6 +60,7 @@ export const RemotionRoot: React.FC = () => {
 
       <TanStackStartComposition />
       <ReactStarsComposition />
+      <OpenClawStarsComposition />
     </>
   );
 };
