@@ -53,14 +53,21 @@ const StarGrowthChart: React.FC = () => {
   const xScale = CHART_WIDTH / (dataLength - 1)
   const yScale = CHART_HEIGHT / maxStars
 
+  // 生成一致的随机偏移量（基于索引）
+  const getRandomOffset = (index: number, range: number = 3) => {
+    // 使用正弦函数生成基于索引的一致随机值
+    const randomX = ((Math.sin(index * 12.9898) + 1) / 2 - 0.5) * range
+    const randomY = ((Math.sin(index * 78.233) + 1) / 2 - 0.5) * range
+    return { randomX, randomY }
+  }
+
   // 生成路径
   const generatePath = () => {
     if (visibleData.length < 2) return ""
     return visibleData
       .map((point, i) => {
-        // Add slight random offset for hand-drawn effect
-        const randomX = (Math.random() - 0.5) * 3
-        const randomY = (Math.random() - 0.5) * 3
+        // 使用基于索引的一致随机偏移量
+        const { randomX, randomY } = getRandomOffset(i, 2)
         const x = CHART_MARGIN.left + i * xScale + randomX
         const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale + randomY
         return `${i === 0 ? "M" : "L"} ${x} ${y}`
@@ -73,18 +80,20 @@ const StarGrowthChart: React.FC = () => {
     if (visibleData.length < 2) return ""
     const linePath = visibleData
       .map((point, i) => {
-        // Add slight random offset for hand-drawn effect
-        const randomX = (Math.random() - 0.5) * 3
-        const randomY = (Math.random() - 0.5) * 3
+        // 使用基于索引的一致随机偏移量
+        const { randomX, randomY } = getRandomOffset(i, 2)
         const x = CHART_MARGIN.left + i * xScale + randomX
         const y = HEIGHT - CHART_MARGIN.bottom - point.stars * yScale + randomY
         return `${i === 0 ? "M" : "L"} ${x} ${y}`
       })
       .join(" ")
 
-    const lastX = CHART_MARGIN.left + (visibleData.length - 1) * xScale
+    const lastIndex = visibleData.length - 1
+    const { randomX: lastRandomX } = getRandomOffset(lastIndex, 2)
+    const lastX = CHART_MARGIN.left + lastIndex * xScale + lastRandomX
     const bottomY = HEIGHT - CHART_MARGIN.bottom
-    const firstX = CHART_MARGIN.left
+    const { randomX: firstRandomX } = getRandomOffset(0, 2)
+    const firstX = CHART_MARGIN.left + firstRandomX
 
     return `${linePath} L ${lastX} ${bottomY} L ${firstX} ${bottomY} Z`
   }
@@ -285,19 +294,17 @@ const StarGrowthChart: React.FC = () => {
                 fps,
                 config: { damping: 100, stiffness: 100 },
               }),
-              transform: `scale(${interpolate(frame, [0, 100], [0.98, 1])})`,
             }}
           />
         )}
 
         {/* 数据点 */}
         {visibleData.map((point, i) => {
-          const x = CHART_MARGIN.left + i * xScale + (Math.random() - 0.5) * 2
+          // 使用基于索引的一致随机偏移量
+          const { randomX, randomY } = getRandomOffset(i, 2)
+          const x = CHART_MARGIN.left + i * xScale + randomX
           const y =
-            HEIGHT -
-            CHART_MARGIN.bottom -
-            point.stars * yScale +
-            (Math.random() - 0.5) * 2
+            HEIGHT - CHART_MARGIN.bottom - point.stars * yScale + randomY
           const isMilestone = milestones.some(
             (m) => m.year === point.year && m.month === point.month,
           )
@@ -332,8 +339,14 @@ const StarGrowthChart: React.FC = () => {
           )
           if (index === -1 || index > visibleDataCount) return null
 
-          const x = CHART_MARGIN.left + index * xScale
-          const y = HEIGHT - CHART_MARGIN.bottom - milestone.stars * yScale
+          // 使用基于索引的一致随机偏移量（与曲线相同）
+          const { randomX, randomY } = getRandomOffset(index, 2)
+          const x = CHART_MARGIN.left + index * xScale + randomX
+          const y =
+            HEIGHT -
+            CHART_MARGIN.bottom -
+            reactStarsMonthly[index].stars * yScale +
+            randomY
 
           const labelProgress = interpolate(
             frame,

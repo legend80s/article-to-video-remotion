@@ -1004,7 +1004,7 @@ export const reactStarsYearly: YearData[] = [
 // 重要里程碑
 export const milestones = [
   { year: 2013, month: 5, event: "React 开源发布", stars: 0 },
-  { year: 2015, month: 1, event: "React Native 发布", stars: 68700 },
+  { year: 2015, month: 1, event: "React Native 发布", stars: 59200 },
   { year: 2016, month: 4, event: "React 15 发布", stars: 161100 },
   { year: 2017, month: 5, event: "Create React App 发布", stars: 319900 },
   { year: 2019, month: 2, event: "React Hooks 发布", stars: 750400 },
