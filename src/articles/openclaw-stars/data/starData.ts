@@ -10,7 +10,86 @@ export interface StarDataPoint {
 }
 
 // 月度累计 star 数据
-export const reactStarsMonthly: StarDataPoint[] = [];
+export const reactStarsMonthly: StarDataPoint[] = [
+  { date: "2025-11", year: 2025, month: 11, stars: 231, monthlyGrowth: 231 },
+  { date: "2025-12", year: 2025, month: 12, stars: 907, monthlyGrowth: 676 },
+  { date: "2026-01", year: 2026, month: 1, stars: 63500, monthlyGrowth: 62593 },
+];
+
+// 日度累计 star 数据
+export interface DailyStarData {
+  date: string;
+  stars: number;
+  dailyGrowth: number;
+}
+
+export const starsDaily: DailyStarData[] = [
+  { date: "2025-11-24", stars: 2, dailyGrowth: 2 },
+  { date: "2025-11-25", stars: 28, dailyGrowth: 26 },
+  { date: "2025-11-26", stars: 48, dailyGrowth: 20 },
+  { date: "2025-11-27", stars: 72, dailyGrowth: 24 },
+  { date: "2025-11-28", stars: 194, dailyGrowth: 122 },
+  { date: "2025-11-29", stars: 222, dailyGrowth: 28 },
+  { date: "2025-11-30", stars: 231, dailyGrowth: 9 },
+  { date: "2025-12-01", stars: 243, dailyGrowth: 12 },
+  { date: "2025-12-02", stars: 250, dailyGrowth: 7 },
+  { date: "2025-12-03", stars: 258, dailyGrowth: 8 },
+  { date: "2025-12-04", stars: 270, dailyGrowth: 12 },
+  { date: "2025-12-05", stars: 276, dailyGrowth: 6 },
+  { date: "2025-12-06", stars: 282, dailyGrowth: 6 },
+  { date: "2025-12-07", stars: 289, dailyGrowth: 7 },
+  { date: "2025-12-08", stars: 292, dailyGrowth: 3 },
+  { date: "2025-12-09", stars: 297, dailyGrowth: 5 },
+  { date: "2025-12-10", stars: 304, dailyGrowth: 7 },
+  { date: "2025-12-11", stars: 307, dailyGrowth: 3 },
+  { date: "2025-12-12", stars: 309, dailyGrowth: 2 },
+  { date: "2025-12-13", stars: 329, dailyGrowth: 20 },
+  { date: "2025-12-14", stars: 336, dailyGrowth: 7 },
+  { date: "2025-12-15", stars: 345, dailyGrowth: 9 },
+  { date: "2025-12-16", stars: 369, dailyGrowth: 24 },
+  { date: "2025-12-17", stars: 375, dailyGrowth: 6 },
+  { date: "2025-12-18", stars: 385, dailyGrowth: 10 },
+  { date: "2025-12-19", stars: 392, dailyGrowth: 7 },
+  { date: "2025-12-20", stars: 400, dailyGrowth: 8 },
+  { date: "2025-12-21", stars: 409, dailyGrowth: 9 },
+  { date: "2025-12-22", stars: 436, dailyGrowth: 27 },
+  { date: "2025-12-23", stars: 446, dailyGrowth: 10 },
+  { date: "2025-12-24", stars: 450, dailyGrowth: 4 },
+  { date: "2025-12-25", stars: 479, dailyGrowth: 29 },
+  { date: "2025-12-26", stars: 519, dailyGrowth: 40 },
+  { date: "2025-12-27", stars: 578, dailyGrowth: 59 },
+  { date: "2025-12-28", stars: 647, dailyGrowth: 69 },
+  { date: "2025-12-29", stars: 699, dailyGrowth: 52 },
+  { date: "2025-12-30", stars: 775, dailyGrowth: 76 },
+  { date: "2025-12-31", stars: 907, dailyGrowth: 132 },
+  { date: "2026-01-01", stars: 985, dailyGrowth: 78 },
+  { date: "2026-01-02", stars: 1147, dailyGrowth: 162 },
+  { date: "2026-01-03", stars: 1211, dailyGrowth: 64 },
+  { date: "2026-01-04", stars: 1337, dailyGrowth: 126 },
+  { date: "2026-01-05", stars: 1690, dailyGrowth: 353 },
+  { date: "2026-01-06", stars: 2044, dailyGrowth: 354 },
+  { date: "2026-01-07", stars: 2314, dailyGrowth: 270 },
+  { date: "2026-01-08", stars: 2447, dailyGrowth: 133 },
+  { date: "2026-01-09", stars: 2626, dailyGrowth: 179 },
+  { date: "2026-01-10", stars: 2850, dailyGrowth: 224 },
+  { date: "2026-01-11", stars: 3116, dailyGrowth: 266 },
+  { date: "2026-01-12", stars: 3366, dailyGrowth: 250 },
+  { date: "2026-01-13", stars: 3739, dailyGrowth: 373 },
+  { date: "2026-01-14", stars: 3985, dailyGrowth: 246 },
+  { date: "2026-01-15", stars: 4175, dailyGrowth: 190 },
+  { date: "2026-01-16", stars: 4414, dailyGrowth: 239 },
+  { date: "2026-01-17", stars: 4608, dailyGrowth: 194 },
+  { date: "2026-01-18", stars: 4823, dailyGrowth: 215 },
+  { date: "2026-01-19", stars: 5058, dailyGrowth: 235 },
+  { date: "2026-01-20", stars: 5212, dailyGrowth: 154 },
+  { date: "2026-01-21", stars: 5480, dailyGrowth: 268 },
+  { date: "2026-01-22", stars: 5862, dailyGrowth: 382 },
+  { date: "2026-01-23", stars: 6368, dailyGrowth: 506 },
+  { date: "2026-01-24", stars: 7422, dailyGrowth: 1054 },
+  { date: "2026-01-25", stars: 14690, dailyGrowth: 7268 },
+  { date: "2026-01-26", stars: 38560, dailyGrowth: 23870 },
+  { date: "2026-01-27", stars: 63500, dailyGrowth: 24940 },
+];
 
 // 季度统计
 export interface QuarterData {
