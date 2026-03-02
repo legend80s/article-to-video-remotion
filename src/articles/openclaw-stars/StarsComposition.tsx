@@ -262,42 +262,35 @@ const StarGrowthChart: React.FC = () => {
           )
         })}
 
-        {/* 月份标记 */}
-        {[
-          { year: 2025, month: 11, label: "Nov" },
-          { year: 2025, month: 12, label: "Dec" },
-          { year: 2026, month: 1, label: "Jan" },
-        ].map(({ year, month, label }) => {
-          const monthStr = `${year}-${String(month).padStart(2, "0")}`
-          const monthIndex = dailyData.findIndex((d) =>
-            d.date.startsWith(monthStr),
-          )
-          if (monthIndex === -1) return null
-          const x = CHART_MARGIN.left + monthIndex * xScale
-          const randomX = (Math.random() - 0.5) * 2
-          return (
-            <g key={monthStr}>
-              <line
-                x1={x + randomX}
-                y1={HEIGHT - CHART_MARGIN.bottom}
-                y2={HEIGHT - CHART_MARGIN.bottom + 6}
-                stroke="#888"
-                strokeWidth={1}
-              />
-              <text
-                x={x + randomX}
-                y={HEIGHT - CHART_MARGIN.bottom + 22}
-                fill="#666"
-                fontSize={14}
-                fontWeight="bold"
-                textAnchor="middle"
-                fontFamily="'Comic Neue', cursive"
-              >
-                {label}
-              </text>
-            </g>
-          )
-        })}
+        {/* 日期标记 - 天维度 */}
+        {dailyData
+          .map((d, i) => ({ date: d.date, index: i }))
+          .filter((_, i) => i % 7 === 0) // 每5天显示一个刻度
+          .map(({ date, index }) => {
+            const x = CHART_MARGIN.left + index * xScale
+            const label = date.slice(5) // 显示 MM-DD 格式
+            return (
+              <g key={date}>
+                <line
+                  x1={x}
+                  y1={HEIGHT - CHART_MARGIN.bottom}
+                  y2={HEIGHT - CHART_MARGIN.bottom + 4}
+                  stroke="#aaa"
+                  strokeWidth={1}
+                />
+                <text
+                  x={x}
+                  y={HEIGHT - CHART_MARGIN.bottom + 18}
+                  fill="#666"
+                  fontSize={11}
+                  textAnchor="middle"
+                  fontFamily="'Comic Neue', cursive"
+                >
+                  {label}
+                </text>
+              </g>
+            )
+          })}
 
         {/* 填充区域 */}
         {visibleData.length > 1 && (
@@ -354,7 +347,7 @@ const StarGrowthChart: React.FC = () => {
             )
           })
 
-          if (!isMilestone && i % 6 !== 0) {
+          if (!isMilestone && i % 7 !== 0) {
             return null
           }
 
