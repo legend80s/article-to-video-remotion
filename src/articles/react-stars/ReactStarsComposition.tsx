@@ -1,16 +1,16 @@
 /** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
-import React from "react"
+import type React from "react"
 import {
+  Composition,
+  interpolate,
+  spring,
   useCurrentFrame,
   useVideoConfig,
-  spring,
-  interpolate,
-  Composition,
 } from "remotion"
 import {
+  milestones,
   reactStarsMonthly,
   reactStarsYearly,
-  milestones,
 } from "./data/starData"
 
 const WIDTH = 1920
@@ -22,7 +22,7 @@ const CHART_MARGIN = { top: 100, right: 100, bottom: 150, left: 150 }
 // 格式化数字
 const formatNumber = (num: number): string => {
   if (num >= 1000000) {
-    return `${(num / 1000000).toFixed(1)}M`
+    return `${(num / 1000).toFixed(0)}K`
   }
   if (num >= 1000) {
     return `${(num / 1000).toFixed(0)}K`
