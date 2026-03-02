@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
 import "./handwritten-fonts.css"
 import type React from "react"
 import {
@@ -12,6 +11,7 @@ import {
   milestones,
   reactStarsMonthly,
   reactStarsYearly,
+  starsDaily,
 } from "./data/starData"
 
 const WIDTH = 1920
@@ -36,8 +36,10 @@ const StarGrowthChart: React.FC = () => {
   const frame = useCurrentFrame()
   const { fps, durationInFrames } = useVideoConfig()
 
-  const maxStars = Math.max(...reactStarsMonthly.map((d) => d.stars))
-  const dataLength = reactStarsMonthly.length
+  // 使用日度数据
+  const dailyData = starsDaily
+  const maxStars = Math.max(...dailyData.map((d) => d.stars))
+  const dataLength = dailyData.length
   const animationProgress = interpolate(
     frame,
     [0, durationInFrames * 0.85],
@@ -48,7 +50,7 @@ const StarGrowthChart: React.FC = () => {
   )
 
   const visibleDataCount = Math.floor(animationProgress * dataLength)
-  const visibleData = reactStarsMonthly.slice(0, visibleDataCount + 1)
+  const visibleData = dailyData.slice(0, visibleDataCount + 1)
 
   const xScale = CHART_WIDTH / (dataLength - 1)
   const yScale = CHART_HEIGHT / maxStars
@@ -104,7 +106,7 @@ const StarGrowthChart: React.FC = () => {
   const currentDate =
     visibleData.length > 0
       ? visibleData[visibleData.length - 1].date
-      : "2013-05"
+      : "2025-11-24"
 
   return (
     <div
@@ -141,7 +143,7 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          React GitHub Stars ⭐ Growth (2013 —— 2026)
+          OpenClaw GitHub Stars ⭐ Growth (2025.11 —— 2026.01)
         </h1>
         <p
           style={{
@@ -153,9 +155,7 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          From 0 to{" "}
-          {formatNumber(reactStarsMonthly[reactStarsMonthly.length - 1].stars)}{" "}
-          stars
+          From 0 to {formatNumber(dailyData[dailyData.length - 1].stars)} stars
         </p>
       </div>
 
@@ -223,14 +223,11 @@ const StarGrowthChart: React.FC = () => {
           )
         })}
 
-        {/* 年份标记 */}
-        {[
-          2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023,
-          2024, 2025, 2026,
-        ].map((year) => {
-          const yearIndex = reactStarsMonthly.findIndex(
-            (d) => d.year === year && d.month === 1,
-          )
+        {/* 年份标记 - 日度数据按月份显示 */}
+        {[2025, 2026].map((year) => {
+          // 找到每年1月1日的索引
+          const firstDayOfYear = `${year}-01-01`
+          const yearIndex = dailyData.findIndex((d) => d.date >= firstDayOfYear)
           if (yearIndex === -1) return null
           const x = CHART_MARGIN.left + yearIndex * xScale
           // Add random offset for hand-drawn effect
@@ -260,6 +257,43 @@ const StarGrowthChart: React.FC = () => {
                 fontFamily="'Comic Neue', cursive"
               >
                 {year}
+              </text>
+            </g>
+          )
+        })}
+
+        {/* 月份标记 */}
+        {[
+          { year: 2025, month: 11, label: "Nov" },
+          { year: 2025, month: 12, label: "Dec" },
+          { year: 2026, month: 1, label: "Jan" },
+        ].map(({ year, month, label }) => {
+          const monthStr = `${year}-${String(month).padStart(2, "0")}`
+          const monthIndex = dailyData.findIndex((d) =>
+            d.date.startsWith(monthStr),
+          )
+          if (monthIndex === -1) return null
+          const x = CHART_MARGIN.left + monthIndex * xScale
+          const randomX = (Math.random() - 0.5) * 2
+          return (
+            <g key={monthStr}>
+              <line
+                x1={x + randomX}
+                y1={HEIGHT - CHART_MARGIN.bottom}
+                y2={HEIGHT - CHART_MARGIN.bottom + 6}
+                stroke="#888"
+                strokeWidth={1}
+              />
+              <text
+                x={x + randomX}
+                y={HEIGHT - CHART_MARGIN.bottom + 22}
+                fill="#666"
+                fontSize={14}
+                fontWeight="bold"
+                textAnchor="middle"
+                fontFamily="'Comic Neue', cursive"
+              >
+                {label}
               </text>
             </g>
           )
@@ -309,11 +343,20 @@ const StarGrowthChart: React.FC = () => {
           const x = CHART_MARGIN.left + i * xScale + randomX
           const y =
             HEIGHT - CHART_MARGIN.bottom - point.stars * yScale + randomY
-          const isMilestone = milestones.some(
-            (m) => m.year === point.year && m.month === point.month,
-          )
+          // 检查是否里程碑日期
+          const isMilestone = milestones.some((m) => {
+            const milestoneDate = `${m.year}-${String(m.month).padStart(2, "0")}-01`
+            return (
+              point.date === milestoneDate ||
+              point.date.startsWith(
+                `${m.year}-${String(m.month).padStart(2, "0")}-`,
+              )
+            )
+          })
 
-          if (!isMilestone && i % 6 !== 0) return null
+          if (!isMilestone && i % 6 !== 0) {
+            return null
+          }
 
           return (
             <circle
@@ -338,8 +381,11 @@ const StarGrowthChart: React.FC = () => {
 
         {/* 里程碑标记 */}
         {milestones.map((milestone, i) => {
-          const index = reactStarsMonthly.findIndex(
-            (d) => d.year === milestone.year && d.month === milestone.month,
+          // 日度数据中查找对应日期的索引
+          const index = dailyData.findIndex(
+            (d) =>
+              d.date ===
+              `${milestone.year}-${String(milestone.month).padStart(2, "0")}-01`,
           )
           if (index === -1 || index > visibleDataCount) return null
 
@@ -349,12 +395,13 @@ const StarGrowthChart: React.FC = () => {
           const y =
             HEIGHT -
             CHART_MARGIN.bottom -
-            reactStarsMonthly[index].stars * yScale +
+            dailyData[index].stars * yScale +
             randomY
 
           // 里程碑随着曲线绘制逐个出现
           // 计算该里程碑应该出现的时间点（基于数据点索引）
-          const milestoneAppearFrame = (index / dataLength) * durationInFrames * 0.85
+          const milestoneAppearFrame =
+            (index / dataLength) * durationInFrames * 0.85
           const labelProgress = interpolate(
             frame,
             [milestoneAppearFrame, milestoneAppearFrame + 10],
@@ -478,7 +525,6 @@ const StarGrowthChart: React.FC = () => {
   )
 }
 
-
 // 主 Composition 组件
 export const StarsComposition: React.FC = () => {
   const repoName = "OpenClaw"
@@ -486,7 +532,7 @@ export const StarsComposition: React.FC = () => {
     <>
       {/* 主增长曲线 */}
       <Composition
-        id={`${repoName}StarsGrowth`}     
+        id={`${repoName}StarsGrowth`}
         component={StarGrowthChart}
         durationInFrames={450}
         fps={30}

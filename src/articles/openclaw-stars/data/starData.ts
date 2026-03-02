@@ -187,20 +187,4 @@ interface IMilestone {
 }
 
 // 重要里程碑
-export const milestones: IMilestone[] = [
-  { year: 2013, month: 5, event: "React 开源发布", stars: 0 },
-  { year: 2015, month: 1, event: "React Native 发布", stars: 59200 },
-  { year: 2016, month: 4, event: "React 15 发布", stars: 161100 },
-  { year: 2017, month: 5, event: "Create React App 发布", stars: 319900 },
-  { year: 2019, month: 2, event: "React Hooks 发布", stars: 750400 },
-  { year: 2020, month: 10, event: "React 17 发布", stars: 1365400 },
-  { year: 2022, month: 3, event: "React 18 发布", stars: 2045400 },
-  { year: 2024, month: 4, event: "React 19 发布", stars: 3307900 },
-  {
-    year: 2025,
-    month: 12,
-    event: "React 进入 Linux Foundation",
-    stars: 4542900,
-  },
-  { year: 2026, month: 2, event: "当前", stars: 4677400 },
-];
+export const milestones: IMilestone[] = [];
