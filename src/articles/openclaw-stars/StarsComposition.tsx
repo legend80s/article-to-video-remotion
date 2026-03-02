@@ -248,10 +248,14 @@ const StarGrowthChart: React.FC = () => {
               <text
                 x={x + (Math.random() - 0.5) * 3}
                 y={
-                  HEIGHT - CHART_MARGIN.bottom + 35 + (Math.random() - 0.5) * 2
+                  HEIGHT -
+                  CHART_MARGIN.bottom +
+                  35 +
+                  (Math.random() - 0.5) * 2 +
+                  20
                 }
                 fill="#333"
-                fontSize={18}
+                fontSize={28}
                 fontWeight="bold"
                 textAnchor="middle"
                 fontFamily="'Comic Neue', cursive"
@@ -280,9 +284,9 @@ const StarGrowthChart: React.FC = () => {
                 />
                 <text
                   x={x}
-                  y={HEIGHT - CHART_MARGIN.bottom + 18}
+                  y={HEIGHT - CHART_MARGIN.bottom + 28}
                   fill="#666"
-                  fontSize={11}
+                  fontSize={22}
                   textAnchor="middle"
                   fontFamily="'Comic Neue', cursive"
                 >
@@ -453,15 +457,15 @@ const StarGrowthChart: React.FC = () => {
       >
         <div
           style={{
-            fontSize: 24,
+            fontSize: 28,
             color: "#eee",
             marginBottom: 5,
             fontWeight: "bold",
           }}
         >
-          {currentDate}
+          🗓️ {currentDate}
         </div>
-        <div
+        <span
           style={{
             fontSize: 48,
             fontWeight: "bold",
@@ -476,7 +480,7 @@ const StarGrowthChart: React.FC = () => {
           >
             stars
           </span>
-        </div>
+        </span>
       </div>
 
       {/* 图例 */}
