@@ -352,12 +352,12 @@ const StarGrowthChart: React.FC = () => {
             reactStarsMonthly[index].stars * yScale +
             randomY
 
+          // 里程碑随着曲线绘制逐个出现
+          // 计算该里程碑应该出现的时间点（基于数据点索引）
+          const milestoneAppearFrame = (index / dataLength) * durationInFrames * 0.85
           const labelProgress = interpolate(
             frame,
-            [
-              durationInFrames * 0.7 + i * 5,
-              durationInFrames * 0.7 + i * 5 + 15,
-            ],
+            [milestoneAppearFrame, milestoneAppearFrame + 10],
             [0, 1],
             { extrapolateRight: "clamp" },
           )
@@ -373,7 +373,7 @@ const StarGrowthChart: React.FC = () => {
                 strokeWidth={3}
                 style={{
                   opacity: spring({
-                    frame: frame - index * 0.5,
+                    frame: frame - milestoneAppearFrame,
                     fps,
                     config: { damping: 100 },
                   }),
