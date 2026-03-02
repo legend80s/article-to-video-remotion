@@ -37,17 +37,12 @@ const formatNumber = (num: number): string => {
 const IntroScene: React.FC = () => {
   const frame = useCurrentFrame()
 
-  // 图片显示时间：第5帧开始显示
-  const startFrame = 5
+  // 图片显示时间：第15帧开始显示（黑色背景更长）
+  const startFrame = 15
   // 图片持续显示，然后渐渐消失
-  const logoOpacity = interpolate(
-    frame,
-    [startFrame, startFrame + 20, startFrame + 45, startFrame + 55],
-    [0, 1, 1, 0],
-    { extrapolateRight: "clamp" },
-  )
+  const logoOpacity = 1
 
-  // 背景从黑色渐变到白色 (第5帧到第25帧)
+  // 背景从黑色渐变到白色 (第15帧到第35帧)
   const backgroundOpacity = interpolate(
     frame,
     [startFrame, startFrame + 20],
@@ -569,7 +564,7 @@ const StarGrowthChart: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: 700,
+          bottom: 500,
           right: 872,
           background: "rgba(0,0,0,0.6)",
           padding: "20px 30px",
@@ -654,12 +649,12 @@ const StarGrowthChartWithIntro: React.FC = () => {
   return (
     <>
       {/* 开场动画 - 60帧 = 2秒 */}
-      <Sequence from={0} durationInFrames={60}>
+      <Sequence from={0} durationInFrames={30}>
         <IntroScene />
       </Sequence>
 
       {/* 主增长曲线 - 开场动画后开始 */}
-      <Sequence from={60}>
+      <Sequence from={30}>
         <StarGrowthChart />
       </Sequence>
     </>
