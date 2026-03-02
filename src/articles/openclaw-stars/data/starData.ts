@@ -89,7 +89,7 @@ export const starsDaily: DailyStarData[] = [
   { date: "2026-01-25", stars: 14690, dailyGrowth: 7268 },
   { date: "2026-01-26", stars: 38560, dailyGrowth: 23870 },
   { date: "2026-01-27", stars: 63500, dailyGrowth: 24940 },
-  { date: "2026-03-2", stars: 246262, dailyGrowth: -1 },
+  { date: "2026-03-2", stars: 244_473, dailyGrowth: -1 },
 ]
 
 // 季度统计

@@ -49,7 +49,7 @@ const IntroScene: React.FC = () => {
     [0, 1],
     { extrapolateRight: "clamp" },
   )
-  const backgroundColor = `rgb(${Math.round(backgroundOpacity * 255)}, ${Math.round(backgroundOpacity * 255)}, ${Math.round(backgroundOpacity * 255)})`
+  const backgroundColor = `rgb(${Math.round(backgroundOpacity * 248)}, ${Math.round(backgroundOpacity * 245)}, ${Math.round(backgroundOpacity * 230)})`
 
   return (
     <div
@@ -564,7 +564,7 @@ const StarGrowthChart: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: 500,
+          bottom: 540,
           right: 872,
           background: "rgba(0,0,0,0.6)",
           padding: "20px 30px",
@@ -644,7 +644,43 @@ const StarGrowthChart: React.FC = () => {
   )
 }
 
-// 主 Composition 组件 - 包含开场动画和主曲线
+// 结束场景 - 显示历史图片
+const OutroScene: React.FC = () => {
+  const frame = useCurrentFrame()
+
+  // 结束场景从第 490 帧开始（Sequence 的 from=490）
+  // 图片渐现动画 - 从第 0 帧开始（相对于 Sequence），30 帧内渐现
+  const outroOpacity = interpolate(frame, [0, 30], [0, 1], {
+    extrapolateRight: "clamp",
+  })
+
+  return (
+    <div
+      style={{
+        width: WIDTH,
+        height: HEIGHT,
+        background: "rgb(248, 245, 230)", // 米色背景，与主图表一致
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+      }}
+    >
+      <Img
+        src={staticFile("imgs/openclaw-star-history.png")}
+        style={{
+          width: 1400,
+          height: "auto",
+          objectFit: "contain",
+          opacity: outroOpacity,
+        }}
+        alt="OpenClaw Star History"
+      />
+    </div>
+  )
+}
+
+// 主 Composition 组件 - 包含开场动画、主曲线和结束场景
 const StarGrowthChartWithIntro: React.FC = () => {
   return (
     <>
@@ -654,8 +690,13 @@ const StarGrowthChartWithIntro: React.FC = () => {
       </Sequence>
 
       {/* 主增长曲线 - 开场动画后开始 */}
-      <Sequence from={40}>
+      <Sequence from={40} durationInFrames={450}>
         <StarGrowthChart />
+      </Sequence>
+
+      {/* 结束场景 - 主曲线结束后 */}
+      <Sequence from={490} durationInFrames={60}>
+        <OutroScene />
       </Sequence>
     </>
   )
@@ -669,7 +710,7 @@ export const StarsComposition: React.FC = () => {
       <Composition
         id={`${repoName}StarsGrowth`}
         component={StarGrowthChartWithIntro}
-        durationInFrames={510} // 60帧开场 + 450帧主内容
+        durationInFrames={550} // 40帧开场 + 450帧主内容 + 60帧结束场景
         fps={30}
         width={1920}
         height={1080}
