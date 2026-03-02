@@ -141,7 +141,7 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          React GitHub Stars Growth (2013-2026)
+          React GitHub Stars ⭐ Growth (2013 —— 2026)
         </h1>
         <p
           style={{
@@ -411,7 +411,14 @@ const StarGrowthChart: React.FC = () => {
           color: "white",
         }}
       >
-        <div style={{ fontSize: 16, color: "#888", marginBottom: 5 }}>
+        <div
+          style={{
+            fontSize: 16,
+            color: "#eee",
+            marginBottom: 5,
+            fontWeight: "bold",
+          }}
+        >
           {currentDate}
         </div>
         <div
@@ -423,7 +430,9 @@ const StarGrowthChart: React.FC = () => {
         >
           {formatNumber(currentStars)}
         </div>
-        <div style={{ fontSize: 16, color: "#888" }}>stars</div>
+        <div style={{ fontSize: 16, color: "#eee", fontWeight: "bold" }}>
+          stars
+        </div>
       </div>
 
       {/* 图例 */}
