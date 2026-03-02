@@ -564,8 +564,8 @@ const StarGrowthChart: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: 540,
-          right: 872,
+          bottom: 548,
+          right: 840,
           background: "rgba(0,0,0,0.6)",
           padding: "20px 30px",
           borderRadius: 12,
@@ -649,13 +649,13 @@ const OutroScene: React.FC = () => {
   const frame = useCurrentFrame()
 
   // 结束场景从第 490 帧开始（Sequence 的 from=490）
-  // 图片渐现动画 - 从第 0 帧开始（相对于 Sequence），30 帧内渐现
-  const outroOpacity = interpolate(frame, [0, 30], [0, 1], {
+  // 图片渐现动画 - 从第 0 帧开始（相对于 Sequence），40 帧内渐现
+  const outroOpacity = interpolate(frame, [0, 25], [0, 1], {
     extrapolateRight: "clamp",
   })
 
-  // 遮罩揭示动画 - 从第 30 帧开始，40 帧内从完全不透明到完全透明
-  const maskOpacity = interpolate(frame, [30, 70], [1, 0], {
+  // 遮罩揭示动画 - 从第 25 帧开始，60 帧内从完全不透明到完全透明
+  const maskOpacity = interpolate(frame, [25, 100], [1, 0], {
     extrapolateRight: "clamp",
   })
 
@@ -713,7 +713,7 @@ const StarGrowthChartWithIntro: React.FC = () => {
       </Sequence>
 
       {/* 结束场景 - 主曲线结束后 */}
-      <Sequence from={490} durationInFrames={60}>
+      <Sequence from={490} durationInFrames={100}>
         <OutroScene />
       </Sequence>
     </>
@@ -728,7 +728,7 @@ export const StarsComposition: React.FC = () => {
       <Composition
         id={`${repoName}StarsGrowth`}
         component={StarGrowthChartWithIntro}
-        durationInFrames={550} // 40帧开场 + 450帧主内容 + 60帧结束场景
+        durationInFrames={590} // 40帧开场 + 450帧主内容 + 100帧结束场景
         fps={30}
         width={1920}
         height={1080}
