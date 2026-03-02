@@ -33,36 +33,17 @@ const formatNumber = (num: number): string => {
   return num.toString()
 }
 
-// 开场动画组件 - 闪电效果
+// 开场动画组件 - 黑色背景 + Logo 渐现渐隐
 const IntroScene: React.FC = () => {
   const frame = useCurrentFrame()
-  const { fps, durationInFrames } = useVideoConfig()
 
-  // 闪电出现的时间点 (第5帧开始)
-  const flashStart = 5
-  const flashDuration = 8 // 闪电持续时间
-
-  // Logo 出现动画 - 快速出现
-  const logoAppear = interpolate(
+  // 图片显示时间：第5帧开始显示
+  const startFrame = 5
+  // 图片持续显示，然后渐渐消失
+  const logoOpacity = interpolate(
     frame,
-    [flashStart, flashStart + 3, flashStart + flashDuration],
-    [0, 1.3, 0], // 0 -> 1.3 (overshoot) -> 0
-    { extrapolateRight: "clamp" },
-  )
-
-  // 闪电闪光效果 - 白色闪光
-  const flashIntensity = interpolate(
-    frame,
-    [flashStart, flashStart + 2, flashStart + 4, flashStart + flashDuration],
-    [0, 1, 0.8, 0],
-    { extrapolateRight: "clamp" },
-  )
-
-  // 背景渐变 - 从纯黑到正常背景
-  const bgOpacity = interpolate(
-    frame,
-    [flashStart + flashDuration, flashStart + flashDuration + 15],
-    [0, 1],
+    [startFrame, startFrame + 20, startFrame + 45, startFrame + 55],
+    [0, 1, 1, 0],
     { extrapolateRight: "clamp" },
   )
 
@@ -71,65 +52,25 @@ const IntroScene: React.FC = () => {
       style={{
         width: WIDTH,
         height: HEIGHT,
-        background:
-          frame < flashStart + flashDuration
-            ? `rgb(${Math.floor(flashIntensity * 255)}, ${Math.floor(flashIntensity * 255)}, ${Math.floor(flashIntensity * 255)})`
-            : `rgba(248, 245, 230, ${bgOpacity})`,
-        boxShadow: "0 0 20px rgba(0,0,0,0.1)",
-        fontFamily: "'Comic Neue', 'Architects Daughter', cursive",
-        WebkitFontSmoothing: "antialiased",
-        position: "relative",
+        background: "rgb(0, 0, 0)", // 纯黑背景
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
       }}
     >
-      {/* Logo - 闪电出现 */}
-      {logoAppear > 0 && (
-        <div
-          style={{
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transform: `scale(${logoAppear})`,
-            opacity: logoAppear,
-            filter: `drop-shadow(0 0 ${30 * logoAppear}px rgba(255, 255, 255, ${flashIntensity}))`,
-          }}
-        >
-          <Img
-            src={staticFile(
-              "articles/openclaw-stars/assets/openclaw-logo-text-dark.png",
-            )}
-            style={{
-              height: 200,
-              objectFit: "contain",
-            }}
-            alt="OpenClaw Logo"
-          />
-        </div>
-      )}
-
-      {/* 闪电裂缝效果 */}
-      {frame >= flashStart && frame < flashStart + flashDuration && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: `linear-gradient(180deg, 
-              transparent 0%, 
-              rgba(255,255,255,${flashIntensity * 0.5}) 45%, 
-              rgba(255,255,255,${flashIntensity}) 50%, 
-              rgba(255,255,255,${flashIntensity * 0.5}) 55%, 
-              transparent 100%)`,
-            pointerEvents: "none",
-          }}
-        />
-      )}
+      {/* Logo - 渐现渐隐 */}
+      <Img
+        src={
+          "https://raw.bgithub.xyz/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png"
+        }
+        style={{
+          height: 250,
+          objectFit: "contain",
+          opacity: logoOpacity,
+        }}
+        alt="OpenClaw Logo"
+      />
     </div>
   )
 }
@@ -707,7 +648,7 @@ const StarGrowthChartWithIntro: React.FC = () => {
       <Sequence from={0} durationInFrames={60}>
         <IntroScene />
       </Sequence>
-      
+
       {/* 主增长曲线 - 开场动画后开始 */}
       <Sequence from={60}>
         <StarGrowthChart />
