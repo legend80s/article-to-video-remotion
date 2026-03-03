@@ -89,7 +89,12 @@ export const starsDaily: DailyStarData[] = [
   { date: "2026-01-25", stars: 14690, dailyGrowth: 7268 },
   { date: "2026-01-26", stars: 38560, dailyGrowth: 23870 },
   { date: "2026-01-27", stars: 63500, dailyGrowth: 24940 },
+  { date: "2026-01-39", stars: 10_0000, dailyGrowth: -1 },
+  { date: "2026-02-24", stars: 22.4 * 10000, dailyGrowth: -1 },
+  // 2026-03-01 超越 React
+  { date: "2026-03-1", stars: 24.3 * 10000, dailyGrowth: -1 },
   { date: "2026-03-2", stars: 244_473, dailyGrowth: -1 },
+  { date: "2026-03-3", stars: 24_8640, dailyGrowth: -1 },
 ]
 
 // 季度统计
@@ -188,6 +193,7 @@ interface IMilestone {
   // stars: number
   // 当天增长的 stars
   incrementedStars?: number
+  reference?: string
 }
 
 // 重要里程碑
@@ -234,9 +240,9 @@ export const milestones: IMilestone[] = [
     year: 2026,
     month: 1,
     day: 27,
-    event: "更名为 Moltbot & 同日发生原账号被抢注事件",
+    event: "Clawdbot → Moltbot & 同日发生原账号被抢注事件",
     eventDetails:
-      "更名为 Moltbot：因 Anthropic 商标通知（Clawd 与 Claude 谐音），项目更名为 Moltbot；同日发生原账号被抢注事件",
+      "2026 年 1 月 27 日 ClawdBot 创始人 Peter Steinberger 宣布项目正式更名为 Moltbot。这是开源社区近期最受关注的品牌重塑事件之一。：因 Anthropic 商标通知（Clawd 与 Claude 谐音），项目更名为 Moltbot；同日发生原账号被抢注事件",
   },
   {
     year: 2026,
@@ -249,9 +255,25 @@ export const milestones: IMilestone[] = [
   {
     year: 2026,
     month: 1,
-    day: 27,
-    event: "ClawdBot 更名为 OpenClaw",
+    day: 29,
+    event: "Star数突破10万",
+    eventDetails:
+      "项目（当时名为Moltbot）首次突破10万星标，成为GitHub上增长最快的开源项目之一，达到约10.5万星",
+  },
+  {
+    year: 2026,
+    month: 1,
+    day: 30,
+    event: "Moltbot → OpenClaw",
     eventDetails: "项目最终定名为 OpenClaw（曾用名包括 Clawdbot、Moltbot）",
+  },
+  {
+    year: 2026,
+    month: 1,
+    day: 31,
+    event: "Star数持续突破10万",
+    eventDetails:
+      "项目（已更名为OpenClaw）Star数确认突破10万大关，继续保持强势增长态势",
   },
   {
     year: 2026,
@@ -281,5 +303,25 @@ export const milestones: IMilestone[] = [
     day: 17,
     event: "Cline CLI 供应链攻击",
     eventDetails: "攻击者利用提示词注入漏洞发布恶意版本，强制安装 OpenClaw",
+  },
+  {
+    year: 2026,
+    month: 2,
+    day: 24,
+    event: "Star 数超越 Linux 内核",
+    eventDetails:
+      "项目Star数超过 22.4万，超越Linux内核（21.8万），成为GitHub上Star数排名第14的项目，全速追赶 React (24.3万) ",
+    reference:
+      "https://www.star-history.com/blog/openclaw-surpasses-linux-14th-most-starred",
+  },
+  {
+    year: 2026,
+    month: 3,
+    day: 1,
+    event: "Star 数超越 React：距离发布仅四个月 🚀",
+    eventDetails:
+      "已突破 243K+，超越 React，成为 GitHub 上星数最高的非聚合软件项目——这一称号多年来一直是 React 无人挑战的。不到四个月，从零到#1，丝毫没有放缓的迹象。",
+    reference:
+      "https://www.star-history.com/blog/openclaw-surpasses-react-most-starred-software",
   },
 ]
