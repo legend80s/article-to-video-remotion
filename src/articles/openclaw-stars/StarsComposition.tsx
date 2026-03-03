@@ -470,10 +470,22 @@ const StarGrowthChart: React.FC = () => {
             const finalScale = starsScale * pulseScale
 
             // 根据星星数量调整字体大小（基础28px，最大80px）
+            const mapping = [
+              [0, 20],
+              [500, 22],
+              [1000, 24],
+              [2000, 26],
+              [3000, 28],
+              [6000, 30],
+              [1_0000, 33],
+              [2_0000, 45],
+              [10_0000, 60],
+              [20_0000, 80],
+            ]
             const baseFontSize = interpolate(
               lastPoint.stars,
-              [0, 500, 1000, 2000, 3000, 6000, 10_000],
-              [20, 22, 24, 26, 28, 30, 80],
+              mapping.map(([star, _]) => star),
+              mapping.map(([_, fontSize]) => fontSize),
               { extrapolateRight: "clamp" },
             )
             // console.log("baseFontSize", baseFontSize)
