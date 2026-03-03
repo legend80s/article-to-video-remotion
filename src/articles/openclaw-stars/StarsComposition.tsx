@@ -1,11 +1,12 @@
 import "./handwritten-fonts.css"
 import type React from "react"
-import { Img, staticFile } from "remotion"
 import {
   Composition,
+  Img,
   interpolate,
   Sequence,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion"
@@ -388,9 +389,9 @@ const StarGrowthChart: React.FC = () => {
           const x = CHART_MARGIN.left + i * xScale + randomX
           const y =
             HEIGHT - CHART_MARGIN.bottom - point.stars * yScale + randomY
-          // 检查是否里程碑日期
+          // 检查是否是里程碑日期
           const isMilestone = milestones.some((m) => {
-            const milestoneDate = `${m.year}-${String(m.month).padStart(2, "0")}-01`
+            const milestoneDate = `${m.year}-${String(m.month).padStart(2, "0")}-${m.day}`
             return (
               point.date === milestoneDate ||
               point.date.startsWith(
@@ -430,7 +431,7 @@ const StarGrowthChart: React.FC = () => {
           const index = dailyData.findIndex(
             (d) =>
               d.date ===
-              `${milestone.year}-${String(milestone.month).padStart(2, "0")}-01`,
+              `${milestone.year}-${String(milestone.month).padStart(2, "0")}-${milestone.day}`,
           )
           if (index === -1 || index > visibleDataCount) return null
 

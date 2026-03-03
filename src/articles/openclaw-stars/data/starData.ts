@@ -182,9 +182,104 @@ export const reactStarsYearly: YearData[] = [
 interface IMilestone {
   year: number
   month: number
+  day: number
   event: string
-  stars: number
+  eventDetails?: string
+  // stars: number
+  // 当天增长的 stars
+  incrementedStars?: number
 }
 
 // 重要里程碑
-export const milestones: IMilestone[] = []
+export const milestones: IMilestone[] = [
+  {
+    year: 2025,
+    month: 11,
+    day: 24,
+    event: "Clawdbot 首次开源",
+    eventDetails:
+      "项目最初名为 Clawdbot（也曾叫 Clawd），由奥地利开发者 Peter Steinberger 开源",
+
+    incrementedStars: 2,
+  },
+  // 2025年12月3日	项目爆火	24小时内获得 9,000+ GitHub Stars
+  {
+    year: 2025,
+    month: 12,
+    day: 3,
+    event: "项目爆火 24 ＋9,000+ Stars",
+    eventDetails: "项目爆火 24 小时内获得 9,000+ GitHub Stars",
+    incrementedStars: 9000,
+  },
+  // 2026年1月23日	安全漏洞曝光	安全研究人员发现 1000+ 网关暴露，数百个实例存在未授权访问漏洞
+  {
+    year: 2026,
+    month: 1,
+    day: 23,
+    event: "安全漏洞曝光",
+    eventDetails:
+      "安全研究人员发现 1000+ 网关暴露，数百个实例存在未授权访问漏洞",
+  },
+  // 2026年1月25日	官方发布安全补丁	修复网关未授权访问漏洞
+  {
+    year: 2026,
+    month: 1,
+    day: 25,
+    event: "官方发布安全补丁",
+    eventDetails: "修复网关未授权访问漏洞",
+    incrementedStars: 0,
+  },
+  // 2026年1月27日	更名为 Moltbot	因 Anthropic 商标通知（Clawd 与 Claude 谐音），项目更名为 Moltbot；同日发生原账号被抢注事件
+  {
+    year: 2026,
+    month: 1,
+    day: 27,
+    event: "更名为 Moltbot & 同日发生原账号被抢注事件",
+    eventDetails:
+      "更名为 Moltbot：因 Anthropic 商标通知（Clawd 与 Claude 谐音），项目更名为 Moltbot；同日发生原账号被抢注事件",
+  },
+  {
+    year: 2026,
+    month: 1,
+    day: 28,
+    event: "加密货币诈骗事件",
+    eventDetails:
+      "更名时原 Twitter/X 账号 @clawdbot 被抢注，诈骗者发行虚假代币 $CLAWD，市值一度达 1600 万美元后崩盘",
+  },
+  {
+    year: 2026,
+    month: 1,
+    day: 27,
+    event: "ClawdBot 更名为 OpenClaw",
+    eventDetails: "项目最终定名为 OpenClaw（曾用名包括 Clawdbot、Moltbot）",
+  },
+  {
+    year: 2026,
+    month: 2,
+    day: 1,
+    event: "突破 14.5 万星",
+    eventDetails: "成为 GitHub 史上增长最快的开源项目之一",
+  },
+  {
+    year: 2026,
+    month: 2,
+    day: 10,
+    event: "首次 AI 报复人类事件",
+    eventDetails:
+      "OpenClaw 智能体 'MJ Rathbun' 因代码合并请求被拒，撰写攻击文章报复开源维护者",
+  },
+  {
+    year: 2026,
+    month: 2,
+    day: 16,
+    event: "创始人加入 OpenAI",
+    eventDetails: "Peter Steinberger 宣布加入 OpenAI，负责下一代个人智能体",
+  },
+  {
+    year: 2026,
+    month: 2,
+    day: 17,
+    event: "Cline CLI 供应链攻击",
+    eventDetails: "攻击者利用提示词注入漏洞发布恶意版本，强制安装 OpenClaw",
+  },
+]
