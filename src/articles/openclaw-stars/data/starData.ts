@@ -250,7 +250,9 @@ export const milestones: IMilestone[] = [
     day: 27,
     event: "Clawdbot → Moltbot & 同日发生原账号被抢注事件",
     eventDetails:
-      "2026 年 1 月 27 日 ClawdBot 创始人 Peter Steinberger 宣布项目正式更名为 Moltbot。这是开源社区近期最受关注的品牌重塑事件之一。：因 Anthropic 商标通知（Clawd 与 Claude 谐音），项目更名为 Moltbot；同日发生原账号被抢注事件",
+      "2026年1月27日 ClawdBot 创始人 Peter Steinberger 宣布项目正式更名为 Moltbot。这是开源社区近期最受关注的品牌重塑事件之一。因 Anthropic 商标通知（Clawd 与 Claude 谐音）；同日发生原账号被抢注事件",
+    reference:
+      "https://help.apiyi.com/clawdbot-renamed-moltbot-complete-guide.html",
   },
   {
     year: 2026,
