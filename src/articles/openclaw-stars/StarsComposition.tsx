@@ -433,9 +433,15 @@ const StarGrowthChart: React.FC = () => {
             const lastPoint = visibleData[lastIndex]
             if (!lastPoint) return null
             const { randomX, randomY } = getRandomOffset(lastIndex, 2)
+            // 只在动画接近结束时（最后两个里程碑出现时）左移龙虾
+            const lobsterShift = animationProgress > 0.95 ? -100 : 0
             const x = CHART_MARGIN.left + lastIndex * xScale + randomX
             const y =
-              HEIGHT - CHART_MARGIN.bottom - lastPoint.stars * yScale + randomY
+              HEIGHT -
+              CHART_MARGIN.bottom -
+              lastPoint.stars * yScale +
+              randomY +
+              lobsterShift
 
             // 根据星星数量计算基础缩放（星星越多，龙虾越大）
             // 假设最大约 3000 stars，映射到 1.0-3.0 的缩放范围
