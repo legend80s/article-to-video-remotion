@@ -438,7 +438,7 @@ const StarGrowthChart: React.FC = () => {
       </div>
 
       {/* 图例 */}
-      {/* <div
+      <div
         style={{
           position: "absolute",
           bottom: 40,
@@ -475,7 +475,7 @@ const StarGrowthChart: React.FC = () => {
             重要里程碑
           </span>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }

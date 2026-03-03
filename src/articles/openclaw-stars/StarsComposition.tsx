@@ -587,7 +587,7 @@ const StarGrowthChart: React.FC = () => {
           style={{
             fontSize: 48,
             fontWeight: "bold",
-            color: "#ff6b6b",
+            color: "#61dafb",
           }}
         >
           {currentStars.toLocaleString()}
@@ -602,7 +602,7 @@ const StarGrowthChart: React.FC = () => {
       </div>
 
       {/* 图例 */}
-      {/* <div
+      <div
         style={{
           position: "absolute",
           bottom: 40,
@@ -639,7 +639,7 @@ const StarGrowthChart: React.FC = () => {
             重要里程碑
           </span>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }
