@@ -1,3 +1,6 @@
+/** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
+/** biome-ignore-all lint/a11y/noSvgWithoutTitle: <explanation> */
 import "./handwritten-fonts.css"
 import type React from "react"
 import {
@@ -10,12 +13,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion"
-import {
-  milestones,
-  reactStarsMonthly,
-  reactStarsYearly,
-  starsDaily,
-} from "./data/starData"
+import { milestones, starsDaily } from "./data/starData"
 
 const WIDTH = 1920
 const HEIGHT = 1080
@@ -156,6 +154,81 @@ const StarGrowthChart: React.FC = () => {
     visibleData.length > 0
       ? visibleData[visibleData.length - 1].date
       : "2025-11-24"
+
+
+  const showSubtitle = false
+
+  // 计算当前应该显示的里程碑字幕
+  // 找到当前已经显示的里程碑中，最近的一个
+  const currentMilestone = milestones
+    .filter((milestone) => {
+      const index = dailyData.findIndex(
+        (d) =>
+          d.date ===
+          `${milestone.year}-${String(milestone.month).padStart(2, "0")}-${milestone.day}`,
+      )
+      return index !== -1 && index <= visibleDataCount
+    })
+    .pop()
+
+  // 计算字幕的显示和淡出动画
+  let subtitleOpacity = 0
+  let subtitleText = ""
+  if (currentMilestone && currentMilestone.eventDetails) {
+    subtitleText = currentMilestone.eventDetails
+    // 找到当前里程碑的索引
+    const currentIndex = dailyData.findIndex(
+      (d) =>
+        d.date ===
+        `${currentMilestone.year}-${String(currentMilestone.month).padStart(2, "0")}-${currentMilestone.day}`,
+    )
+    // 找到下一个里程碑的索引
+    const nextMilestone = milestones.find((m) => {
+      const index = dailyData.findIndex(
+        (d) =>
+          d.date === `${m.year}-${String(m.month).padStart(2, "0")}-${m.day}`,
+      )
+      return index !== -1 && index > currentIndex
+    })
+
+    // 字幕淡入动画：里程碑出现后 5 帧开始淡入，15 帧内完成
+    const milestoneAppearFrame =
+      (currentIndex / dataLength) * durationInFrames * 0.85
+    const fadeInStart = milestoneAppearFrame + 5
+    const fadeInEnd = fadeInStart + 15
+
+    // 字幕淡出动画：下一个里程碑出现前 10 帧开始淡出
+    let fadeOutStart = durationInFrames * 0.85
+    let fadeOutEnd = fadeOutStart + 10
+    if (nextMilestone) {
+      const nextIndex = dailyData.findIndex(
+        (d) =>
+          d.date ===
+          `${nextMilestone.year}-${String(nextMilestone.month).padStart(2, "0")}-${nextMilestone.day}`,
+      )
+      const nextMilestoneAppearFrame =
+        (nextIndex / dataLength) * durationInFrames * 0.85
+      fadeOutStart = nextMilestoneAppearFrame - 10
+      fadeOutEnd = nextMilestoneAppearFrame
+    }
+
+    // 计算当前透明度
+    if (frame < fadeInStart) {
+      subtitleOpacity = 0
+    } else if (frame < fadeInEnd) {
+      subtitleOpacity = interpolate(frame, [fadeInStart, fadeInEnd], [0, 1], {
+        extrapolateRight: "clamp",
+      })
+    } else if (frame < fadeOutStart) {
+      subtitleOpacity = 1
+    } else if (frame < fadeOutEnd) {
+      subtitleOpacity = interpolate(frame, [fadeOutStart, fadeOutEnd], [1, 0], {
+        extrapolateRight: "clamp",
+      })
+    } else {
+      subtitleOpacity = 0
+    }
+  }
 
   return (
     <div
@@ -660,6 +733,33 @@ const StarGrowthChart: React.FC = () => {
           </span>
         </div>
       </div>
+
+      {/* 底部字幕 - 显示当前里程碑的详细信息 */}
+      {showSubtitle &&subtitleText && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: 100,
+            left: "50%",
+            transform: "translateX(-50%)",
+            maxWidth: 1400,
+            background: "rgba(0, 0, 0, 0.75)",
+            padding: "20px 40px",
+            borderRadius: 12,
+            color: "#fff",
+            fontSize: 28,
+            fontWeight: "bold",
+            textAlign: "center",
+            lineHeight: 1.5,
+            opacity: subtitleOpacity,
+            fontFamily: "'Comic Neue', cursive",
+            textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+            border: "2px solid #ff6b6b",
+          }}
+        >
+          {subtitleText}
+        </div>
+      )}
     </div>
   )
 }
