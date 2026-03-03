@@ -354,7 +354,8 @@ const StarGrowthChart: React.FC = () => {
 
           // 里程碑随着曲线绘制逐个出现
           // 计算该里程碑应该出现的时间点（基于数据点索引）
-          const milestoneAppearFrame = (index / dataLength) * durationInFrames * 0.85
+          const milestoneAppearFrame =
+            (index / dataLength) * durationInFrames * 0.85
           const labelProgress = interpolate(
             frame,
             [milestoneAppearFrame, milestoneAppearFrame + 10],
@@ -382,8 +383,9 @@ const StarGrowthChart: React.FC = () => {
               <text
                 x={x + 25}
                 y={y - 15}
-                fill="rgb(51, 51, 51)"
-                fontSize={20}
+                // fill="rgb(51, 51, 51)"
+                // fontSize={17}
+                className="text-[13px] fill-[#ffx6b6b]"
                 fontWeight="bold"
                 fontFamily="'Comic Neue', cursive"
                 style={{
