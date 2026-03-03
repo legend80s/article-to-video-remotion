@@ -155,7 +155,6 @@ const StarGrowthChart: React.FC = () => {
       ? visibleData[visibleData.length - 1].date
       : "2025-11-24"
 
-
   const showSubtitle = false
 
   // 计算当前应该显示的里程碑字幕
@@ -634,7 +633,7 @@ const StarGrowthChart: React.FC = () => {
                 }}
               />
               <text
-                x={x + 25}
+                x={x - 150}
                 y={y - 15}
                 fill="rgb(51, 51, 51)"
                 fontSize={20}
@@ -735,7 +734,7 @@ const StarGrowthChart: React.FC = () => {
       </div>
 
       {/* 底部字幕 - 显示当前里程碑的详细信息 */}
-      {showSubtitle &&subtitleText && (
+      {showSubtitle && subtitleText && (
         <div
           style={{
             position: "absolute",
