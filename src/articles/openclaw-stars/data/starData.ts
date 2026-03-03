@@ -33,6 +33,7 @@ export const starsDaily: DailyStarData[] = [
   { date: "2025-11-30", stars: 231, dailyGrowth: 9 },
   { date: "2025-12-01", stars: 243, dailyGrowth: 12 },
   { date: "2025-12-02", stars: 250, dailyGrowth: 7 },
+  // 爆火 9000+ star
   { date: "2025-12-03", stars: 258, dailyGrowth: 8 },
   { date: "2025-12-04", stars: 270, dailyGrowth: 12 },
   { date: "2025-12-05", stars: 276, dailyGrowth: 6 },
@@ -88,8 +89,15 @@ export const starsDaily: DailyStarData[] = [
   { date: "2026-01-24", stars: 7422, dailyGrowth: 1054 },
   { date: "2026-01-25", stars: 14690, dailyGrowth: 7268 },
   { date: "2026-01-26", stars: 38560, dailyGrowth: 23870 },
-  { date: "2026-01-27", stars: 63500, dailyGrowth: 24940 },
-  { date: "2026-01-39", stars: 10_0000, dailyGrowth: -1 },
+  { date: "2026-01-27", stars: 6_3500, dailyGrowth: 24940 },
+  // 105153
+  { date: "2026-01-29", stars: 10_0000, dailyGrowth: -1 },
+
+  { date: "2026-02-1", stars: 14.5 * 10000, dailyGrowth: -1 },
+  { date: "2026-02-10", stars: 17.5 * 10000, dailyGrowth: -1 },
+  // 2026-02-15 加入 OpenAI
+  { date: "2026-02-15", stars: 20 * 10000, dailyGrowth: -1 },
+
   { date: "2026-02-24", stars: 22.4 * 10000, dailyGrowth: -1 },
   // 2026-03-01 超越 React
   { date: "2026-03-1", stars: 24.3 * 10000, dailyGrowth: -1 },
@@ -227,14 +235,14 @@ export const milestones: IMilestone[] = [
       "安全研究人员发现 1000+ 网关暴露，数百个实例存在未授权访问漏洞",
   },
   // 2026年1月25日	官方发布安全补丁	修复网关未授权访问漏洞
-  {
-    year: 2026,
-    month: 1,
-    day: 25,
-    event: "官方发布安全补丁",
-    eventDetails: "修复网关未授权访问漏洞",
-    incrementedStars: 0,
-  },
+  // {
+  //   year: 2026,
+  //   month: 1,
+  //   day: 25,
+  //   event: "官方发布安全补丁",
+  //   eventDetails: "修复网关未授权访问漏洞",
+  //   incrementedStars: 0,
+  // },
   // 2026年1月27日	更名为 Moltbot	因 Anthropic 商标通知（Clawd 与 Claude 谐音），项目更名为 Moltbot；同日发生原账号被抢注事件
   {
     year: 2026,
@@ -256,9 +264,11 @@ export const milestones: IMilestone[] = [
     year: 2026,
     month: 1,
     day: 29,
-    event: "Star数突破10万",
+    event: "突破 10万 ",
     eventDetails:
       "项目（当时名为Moltbot）首次突破10万星标，成为GitHub上增长最快的开源项目之一，达到约10.5万星",
+    reference:
+      "https://www.thepaper.cn/newsDetail_forward_32497676 https://eu.36kr.com/en/p/3661357114942337",
   },
   {
     year: 2026,
@@ -271,9 +281,10 @@ export const milestones: IMilestone[] = [
     year: 2026,
     month: 1,
     day: 31,
-    event: "Star数持续突破10万",
-    eventDetails:
-      "项目（已更名为OpenClaw）Star数确认突破10万大关，继续保持强势增长态势",
+    event: "🚀 持续突破10万，短短两个月！",
+    eventDetails: "短短两个月就拿下了超过 10 万 Star，继续保持强势增长态势",
+    reference:
+      "https://blog.fit2cloud.com/?p=019c180f-cc91-732f-bb4a-183085efead0 https://openclaws.io/zh/blog/openclaw-creator-joins-openai",
   },
   {
     year: 2026,
@@ -293,9 +304,11 @@ export const milestones: IMilestone[] = [
   {
     year: 2026,
     month: 2,
-    day: 16,
+    day: 15,
     event: "创始人加入 OpenAI",
-    eventDetails: "Peter Steinberger 宣布加入 OpenAI，负责下一代个人智能体",
+    eventDetails:
+      "OpenAI CEO Sam Altman 在 X 上官宣：OpenClaw 创始人、奥地利开发者 Peter Steinberger 正式加入 OpenAI，将“引领下一代个人 Agent”的研发。",
+    reference: "https://openclaws.io/zh/blog/openclaw-creator-joins-openai",
   },
   {
     year: 2026,

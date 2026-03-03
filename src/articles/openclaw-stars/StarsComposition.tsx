@@ -425,71 +425,6 @@ const StarGrowthChart: React.FC = () => {
           )
         })}
 
-        {/* 里程碑标记 */}
-        {milestones.map((milestone, i) => {
-          // 日度数据中查找对应日期的索引
-          const index = dailyData.findIndex(
-            (d) =>
-              d.date ===
-              `${milestone.year}-${String(milestone.month).padStart(2, "0")}-${milestone.day}`,
-          )
-          if (index === -1 || index > visibleDataCount) return null
-
-          // 使用基于索引的一致随机偏移量（与曲线相同）
-          const { randomX, randomY } = getRandomOffset(index, 2)
-          const x = CHART_MARGIN.left + index * xScale + randomX
-          const y =
-            HEIGHT -
-            CHART_MARGIN.bottom -
-            dailyData[index].stars * yScale +
-            randomY
-
-          // 里程碑随着曲线绘制逐个出现
-          // 计算该里程碑应该出现的时间点（基于数据点索引）
-          const milestoneAppearFrame =
-            (index / dataLength) * durationInFrames * 0.85
-          const labelProgress = interpolate(
-            frame,
-            [milestoneAppearFrame, milestoneAppearFrame + 10],
-            [0, 1],
-            { extrapolateRight: "clamp" },
-          )
-
-          return (
-            <g key={i}>
-              <circle
-                cx={x}
-                cy={y}
-                r={12}
-                fill="none"
-                stroke="#ec1313"
-                strokeWidth={1.5}
-                style={{
-                  opacity: spring({
-                    frame: frame - milestoneAppearFrame,
-                    fps,
-                    config: { damping: 100 },
-                  }),
-                }}
-              />
-              <text
-                x={x + 25}
-                y={y - 15}
-                fill="rgb(51, 51, 51)"
-                fontSize={20}
-                fontWeight="bold"
-                fontFamily="'Comic Neue', cursive"
-                style={{
-                  opacity: labelProgress,
-                  transform: `translateX(${labelProgress * 10}px)`,
-                }}
-              >
-                {milestone.year}-{milestone.month} {milestone.event}
-              </text>
-            </g>
-          )
-        })}
-
         {/* 曲线顶端的 🦞 - 跟随曲线顶点移动 */}
         {visibleData.length > 0 &&
           (() => {
@@ -559,6 +494,72 @@ const StarGrowthChart: React.FC = () => {
               </g>
             )
           })()}
+
+        {/* 里程碑标记 */}
+        {milestones.map((milestone, i) => {
+          // 日度数据中查找对应日期的索引
+          const index = dailyData.findIndex(
+            (d) =>
+              d.date ===
+              `${milestone.year}-${String(milestone.month).padStart(2, "0")}-${milestone.day}`,
+          )
+          if (index === -1 || index > visibleDataCount) return null
+
+          // 使用基于索引的一致随机偏移量（与曲线相同）
+          const { randomX, randomY } = getRandomOffset(index, 2)
+          const x = CHART_MARGIN.left + index * xScale + randomX
+          const y =
+            HEIGHT -
+            CHART_MARGIN.bottom -
+            dailyData[index].stars * yScale +
+            randomY
+
+          // 里程碑随着曲线绘制逐个出现
+          // 计算该里程碑应该出现的时间点（基于数据点索引）
+          const milestoneAppearFrame =
+            (index / dataLength) * durationInFrames * 0.85
+          const labelProgress = interpolate(
+            frame,
+            [milestoneAppearFrame, milestoneAppearFrame + 10],
+            [0, 1],
+            { extrapolateRight: "clamp" },
+          )
+
+          return (
+            <g key={i}>
+              <circle
+                cx={x}
+                cy={y}
+                r={12}
+                fill="none"
+                stroke="#ec1313"
+                strokeWidth={1.5}
+                style={{
+                  opacity: spring({
+                    frame: frame - milestoneAppearFrame,
+                    fps,
+                    config: { damping: 100 },
+                  }),
+                }}
+              />
+              <text
+                x={x + 25}
+                y={y - 15}
+                fill="rgb(51, 51, 51)"
+                fontSize={20}
+                fontWeight="bold"
+                fontFamily="'Comic Neue', cursive"
+                style={{
+                  opacity: labelProgress,
+                  transform: `translateX(${labelProgress * 10}px)`,
+                }}
+              >
+                {milestone.year}-{milestone.month}-{milestone.day}{" "}
+                {milestone.event}
+              </text>
+            </g>
+          )
+        })}
       </svg>
 
       {/* 当前数据展示 */}
