@@ -323,7 +323,7 @@ export const milestones: IMilestone[] = [
     year: 2026,
     month: 2,
     day: 24,
-    event: "Star 数超越 Linux 内核",
+    event: "🚩 超越 Linux 内核",
     eventDetails:
       "项目Star数超过 22.4万，超越Linux内核（21.8万），成为GitHub上Star数排名第14的项目，全速追赶 React (24.3万) ",
     reference:
@@ -333,7 +333,7 @@ export const milestones: IMilestone[] = [
     year: 2026,
     month: 3,
     day: 1,
-    event: "Star 数超越 React：距离发布仅四个月 🚀",
+    event: "🚩 超越 React 用时仅四个月",
     eventDetails:
       "已突破 243K+，超越 React，成为 GitHub 上星数最高的非聚合软件项目——这一称号多年来一直是 React 无人挑战的。不到四个月，从零到#1，丝毫没有放缓的迹象。",
     reference:
