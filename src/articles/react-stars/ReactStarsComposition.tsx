@@ -4,9 +4,11 @@ import "./handwritten-fonts.css"
 import type React from "react"
 import {
   Composition,
+  Img,
   interpolate,
   Sequence,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion"
@@ -418,18 +420,22 @@ const StarGrowthChart: React.FC = () => {
                   transformOrigin: `${x}px ${y - 15}px`,
                 }}
               >
-                <text
-                  x={x}
-                  y={y - 25}
-                  fontSize={baseFontSize}
-                  textAnchor="middle"
-                  style={{
-                    // 添加轻微的阴影增加立体感
-                    filter: "drop-shadow(0px 6px 0px rgba(0,0,0,0.4))",
-                  }}
+                <foreignObject
+                  x={x - baseFontSize / 2}
+                  y={y - 15 - baseFontSize}
+                  width={baseFontSize}
+                  height={baseFontSize}
                 >
-                  ⚛️
-                </text>
+                  <Img
+                    src={staticFile("imgs/react-logo-dark.svg")}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      filter: "drop-shadow(0px 1px 0px rgba(0,0,0,0.4))",
+                    }}
+                    alt="React Logo"
+                  />
+                </foreignObject>
               </g>
             )
           })()}
