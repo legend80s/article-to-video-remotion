@@ -1160,7 +1160,7 @@ export const milestones: IMilestone[] = [
   {
     year: 2013,
     month: 5,
-    event: "React 开源发布：初期遭质疑JSX“倒退”",
+    event: "React 开源发布：遭质疑JSX“倒退”",
     eventDetails:
       "Facebook在JSConf美国大会上开源React，采用组件化架构和虚拟DOM理念",
     stars: 0,
@@ -1175,38 +1175,38 @@ export const milestones: IMilestone[] = [
     stars: 59200,
   },
   // 2015-06	Redux发布	状态管理标准方案诞生（Dan Abramov）
-  {
-    year: 2015,
-    month: 6,
-    event: "Redux发布",
-    eventDetails: "状态管理标准方案诞生（Dan Abramov）",
-    stars: 161100,
-  },
+  // {
+  //   year: 2015,
+  //   month: 6,
+  //   event: "Redux发布",
+  //   eventDetails: "状态管理标准方案诞生（Dan Abramov）",
+  //   stars: 161100,
+  // },
   // 2015年10月 拆分React与ReactDOM 明确分层架构，引入PropTypes，支持函数组件
-  {
-    year: 2015,
-    month: 10,
-    event: "v0.14.0 拆分React与ReactDOM",
-    eventDetails:
-      "拆分React与ReactDOM 明确分层架构，引入PropTypes，支持函数组件",
-    stars: 161100,
-  },
+  // {
+  //   year: 2015,
+  //   month: 10,
+  //   event: "v0.14.0 拆分React与ReactDOM",
+  //   eventDetails:
+  //     "拆分React与ReactDOM 明确分层架构，引入PropTypes，支持函数组件",
+  //   stars: 161100,
+  // },
   // 2016年4月	v15.0	首个v15版本	优化服务端渲染性能，支持Fragment，初始渲染改用document.createElement
   {
     year: 2016,
     month: 4,
-    event: "v15.0",
+    event: "v15 首个大版本",
     eventDetails:
       "优化服务端渲染性能，支持Fragment，初始渲染改用document.createElement",
     stars: 319900,
   },
   // 2016-09: ⭐ 50,000 Stars 里程碑
-  {
-    year: 2016,
-    month: 9,
-    event: "⭐️ 50,000 Stars 里程碑",
-    stars: 50000,
-  },
+  // {
+  //   year: 2016,
+  //   month: 9,
+  //   event: "⭐️ 50,000 Stars 里程碑",
+  //   stars: 50000,
+  // },
 
   // 2017年9月	v16.0	Fiber架构问世	异步可中断渲染，引入Error Boundaries和Portals，React核心重写
   {
@@ -1220,21 +1220,21 @@ export const milestones: IMilestone[] = [
       "https://dev.to/sirajmsm/evolution-of-react-a-version-by-version-comparison-4kgl",
   },
   // 2018年3月	v16.3	新版Context API	生命周期调整（废弃componentWill*），引入createRef和forwardRef
-  {
-    year: 2018,
-    month: 3,
-    event: "v16.3 新版 Context API、Strict Mode",
-    eventDetails:
-      "生命周期调整（废弃componentWillxxx），引入createRef和forwardRef",
-    stars: 40000,
-  },
+  // {
+  //   year: 2018,
+  //   month: 3,
+  //   event: "v16.3 新版 Context API、Strict Mode",
+  //   eventDetails:
+  //     "生命周期调整（废弃componentWillxxx），引入createRef和forwardRef",
+  //   stars: 40000,
+  // },
   // 2018-06: ⭐ 100,000 Stars 里程碑
-  {
-    year: 2018,
-    month: 6,
-    event: "⭐️ 100,000 Stars 里程碑",
-    stars: 10_0000,
-  },
+  // {
+  //   year: 2018,
+  //   month: 6,
+  //   event: "⭐️ 100,000 Stars 里程碑",
+  //   stars: 10_0000,
+  // },
 
   // 2019年2月	v16.8	Hooks革命	引入useState、useEffect，函数组件获得状态管理能力，彻底改变React编程范式
   {
@@ -1255,12 +1255,12 @@ export const milestones: IMilestone[] = [
     stars: 0,
   },
   // 2021-06: ⭐ 200,000 Stars 里程碑
-  {
-    year: 2021,
-    month: 6,
-    event: "20_0000 Stars 里程碑",
-    stars: 20_0000,
-  },
+  // {
+  //   year: 2021,
+  //   month: 6,
+  //   event: "20 万 Stars",
+  //   stars: 20_0000,
+  // },
 
   // 2022年3月	v18.0	并发渲染	并发模式、自动批处理、Transitions、Suspense on Server，useTransition/useDeferredValue
   {
@@ -1293,17 +1293,17 @@ export const milestones: IMilestone[] = [
   {
     year: 2025,
     month: 10,
-    event: "React 进入 Linux Foundation",
+    event: "进入 Linux Foundation",
     stars: 4542900,
   },
   // 2026年1月26日	v19.2.4	最新版本发布	截至被OpenClaw超越前的最后一个版本
-  {
-    year: 2026,
-    month: 1,
-    event: "v19.2.4 最新版本发布",
-    eventDetails: "被 OpenClaw 超越前的最后一个版本",
-    stars: 4677400,
-  },
+  // {
+  //   year: 2026,
+  //   month: 1,
+  //   event: "v19.2.4 最新版本发布",
+  //   eventDetails: "被 OpenClaw 超越前的最后一个版本",
+  //   stars: 4677400,
+  // },
   // 2026年3月3日	-	被OpenClaw超越	React星标数达24.3万，被诞生仅四个月的OpenClaw（24.8万星）超越
   {
     year: 2026,
@@ -1313,4 +1313,7 @@ export const milestones: IMilestone[] = [
       "React星标数达24.3万，被诞生仅四个月的OpenClaw（25.6万星）超越",
     stars: 243_467,
   },
-]
+].map((item) => ({
+  ...item,
+  event: `${item.event} 🚩`,
+}))

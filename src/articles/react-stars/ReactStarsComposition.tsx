@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import "./handwritten-fonts.css"
 import type React from "react"
 import {
@@ -383,7 +384,8 @@ const StarGrowthChart: React.FC = () => {
               />
               <text
                 x={x - 150}
-                y={y - 15}
+                // 最后一个里程碑往上移动，避免与数据点重叠
+                y={y - 15 - (i === milestones.length - 1 ? 15 : 0)}
                 // fill="rgb(51, 51, 51)"
                 // fontSize={17}
                 className="text-[18px] font-bold fill-[#ffx6b6b]"
