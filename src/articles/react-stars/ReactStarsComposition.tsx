@@ -132,8 +132,8 @@ const StarGrowthChart: React.FC = () => {
         }}
       >
         <h1
+          className="text-5xl"
           style={{
-            fontSize: 48,
             fontWeight: "bold",
             margin: 0,
             fontFamily: "'Architects Daughter', cursive",
@@ -141,7 +141,7 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          React GitHub Stars ⭐ Growth (2013 —— 2026)
+          React GitHub Star ⭐ 增长趋势 (2013 至 2026)
         </h1>
         <p
           style={{
@@ -381,12 +381,11 @@ const StarGrowthChart: React.FC = () => {
                 }}
               />
               <text
-                x={x + 25}
+                x={x - 150}
                 y={y - 15}
                 // fill="rgb(51, 51, 51)"
                 // fontSize={17}
-                className="text-[13px] fill-[#ffx6b6b]"
-                fontWeight="bold"
+                className="text-[18px] font-bold fill-[#ffx6b6b]"
                 fontFamily="'Comic Neue', cursive"
                 style={{
                   opacity: labelProgress,
@@ -414,8 +413,8 @@ const StarGrowthChart: React.FC = () => {
         }}
       >
         <div
+          className="text-xl"
           style={{
-            fontSize: 16,
             color: "#eee",
             marginBottom: 5,
             fontWeight: "bold",

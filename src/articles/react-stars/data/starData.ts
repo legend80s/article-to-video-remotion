@@ -2,11 +2,11 @@
 // 基于历史里程碑和增长趋势的估算数据
 
 export interface StarDataPoint {
-  date: string;
-  year: number;
-  month: number;
-  stars: number;
-  monthlyGrowth: number;
+  date: string
+  year: number
+  month: number
+  stars: number
+  monthlyGrowth: number
 }
 
 // 月度累计 star 数据
@@ -912,14 +912,14 @@ export const reactStarsMonthly: StarDataPoint[] = [
     stars: 4677400,
     monthlyGrowth: 67500,
   },
-];
+]
 
 // 季度统计
 export interface QuarterData {
-  year: number;
-  quarter: number;
-  stars: number;
-  growth: number;
+  year: number
+  quarter: number
+  stars: number
+  growth: number
 }
 
 export const reactStarsQuarterly: QuarterData[] = [
@@ -975,13 +975,13 @@ export const reactStarsQuarterly: QuarterData[] = [
   { year: 2025, quarter: 3, stars: 4344900, growth: 193500 },
   { year: 2025, quarter: 4, stars: 4542900, growth: 198000 },
   { year: 2026, quarter: 1, stars: 4677400, growth: 134500 },
-];
+]
 
 // 年度统计
 export interface YearData {
-  year: number;
-  stars: number;
-  yearlyGrowth: number;
+  year: number
+  stars: number
+  yearlyGrowth: number
 }
 
 export const reactStarsYearly: YearData[] = [
@@ -999,23 +999,164 @@ export const reactStarsYearly: YearData[] = [
   { year: 2024, stars: 3777900, yearlyGrowth: 693000 },
   { year: 2025, stars: 4542900, yearlyGrowth: 765000 },
   { year: 2026, stars: 4677400, yearlyGrowth: 134500 },
-];
+]
 
 // 重要里程碑
-export const milestones = [
-  { year: 2013, month: 5, event: "React 开源发布", stars: 0 },
-  { year: 2015, month: 1, event: "React Native 发布", stars: 59200 },
-  { year: 2016, month: 4, event: "React 15 发布", stars: 161100 },
-  { year: 2017, month: 5, event: "Create React App 发布", stars: 319900 },
-  { year: 2019, month: 2, event: "React Hooks 发布", stars: 750400 },
-  { year: 2020, month: 10, event: "React 17 发布", stars: 1365400 },
-  { year: 2022, month: 3, event: "React 18 发布", stars: 2045400 },
-  { year: 2024, month: 4, event: "React 19 发布", stars: 3307900 },
+type IMilestone = {
+  year: number
+  month: number
+  event: string
+  eventDetails?: string
+  stars: number
+  reference?: string
+}
+
+export const milestones: IMilestone[] = [
+  {
+    year: 2013,
+    month: 5,
+    event: "React 开源发布：初期遭质疑JSX“倒退”",
+    eventDetails:
+      "Facebook在JSConf美国大会上开源React，采用组件化架构和虚拟DOM理念",
+    stars: 0,
+  },
+  {
+    year: 2015,
+    month: 3,
+    event: "RN (iOS) 发布：移动端革命",
+    eventDetails: 'React Native 发布：移动端革命，"Learn Once, Write Anywhere"',
+    reference:
+      "https://swovo.com/blog/the-evolution-of-react-native/#:~:text=In%20March%202015%2C%20React%20Native%20was%20open%2Dsourced%20and%20made%20available%20on%20GitHub.",
+    stars: 59200,
+  },
+  // 2015-06	Redux发布	状态管理标准方案诞生（Dan Abramov）
+  {
+    year: 2015,
+    month: 6,
+    event: "Redux发布",
+    eventDetails: "状态管理标准方案诞生（Dan Abramov）",
+    stars: 161100,
+  },
+  // 2015年10月 拆分React与ReactDOM 明确分层架构，引入PropTypes，支持函数组件
+  {
+    year: 2015,
+    month: 10,
+    event: "v0.14.0 拆分React与ReactDOM",
+    eventDetails:
+      "拆分React与ReactDOM 明确分层架构，引入PropTypes，支持函数组件",
+    stars: 161100,
+  },
+  // 2016年4月	v15.0	首个v15版本	优化服务端渲染性能，支持Fragment，初始渲染改用document.createElement
+  {
+    year: 2016,
+    month: 4,
+    event: "v15.0",
+    eventDetails:
+      "优化服务端渲染性能，支持Fragment，初始渲染改用document.createElement",
+    stars: 319900,
+  },
+  // 2016-09: ⭐ 50,000 Stars 里程碑
+  {
+    year: 2016,
+    month: 9,
+    event: "⭐️ 50,000 Stars 里程碑",
+    stars: 50000,
+  },
+
+  // 2017年9月	v16.0	Fiber架构问世	异步可中断渲染，引入Error Boundaries和Portals，React核心重写
+  {
+    year: 2017,
+    month: 9,
+    event: "v16.0 Fiber架构问世，React核心重写",
+    eventDetails:
+      "Fiber架构问世：异步可中断渲染、错误边界、Portals，React核心重写",
+    stars: 40000,
+    reference:
+      "https://dev.to/sirajmsm/evolution-of-react-a-version-by-version-comparison-4kgl",
+  },
+  // 2018年3月	v16.3	新版Context API	生命周期调整（废弃componentWill*），引入createRef和forwardRef
+  {
+    year: 2018,
+    month: 3,
+    event: "v16.3 新版 Context API、Strict Mode",
+    eventDetails:
+      "生命周期调整（废弃componentWillxxx），引入createRef和forwardRef",
+    stars: 40000,
+  },
+  // 2018-06: ⭐ 100,000 Stars 里程碑
+  {
+    year: 2018,
+    month: 6,
+    event: "⭐️ 100,000 Stars 里程碑",
+    stars: 10_0000,
+  },
+
+  // 2019年2月	v16.8	Hooks革命	引入useState、useEffect，函数组件获得状态管理能力，彻底改变React编程范式
+  {
+    year: 2019,
+    month: 2,
+    event: "v16.8 Hooks 革命性发布",
+    eventDetails:
+      "引入useState、useEffect，函数组件获得状态管理能力，彻底改变React编程范式",
+    stars: 0,
+  },
+  // 2020年10月	v17.0	过渡版本	无新特性，事件委托重构，新JSX转换（无需import React），为并发模式铺路
+  {
+    year: 2020,
+    month: 10,
+    event: "v17.0 “无新特性”版本",
+    eventDetails:
+      "无新特性，事件委托重构，新JSX转换（无需import React），为并发模式铺路",
+    stars: 0,
+  },
+  // 2022年3月	v18.0	并发渲染	并发模式、自动批处理、Transitions、Suspense on Server，useTransition/useDeferredValue
+  {
+    year: 2022,
+    month: 3,
+    event: "v18.0 并发渲染",
+    eventDetails:
+      "并发模式、自动批处理、Transitions、Suspense，useTransition/useDeferredValue",
+    stars: 0,
+  },
+  // 2023-03 v18.2.0 Server Components实验性支持
+  {
+    year: 2023,
+    month: 3,
+    event: "v18.2.0 Server Components",
+    eventDetails: "实验性支持，为未来版本提供基础",
+    stars: 0,
+  },
+  // 2024年12月5日	v19.0	全栈演进	Actions、React编译器（React Forget）、文档元数据管理、Server Components正式版
+  {
+    year: 2024,
+    month: 12,
+    event: "v19.0 全栈演进",
+    eventDetails:
+      "Actions、React编译器（React Forget）、Server Components 正式版",
+    stars: 0,
+  },
+  // 2025年10月7日	-	React基金会成立	项目过渡到Linux基金会旗下，实现供应商中立的环境
   {
     year: 2025,
-    month: 12,
+    month: 10,
     event: "React 进入 Linux Foundation",
     stars: 4542900,
   },
-  { year: 2026, month: 2, event: "当前", stars: 4677400 },
-];
+  // 2026年1月26日	v19.2.4	最新版本发布	截至被OpenClaw超越前的最后一个版本
+  {
+    year: 2026,
+    month: 1,
+    event: "v19.2.4 最新版本发布",
+    eventDetails: "被 OpenClaw 超越前的最后一个版本",
+    stars: 4677400,
+  },
+  // 2026年3月3日	-	被OpenClaw超越	React星标数达24.3万，被诞生仅四个月的OpenClaw（24.8万星）超越
+  {
+    year: 2026,
+    month: 3,
+    event: "被OpenClaw超越",
+    eventDetails:
+      "React星标数达24.3万，被诞生仅四个月的OpenClaw（25.6万星）超越",
+    stars: 243_467,
+  },
+]
