@@ -10,12 +10,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion"
+import { OutroScene } from "../components/OutroScene"
 import {
   milestones,
   reactStarsMonthly,
   reactStarsYearly,
 } from "./data/starData"
-import { OutroScene } from "../components/OutroScene"
 
 const WIDTH = 1920
 const HEIGHT = 1080
@@ -340,7 +340,7 @@ const StarGrowthChart: React.FC = () => {
           )
         })}
 
-        {/* 曲线顶端的 🦞 - 跟随曲线顶点移动 */}
+        {/* 曲线顶端的 小龙虾 🦞 - 跟随曲线顶点移动 */}
         {visibleData.length > 0 &&
           (() => {
             // 使用当前动画位置的数据点，让🦞跟随曲线移动
@@ -428,7 +428,7 @@ const StarGrowthChart: React.FC = () => {
                     filter: "drop-shadow(0px 6px 0px rgba(0,0,0,0.4))",
                   }}
                 >
-                  🦞
+                  ⚛️
                 </text>
               </g>
             )
@@ -794,12 +794,12 @@ const StarGrowthChartWithIntro: React.FC = () => {
         </Sequence> */}
 
       {/* 主增长曲线 - 开场动画后开始 */}
-      <Sequence from={40} durationInFrames={450}>
+      <Sequence from={0} durationInFrames={450}>
         <StarGrowthChart />
       </Sequence>
 
       {/* 结束场景 - 主曲线结束后 */}
-      <Sequence from={490} durationInFrames={100}>
+      <Sequence from={450} durationInFrames={100}>
         <OutroScene src="imgs/react-star-history.jpg" />
       </Sequence>
     </>
@@ -814,7 +814,7 @@ export const ReactStarsComposition: React.FC = () => {
       <Composition
         id="ReactStarsGrowth"
         component={StarGrowthChartWithIntro}
-        durationInFrames={590} // 40帧开场 + 450帧主内容 + 100帧结束场景
+        durationInFrames={550} // 40帧开场 + 450帧主内容 + 100帧结束场景
         // durationInFrames={450}
         fps={30}
         width={1920}
