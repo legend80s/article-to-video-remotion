@@ -1272,13 +1272,13 @@ export const milestones: IMilestone[] = [
     stars: 0,
   },
   // 2023-03 v18.2.0 Server Components实验性支持
-  {
-    year: 2023,
-    month: 3,
-    event: "v18.2.0 Server Components",
-    eventDetails: "实验性支持，为未来版本提供基础",
-    stars: 0,
-  },
+  // {
+  //   year: 2023,
+  //   month: 3,
+  //   event: "v18.2.0 Server Components",
+  //   eventDetails: "实验性支持，为未来版本提供基础",
+  //   stars: 0,
+  // },
   // 2024年12月5日	v19.0	全栈演进	Actions、React编译器（React Forget）、文档元数据管理、Server Components正式版
   {
     year: 2024,

@@ -152,8 +152,8 @@ const StarGrowthChart: React.FC = () => {
           {reactStarsMonthly.at(-1)?.year}
         </h1>
         <p
+          className="text-5xl"
           style={{
-            fontSize: 24,
             fontWeight: "bold",
             color: "#333",
             margin: "10px 0 0 0",
@@ -220,7 +220,7 @@ const StarGrowthChart: React.FC = () => {
                 x={CHART_MARGIN.left - 20 + (Math.random() - 0.5) * 2}
                 y={y + 5 + (Math.random() - 0.5) * 2}
                 fill="#333"
-                fontSize={16}
+                className="text-[32px]"
                 fontWeight="bold"
                 textAnchor="end"
                 fontFamily="'Comic Neue', cursive"
@@ -262,7 +262,7 @@ const StarGrowthChart: React.FC = () => {
                   HEIGHT - CHART_MARGIN.bottom + 35 + (Math.random() - 0.5) * 2
                 }
                 fill="#333"
-                fontSize={18}
+                className="text-[32px]"
                 fontWeight="bold"
                 textAnchor="middle"
                 fontFamily="'Comic Neue', cursive"
@@ -288,13 +288,13 @@ const StarGrowthChart: React.FC = () => {
           />
         )}
 
-        {/* 主线条 */}
+        {/* 主线条 主曲线 */}
         {visibleData.length > 1 && (
           <path
             d={generatePath()}
             fill="none"
             stroke="#ff6b6b"
-            strokeWidth={5}
+            strokeWidth={7}
             strokeLinecap="round"
             strokeLinejoin="round"
             style={{
@@ -409,8 +409,8 @@ const StarGrowthChart: React.FC = () => {
             // )
             // baseFontSize 限制在 20px-80px 之间
             const baseFontSize = getFontSizeByStars(lastPoint.stars, {
-              minFont: 12,
-              maxFont: 70,
+              minFont: 10,
+              maxFont: 56,
             })
 
             // console.log("baseFontSize", baseFontSize)
@@ -492,7 +492,7 @@ const StarGrowthChart: React.FC = () => {
                 y={y - 15 - (i === milestones.length - 1 ? 15 : 0)}
                 // fill="rgb(51, 51, 51)"
                 // fontSize={17}
-                className="text-[18px] font-bold fill-[#ffx6b6b]"
+                className="text-[24px] font-bold fill-[#ffx6b6b]"
                 fontFamily="'Comic Neue', cursive"
                 style={{
                   opacity: labelProgress,
@@ -520,7 +520,7 @@ const StarGrowthChart: React.FC = () => {
         }}
       >
         <div
-          className="text-xl"
+          className="text-[32px]"
           style={{
             color: "#eee",
             marginBottom: 5,
@@ -530,15 +530,18 @@ const StarGrowthChart: React.FC = () => {
           {currentDate}
         </div>
         <div
+          className="text-8xl"
           style={{
-            fontSize: 48,
             fontWeight: "bold",
             color: "#61dafb",
           }}
         >
           {formatNumber(currentStars)}
         </div>
-        <div style={{ fontSize: 16, color: "#eee", fontWeight: "bold" }}>
+        <div
+          className="text-[32px]"
+          style={{ color: "#eee", fontWeight: "bold" }}
+        >
           stars
         </div>
       </div>
@@ -564,7 +567,10 @@ const StarGrowthChart: React.FC = () => {
               background: "#61dafb",
             }}
           />
-          <span style={{ fontSize: 16, fontWeight: "bold", color: "#333" }}>
+          <span
+            className="text-[32px]"
+            style={{ fontWeight: "bold", color: "#333" }}
+          >
             星标增长
           </span>
         </div>
@@ -577,7 +583,10 @@ const StarGrowthChart: React.FC = () => {
               background: "#ff6b6b",
             }}
           />
-          <span style={{ fontSize: 16, fontWeight: "bold", color: "#333" }}>
+          <span
+            className="text-[32px]"
+            style={{ fontWeight: "bold", color: "#333" }}
+          >
             重要里程碑
           </span>
         </div>
