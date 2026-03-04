@@ -1,12 +1,13 @@
 /** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
-import "./index.css";
-import { Composition } from "remotion";
-import { TanStackStartComposition } from "./articles/ingenious-innovations-of-tanstack-start";
-import { HelloWorld, myCompSchema } from "./HelloWorld";
-import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
-import { MyComposition } from "./MyComposition";
-import { ReactStarsComposition } from "./articles/react-stars/ReactStarsComposition";
-import { StarsComposition as OpenClawStarsComposition } from "./articles/openclaw-stars/StarsComposition";
+import "./index.css"
+import { Composition } from "remotion"
+import { RocketComposition } from "./articles/compostions/Rocket/RocketComposition"
+import { TanStackStartComposition } from "./articles/ingenious-innovations-of-tanstack-start"
+import { StarsComposition as OpenClawStarsComposition } from "./articles/openclaw-stars/StarsComposition"
+import { ReactStarsComposition } from "./articles/react-stars/ReactStarsComposition"
+import { HelloWorld, myCompSchema } from "./HelloWorld"
+import { Logo, myCompSchema2 } from "./HelloWorld/Logo"
+import { MyComposition } from "./MyComposition"
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -61,6 +62,7 @@ export const RemotionRoot: React.FC = () => {
       <TanStackStartComposition />
       <ReactStarsComposition />
       <OpenClawStarsComposition />
+      <RocketComposition />
     </>
-  );
-};
+  )
+}
