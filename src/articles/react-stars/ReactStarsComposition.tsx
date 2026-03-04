@@ -347,7 +347,7 @@ const StarGrowthChart: React.FC = () => {
             if (!lastPoint) return null
             const { randomX, randomY } = getRandomOffset(lastIndex, 2)
             // 只在动画接近结束时（最后两个里程碑出现时）左移龙虾
-            const lobsterShift = animationProgress > 0.95 ? -100 : 0
+            const lobsterShift = animationProgress > 0.95 ? -50 : 0
             const x = CHART_MARGIN.left + lastIndex * xScale + randomX
             const y =
               HEIGHT -
@@ -383,24 +383,30 @@ const StarGrowthChart: React.FC = () => {
             const finalScale = starsScale * pulseScale
 
             // 根据星星数量调整字体大小（基础28px，最大80px）
-            const mapping = [
-              [0, 20],
-              [500, 22],
-              [1000, 24],
-              [2000, 26],
-              [3000, 28],
-              [6000, 30],
-              [1_0000, 33],
-              [2_0000, 45],
-              [10_0000, 60],
-              [20_0000, 80],
-            ]
-            const baseFontSize = interpolate(
-              lastPoint.stars,
-              mapping.map(([star, _]) => star),
-              mapping.map(([_, fontSize]) => fontSize),
-              { extrapolateRight: "clamp" },
-            )
+            // const mapping = [
+            //   [0, 20],
+            //   [500, 22],
+            //   [1000, 24],
+            //   [2000, 26],
+            //   [3000, 28],
+            //   [6000, 30],
+            //   [1_0000, 33],
+            //   [2_0000, 45],
+            //   [10_0000, 60],
+            //   [20_0000, 80],
+            // ]
+            // const baseFontSize = interpolate(
+            //   lastPoint.stars,
+            //   mapping.map(([star, _]) => star),
+            //   mapping.map(([_, fontSize]) => fontSize),
+            //   { extrapolateRight: "clamp" },
+            // )
+            // baseFontSize 限制在 20px-80px 之间
+            const baseFontSize = getFontSizeByStars(lastPoint.stars, {
+              minFont: 12,
+              maxFont: 70,
+            })
+
             // console.log("baseFontSize", baseFontSize)
 
             return (
@@ -811,4 +817,27 @@ export const ReactStarsComposition: React.FC = () => {
       />
     </>
   )
+}
+
+/**
+ * 根据星星数量动态计算字体大小（20px - 80px）
+ * @param {number} stars - 当前 Star 数
+ * @param {number} minStars - 最小 Star 数（默认 0）
+ * @param {number} maxStars - 最大 Star 数（默认 243550）
+ * @returns {number} 字体大小（px）
+ */
+function getFontSizeByStars(
+  stars: number,
+  { minFont = 20, maxFont = 80 }: { minFont: number; maxFont: number },
+) {
+  const minStars = reactStarsMonthly[0].stars
+  const maxStars = reactStarsMonthly[reactStarsMonthly.length - 1].stars
+
+  // 边界处理
+  if (stars <= minStars) return minFont
+  if (stars >= maxStars) return maxFont
+
+  // 线性插值
+  const ratio = (stars - minStars) / (maxStars - minStars)
+  return Math.round(minFont + ratio * (maxFont - minFont))
 }
