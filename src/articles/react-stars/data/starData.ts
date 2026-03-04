@@ -1109,6 +1109,14 @@ export const milestones: IMilestone[] = [
       "无新特性，事件委托重构，新JSX转换（无需import React），为并发模式铺路",
     stars: 0,
   },
+  // 2021-06: ⭐ 200,000 Stars 里程碑
+  {
+    year: 2021,
+    month: 6,
+    event: "20_0000 Stars 里程碑",
+    stars: 20_0000,
+  },
+
   // 2022年3月	v18.0	并发渲染	并发模式、自动批处理、Transitions、Suspense on Server，useTransition/useDeferredValue
   {
     year: 2022,
@@ -1130,10 +1138,11 @@ export const milestones: IMilestone[] = [
   {
     year: 2024,
     month: 12,
-    event: "v19.0 全栈演进",
+    event: "v19 发布（React Compiler）",
     eventDetails:
       "Actions、React编译器（React Forget）、Server Components 正式版",
     stars: 0,
+    reference: "https://react.dev/blog/2024/12/05/react-19",
   },
   // 2025年10月7日	-	React基金会成立	项目过渡到Linux基金会旗下，实现供应商中立的环境
   {
