@@ -338,6 +338,94 @@ const StarGrowthChart: React.FC = () => {
           )
         })}
 
+        {/* 曲线顶端的 🦞 - 跟随曲线顶点移动 */}
+        {visibleData.length > 0 &&
+          (() => {
+            // 使用当前动画位置的数据点，让🦞跟随曲线移动
+            const lastIndex = visibleData.length - 1
+            const lastPoint = visibleData[lastIndex]
+            if (!lastPoint) return null
+            const { randomX, randomY } = getRandomOffset(lastIndex, 2)
+            // 只在动画接近结束时（最后两个里程碑出现时）左移龙虾
+            const lobsterShift = animationProgress > 0.95 ? -100 : 0
+            const x = CHART_MARGIN.left + lastIndex * xScale + randomX
+            const y =
+              HEIGHT -
+              CHART_MARGIN.bottom -
+              lastPoint.stars * yScale +
+              randomY +
+              lobsterShift
+
+            // 根据星星数量计算基础缩放（星星越多，龙虾越大）
+            // 假设最大约 3000 stars，映射到 1.0-3.0 的缩放范围
+            const starsScale = interpolate(
+              lastPoint.stars,
+              [0, 500, 1000, 2000, 3000],
+              [0.8, 1.2, 1.8, 2.5, 3.2],
+              { extrapolateRight: "clamp" },
+            )
+
+            // 呼吸浮动动画 - 上下浮动
+            const breathe = interpolate(frame % 60, [0, 30, 60], [0, -8, 0], {
+              extrapolateRight: "clamp",
+            })
+            // 摆动动画 - 轻微左右摇摆
+            const wobble = interpolate(frame % 45, [0, 22, 45], [0, 5, 0], {
+              extrapolateRight: "clamp",
+            })
+            // 缩放脉冲动画（与星星数量缩放相乘）
+            const pulseScale = interpolate(
+              frame % 90,
+              [0, 45, 90],
+              [1, 1.15, 1],
+              { extrapolateRight: "clamp" },
+            )
+            const finalScale = starsScale * pulseScale
+
+            // 根据星星数量调整字体大小（基础28px，最大80px）
+            const mapping = [
+              [0, 20],
+              [500, 22],
+              [1000, 24],
+              [2000, 26],
+              [3000, 28],
+              [6000, 30],
+              [1_0000, 33],
+              [2_0000, 45],
+              [10_0000, 60],
+              [20_0000, 80],
+            ]
+            const baseFontSize = interpolate(
+              lastPoint.stars,
+              mapping.map(([star, _]) => star),
+              mapping.map(([_, fontSize]) => fontSize),
+              { extrapolateRight: "clamp" },
+            )
+            // console.log("baseFontSize", baseFontSize)
+
+            return (
+              <g
+                style={{
+                  transform: `translate(${wobble}px, ${breathe}px) scale(${finalScale})`,
+                  transformOrigin: `${x}px ${y - 15}px`,
+                }}
+              >
+                <text
+                  x={x}
+                  y={y - 25}
+                  fontSize={baseFontSize}
+                  textAnchor="middle"
+                  style={{
+                    // 添加轻微的阴影增加立体感
+                    filter: "drop-shadow(0px 6px 0px rgba(0,0,0,0.4))",
+                  }}
+                >
+                  🦞
+                </text>
+              </g>
+            )
+          })()}
+
         {/* 里程碑标记 */}
         {milestones.map((milestone, i) => {
           const index = reactStarsMonthly.findIndex(
