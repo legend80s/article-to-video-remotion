@@ -141,7 +141,8 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          React GitHub Star ⭐ 增长趋势 (2013 至 2026)
+          React GitHub Star ⭐ 增长趋势 {reactStarsMonthly[0].year} 至{" "}
+          {reactStarsMonthly.at(-1)?.year}
         </h1>
         <p
           style={{
