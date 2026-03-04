@@ -14,9 +14,11 @@ import {
   useVideoConfig,
 } from "remotion"
 import { milestones, starsDaily } from "./data/starData"
+import { OutroScene } from "../components/OutroScene"
 
 const WIDTH = 1920
 const HEIGHT = 1080
+
 const CHART_HEIGHT = 600
 const CHART_WIDTH = 1600
 const CHART_MARGIN = { top: 100, right: 100, bottom: 150, left: 150 }
@@ -763,60 +765,6 @@ const StarGrowthChart: React.FC = () => {
   )
 }
 
-// 结束场景 - 显示历史图片
-const OutroScene: React.FC = () => {
-  const frame = useCurrentFrame()
-
-  // 结束场景从第 490 帧开始（Sequence 的 from=490）
-  // 图片渐现动画 - 从第 0 帧开始（相对于 Sequence），40 帧内渐现
-  const outroOpacity = interpolate(frame, [0, 25], [0, 1], {
-    extrapolateRight: "clamp",
-  })
-
-  // 遮罩揭示动画 - 从第 25 帧开始，60 帧内从完全不透明到完全透明
-  const maskOpacity = interpolate(frame, [25, 100], [1, 0], {
-    extrapolateRight: "clamp",
-  })
-
-  return (
-    <div
-      style={{
-        width: WIDTH,
-        height: HEIGHT,
-        background: "rgb(248, 245, 230)", // 米色背景，与主图表一致
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
-      <Img
-        src={staticFile("imgs/openclaw-star-history.png")}
-        style={{
-          width: "90%",
-          height: "auto",
-          objectFit: "contain",
-          opacity: outroOpacity,
-        }}
-        alt="OpenClaw Star History"
-      />
-      {/* 右半部分遮罩 - 慢慢揭示效果 */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: "50%",
-          height: "100%",
-          background: "rgb(248, 245, 230)", // 与背景相同的米色
-          opacity: maskOpacity,
-        }}
-      />
-    </div>
-  )
-}
-
 // 主 Composition 组件 - 包含开场动画、主曲线和结束场景
 const StarGrowthChartWithIntro: React.FC = () => {
   return (
@@ -833,7 +781,7 @@ const StarGrowthChartWithIntro: React.FC = () => {
 
       {/* 结束场景 - 主曲线结束后 */}
       <Sequence from={490} durationInFrames={100}>
-        <OutroScene />
+        <OutroScene src="imgs/openclaw-star-history.png" />
       </Sequence>
     </>
   )

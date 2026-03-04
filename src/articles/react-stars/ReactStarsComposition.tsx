@@ -5,6 +5,7 @@ import type React from "react"
 import {
   Composition,
   interpolate,
+  Sequence,
   spring,
   useCurrentFrame,
   useVideoConfig,
@@ -14,6 +15,7 @@ import {
   reactStarsMonthly,
   reactStarsYearly,
 } from "./data/starData"
+import { OutroScene } from "../components/OutroScene"
 
 const WIDTH = 1920
 const HEIGHT = 1080
@@ -782,6 +784,28 @@ const SummaryScene: React.FC = () => {
   )
 }
 
+// 主 Composition 组件 - 包含开场动画、主曲线和结束场景
+const StarGrowthChartWithIntro: React.FC = () => {
+  return (
+    <>
+      {/* 开场动画 - 60帧 = 2秒 */}
+      {/* <Sequence from={0} durationInFrames={40}>
+          <IntroScene />
+        </Sequence> */}
+
+      {/* 主增长曲线 - 开场动画后开始 */}
+      <Sequence from={40} durationInFrames={450}>
+        <StarGrowthChart />
+      </Sequence>
+
+      {/* 结束场景 - 主曲线结束后 */}
+      <Sequence from={490} durationInFrames={100}>
+        <OutroScene src="imgs/react-star-history.jpg" />
+      </Sequence>
+    </>
+  )
+}
+
 // 主 Composition 组件
 export const ReactStarsComposition: React.FC = () => {
   return (
@@ -789,8 +813,9 @@ export const ReactStarsComposition: React.FC = () => {
       {/* 主增长曲线 */}
       <Composition
         id="ReactStarsGrowth"
-        component={StarGrowthChart}
-        durationInFrames={450}
+        component={StarGrowthChartWithIntro}
+        durationInFrames={590} // 40帧开场 + 450帧主内容 + 100帧结束场景
+        // durationInFrames={450}
         fps={30}
         width={1920}
         height={1080}
