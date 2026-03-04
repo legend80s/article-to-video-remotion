@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
 import type React from "react"
 import { Composition, Sequence } from "remotion"
 import { SCENE_TIMINGS, VIDEO_CONFIG } from "./data/constants"

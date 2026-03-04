@@ -1,18 +1,25 @@
 /** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import "./handwritten-fonts.css"
 import type React from "react"
 import {
   Composition,
+  Img,
   interpolate,
+  Sequence,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion"
+import { OutroScene } from "../components/OutroScene"
 import {
   milestones,
   reactStarsMonthly,
   reactStarsYearly,
 } from "./data/starData"
+import { RocketComposition } from "../compostions/Rocket/RocketComposition"
+import { Rocket } from "../compostions/Rocket/Rocket"
 
 const WIDTH = 1920
 const HEIGHT = 1080
@@ -132,8 +139,8 @@ const StarGrowthChart: React.FC = () => {
         }}
       >
         <h1
+          className="text-5xl"
           style={{
-            fontSize: 48,
             fontWeight: "bold",
             margin: 0,
             fontFamily: "'Architects Daughter', cursive",
@@ -141,7 +148,8 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          React GitHub Stars ⭐ Growth (2013 —— 2026)
+          React GitHub Star ⭐ 增长趋势 {reactStarsMonthly[0].year} 至{" "}
+          {reactStarsMonthly.at(-1)?.year}
         </h1>
         <p
           style={{
@@ -336,6 +344,104 @@ const StarGrowthChart: React.FC = () => {
           )
         })}
 
+        {/* 曲线顶端的 小龙虾 🦞 - 跟随曲线顶点移动 */}
+        {visibleData.length > 0 &&
+          (() => {
+            // 使用当前动画位置的数据点，让🦞跟随曲线移动
+            const lastIndex = visibleData.length - 1
+            const lastPoint = visibleData[lastIndex]
+            if (!lastPoint) return null
+            const { randomX, randomY } = getRandomOffset(lastIndex, 2)
+            // 只在动画接近结束时（最后两个里程碑出现时）左移龙虾
+            const lobsterShift = animationProgress > 0.95 ? -50 : 0
+            const x = CHART_MARGIN.left + lastIndex * xScale + randomX
+            const y =
+              HEIGHT -
+              CHART_MARGIN.bottom -
+              lastPoint.stars * yScale +
+              randomY +
+              lobsterShift
+
+            // 根据星星数量计算基础缩放（星星越多，龙虾越大）
+            // 假设最大约 3000 stars，映射到 1.0-3.0 的缩放范围
+            const starsScale = interpolate(
+              lastPoint.stars,
+              [0, 500, 1000, 2000, 3000],
+              [0.8, 1.2, 1.8, 2.5, 3.2],
+              { extrapolateRight: "clamp" },
+            )
+
+            // 呼吸浮动动画 - 上下浮动
+            const breathe = interpolate(frame % 60, [0, 30, 60], [0, -8, 0], {
+              extrapolateRight: "clamp",
+            })
+            // 摆动动画 - 轻微左右摇摆
+            const wobble = interpolate(frame % 45, [0, 22, 45], [0, 5, 0], {
+              extrapolateRight: "clamp",
+            })
+            // 缩放脉冲动画（与星星数量缩放相乘）
+            const pulseScale = interpolate(
+              frame % 90,
+              [0, 45, 90],
+              [1, 1.15, 1],
+              { extrapolateRight: "clamp" },
+            )
+            const finalScale = starsScale * pulseScale
+
+            // 根据星星数量调整字体大小（基础28px，最大80px）
+            // const mapping = [
+            //   [0, 20],
+            //   [500, 22],
+            //   [1000, 24],
+            //   [2000, 26],
+            //   [3000, 28],
+            //   [6000, 30],
+            //   [1_0000, 33],
+            //   [2_0000, 45],
+            //   [10_0000, 60],
+            //   [20_0000, 80],
+            // ]
+            // const baseFontSize = interpolate(
+            //   lastPoint.stars,
+            //   mapping.map(([star, _]) => star),
+            //   mapping.map(([_, fontSize]) => fontSize),
+            //   { extrapolateRight: "clamp" },
+            // )
+            // baseFontSize 限制在 20px-80px 之间
+            const baseFontSize = getFontSizeByStars(lastPoint.stars, {
+              minFont: 12,
+              maxFont: 70,
+            })
+
+            // console.log("baseFontSize", baseFontSize)
+
+            return (
+              <g
+                style={{
+                  transform: `translate(${wobble}px, ${breathe}px) scale(${finalScale})`,
+                  transformOrigin: `${x}px ${y - 15}px`,
+                }}
+              >
+                <foreignObject
+                  x={x - baseFontSize / 2}
+                  y={y - 15 - baseFontSize}
+                  width={baseFontSize}
+                  height={baseFontSize}
+                >
+                  <Img
+                    src={staticFile("imgs/react-logo-dark.svg")}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      filter: "drop-shadow(0px 1px 0px rgba(0,0,0,0.4))",
+                    }}
+                    alt="React Logo"
+                  />
+                </foreignObject>
+              </g>
+            )
+          })()}
+
         {/* 里程碑标记 */}
         {milestones.map((milestone, i) => {
           const index = reactStarsMonthly.findIndex(
@@ -381,12 +487,12 @@ const StarGrowthChart: React.FC = () => {
                 }}
               />
               <text
-                x={x + 25}
-                y={y - 15}
+                x={x - 150}
+                // 最后一个里程碑往上移动，避免与数据点重叠
+                y={y - 15 - (i === milestones.length - 1 ? 15 : 0)}
                 // fill="rgb(51, 51, 51)"
                 // fontSize={17}
-                className="text-[13px] fill-[#ffx6b6b]"
-                fontWeight="bold"
+                className="text-[18px] font-bold fill-[#ffx6b6b]"
                 fontFamily="'Comic Neue', cursive"
                 style={{
                   opacity: labelProgress,
@@ -414,8 +520,8 @@ const StarGrowthChart: React.FC = () => {
         }}
       >
         <div
+          className="text-xl"
           style={{
-            fontSize: 16,
             color: "#eee",
             marginBottom: 5,
             fontWeight: "bold",
@@ -686,6 +792,33 @@ const SummaryScene: React.FC = () => {
   )
 }
 
+const IntroScene = () => {
+  // return
+}
+
+// 主 Composition 组件 - 包含开场动画、主曲线和结束场景
+const StarGrowthChartWithIntro: React.FC = () => {
+  return (
+    <>
+      {/* 60 = 2s */}
+      {/* 开场动画 - 45帧 */}
+      <Sequence from={0} durationInFrames={45}>
+        <Rocket />
+      </Sequence>
+
+      {/* 主增长曲线 - 开场动画后开始 */}
+      <Sequence from={45} durationInFrames={450}>
+        <StarGrowthChart />
+      </Sequence>
+
+      {/* 结束场景 - 主曲线结束后 */}
+      <Sequence from={450 + 45} durationInFrames={100}>
+        <OutroScene src="imgs/react-star-history.jpg" />
+      </Sequence>
+    </>
+  )
+}
+
 // 主 Composition 组件
 export const ReactStarsComposition: React.FC = () => {
   return (
@@ -693,8 +826,9 @@ export const ReactStarsComposition: React.FC = () => {
       {/* 主增长曲线 */}
       <Composition
         id="ReactStarsGrowth"
-        component={StarGrowthChart}
-        durationInFrames={450}
+        component={StarGrowthChartWithIntro}
+        durationInFrames={45 + 550} // 45帧开场 + 450帧主内容 + 100帧结束场景
+        // durationInFrames={450}
         fps={30}
         width={1920}
         height={1080}
@@ -721,4 +855,27 @@ export const ReactStarsComposition: React.FC = () => {
       />
     </>
   )
+}
+
+/**
+ * 根据星星数量动态计算字体大小（20px - 80px）
+ * @param {number} stars - 当前 Star 数
+ * @param {number} minStars - 最小 Star 数（默认 0）
+ * @param {number} maxStars - 最大 Star 数（默认 243550）
+ * @returns {number} 字体大小（px）
+ */
+function getFontSizeByStars(
+  stars: number,
+  { minFont = 20, maxFont = 80 }: { minFont: number; maxFont: number },
+) {
+  const minStars = reactStarsMonthly[0].stars
+  const maxStars = reactStarsMonthly[reactStarsMonthly.length - 1].stars
+
+  // 边界处理
+  if (stars <= minStars) return minFont
+  if (stars >= maxStars) return maxFont
+
+  // 线性插值
+  const ratio = (stars - minStars) / (maxStars - minStars)
+  return Math.round(minFont + ratio * (maxFont - minFont))
 }
