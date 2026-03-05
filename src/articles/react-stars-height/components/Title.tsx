@@ -17,7 +17,7 @@ export const Title = ({ opacity = 1 }: TitleProps) => {
             "0 0 20px rgba(8, 126, 164, 0.8), 0 0 40px rgba(8, 126, 164, 0.4)",
         }}
       >
-        React GitHub Star ⭐ 增长趋势 2013 至 2026
+        React GitHub Star ⭐ 增长趋势 2013 至 2026年3月
       </div>
     </div>
   )

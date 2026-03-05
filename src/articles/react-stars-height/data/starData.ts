@@ -1057,8 +1057,6 @@ export const reactStarsMonthly: StarDataPoint[] = [
     month: 3,
     stars: 243550,
   },
-
-
 ]
 
 // 季度统计
