@@ -15,7 +15,7 @@ const VIDEO_CONFIG = {
   width: 1920,
   height: 1080,
   fps: 30,
-  durationInFrames: 900, // 30秒，确保每个参照物至少有0.8秒展示时间
+  durationInFrames: 1500, // 50秒，放慢柱子增长速度
 }
 
 const MAX_STARS = 243550
