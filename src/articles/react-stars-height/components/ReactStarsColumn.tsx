@@ -13,6 +13,7 @@ type ReactStarsColumnProps = {
   readonly columnX: number
   readonly currentLandmark: { name: string; height: number }
   readonly currentDate: string
+  readonly isFinal?: boolean
 }
 
 export const ReactStarsColumn = ({
@@ -23,6 +24,7 @@ export const ReactStarsColumn = ({
   columnX,
   currentLandmark,
   currentDate,
+  isFinal = false,
 }: ReactStarsColumnProps) => {
   const columnWidth = COLUMN_WIDTH
 
@@ -114,7 +116,7 @@ export const ReactStarsColumn = ({
         }}
       >
         <div
-          className="text-4xl"
+          className={isFinal ? "text-5xl" : "text-4xl"}
           style={{
             color: "#FFD700",
             fontWeight: "bold",

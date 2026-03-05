@@ -165,6 +165,7 @@ function StarHeightScene() {
             columnX={columnX}
             currentLandmark={mainLandmark}
             currentDate={currentDate}
+            isFinal={heightProgress >= 1}
           />
 
           <ReferenceObjectsContainer
