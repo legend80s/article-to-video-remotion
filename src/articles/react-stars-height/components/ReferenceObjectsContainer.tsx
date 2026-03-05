@@ -80,7 +80,7 @@ export const ReferenceObjectsContainer = ({
             style={{
               height: displayHeight,
               display: "flex",
-              alignItems: "flex-end",
+              alignItems: landmark.image ? "flex-end" : "flex-start",
               justifyContent: "center",
             }}
           >
@@ -145,7 +145,7 @@ export const ReferenceObjectsContainer = ({
             style={{
               height: Math.min(900, nextDisplayHeight),
               display: "flex",
-              alignItems: "flex-end",
+              alignItems: nextLandmark.image ? "flex-end" : "flex-start",
               justifyContent: "center",
             }}
           >
