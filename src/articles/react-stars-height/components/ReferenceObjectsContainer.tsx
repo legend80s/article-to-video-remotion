@@ -34,7 +34,7 @@ export const ReferenceObjectsContainer = ({
   const renderLandmarks = () => {
     const elements: React.ReactNode[] = []
 
-    const currentLandmarkX = viewWidth * 0.35
+    const currentLandmarkX = viewWidth * 0.3
 
     for (let i = 0; i < currentLandmarkIndex; i++) {
       const offsetFromCurrent = currentLandmarkIndex - i
@@ -69,7 +69,9 @@ export const ReferenceObjectsContainer = ({
           >
             {i < 4 && landmarkHeight > 30 && (
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                {Array.from({ length: Math.min(5, Math.floor(landmarkHeight / 20)) }).map((_, j) => (
+                {Array.from({
+                  length: Math.min(5, Math.floor(landmarkHeight / 20)),
+                }).map((_, j) => (
                   <div
                     key={j}
                     style={{
@@ -99,7 +101,7 @@ export const ReferenceObjectsContainer = ({
               {formatHeight(landmarks[i].height)}
             </div>
           </div>
-        </div>
+        </div>,
       )
     }
 
@@ -131,7 +133,9 @@ export const ReferenceObjectsContainer = ({
         >
           {currentLandmarkIndex < 4 && currentLandmarkHeight > 30 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              {Array.from({ length: Math.min(5, Math.floor(currentLandmarkHeight / 20)) }).map((_, j) => (
+              {Array.from({
+                length: Math.min(5, Math.floor(currentLandmarkHeight / 20)),
+              }).map((_, j) => (
                 <div
                   key={j}
                   style={{
@@ -161,7 +165,7 @@ export const ReferenceObjectsContainer = ({
             {formatHeight(landmarks[currentLandmarkIndex].height)}
           </div>
         </div>
-      </div>
+      </div>,
     )
 
     if (currentLandmarkIndex < landmarks.length - 1 && transitionProgress > 0) {
@@ -226,7 +230,7 @@ export const ReferenceObjectsContainer = ({
               {formatHeight(landmarks[nextIndex].height)}
             </div>
           </div>
-        </div>
+        </div>,
       )
     }
 
