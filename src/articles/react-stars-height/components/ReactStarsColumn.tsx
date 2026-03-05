@@ -3,7 +3,7 @@ import { COLUMN_WIDTH, REACT_COLOR, formatStars } from "../data/referenceObjects
 
 interface ReactStarsColumnProps {
   readonly currentStars: number
-  readonly scale: number
+  readonly columnHeight: number
   readonly viewHeight: number
   readonly viewWidth: number
   readonly currentLandmark: { name: string; height: number }
@@ -11,22 +11,18 @@ interface ReactStarsColumnProps {
 
 export const ReactStarsColumn: React.FC<ReactStarsColumnProps> = ({
   currentStars,
-  scale,
+  columnHeight,
   viewHeight,
   viewWidth,
   currentLandmark,
 }) => {
-  const columnHeight = currentStars * scale
   const columnWidth = COLUMN_WIDTH
-
-  // 柱子底部固定在地面（底部）
-  const columnBottom = 0 // 地面高度
 
   return (
     <div
       style={{
         position: "absolute",
-        bottom: columnBottom,
+        bottom: 0,
         left: "50%",
         transform: "translateX(-50%)",
         display: "flex",

@@ -2,7 +2,7 @@ import type React from "react"
 import { interpolate } from "remotion"
 
 interface ReferenceObjectsContainerProps {
-  readonly scale: number
+  readonly columnHeight: number
   readonly viewHeight: number
   readonly viewWidth: number
   readonly columnX: number
@@ -13,7 +13,7 @@ interface ReferenceObjectsContainerProps {
 }
 
 export const ReferenceObjectsContainer: React.FC<ReferenceObjectsContainerProps> = ({
-  scale,
+  columnHeight,
   viewHeight,
   viewWidth,
   columnX,
@@ -25,164 +25,149 @@ export const ReferenceObjectsContainer: React.FC<ReferenceObjectsContainerProps>
   // 地面高度
   const groundHeight = 0
 
-  // 渲染主参照物（当前激活的参照物）
-  const renderMainLandmark = () => {
+  // 主参照物高度固定为视频高度的一半
+  const landmarkHeight = viewHeight * 0.5
+
+  // 渲染当前参照物和下一个参照物（都在左侧）
+  const renderLandmarks = () => {
     const currentLandmark = landmarks[currentLandmarkIndex]
-    const landmarkHeight = currentLandmark.height * scale
-
-    // 主参照物固定在左侧，底部对齐地面
-    const leftPosition = viewWidth * 0.2
-
-    return (
-      <div
-        key={`main-${currentLandmarkIndex}`}
-        style={{
-          position: "absolute",
-          left: leftPosition,
-          bottom: groundHeight,
-          display: "flex",
-          flexDirection: "column-reverse",
-          alignItems: "center",
-          opacity: 1 - transitionProgress * 0.3, // 过渡时稍微变淡
-        }}
-      >
-        {/* 参照物图形 */}
-        <div
-          style={{
-            width: 80,
-            height: landmarkHeight,
-            background: getLandmarkColor(currentLandmarkIndex),
-            borderRadius: 4,
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "center",
-            paddingBottom: 8,
-          }}
-        >
-          {/* 窗户效果 */}
-          {currentLandmarkIndex < 4 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              {Array.from({ length: Math.min(5, Math.floor(landmarkHeight / 20)) }).map((_, i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: 60,
-                    height: 2,
-                    background: "rgba(255,255,255,0.3)",
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* 参照物名称和高度 - 移到顶部 */}
-        <div
-          style={{
-            marginBottom: 8,
-            textAlign: "center",
-            color: "#fff",
-            fontSize: 14,
-            fontWeight: "bold",
-            textShadow: "0 0 4px rgba(0,0,0,0.8)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          <div>{currentLandmark.name}</div>
-          <div style={{ color: "#8AD4FF", fontSize: 12 }}>
-            {formatHeight(currentLandmark.height)}
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // 渲染下一个参照物（在过渡时显示在右侧）
-  const renderNextLandmark = () => {
-    if (currentLandmarkIndex >= landmarks.length - 1) return null
-
     const nextLandmark = landmarks[currentLandmarkIndex + 1]
-    const nextLandmarkHeight = viewHeight * 0.5 // 下一个参照物高度始终是视频高度的一半
 
-    // 下一个参照物从右侧渐入
-    const rightPosition = viewWidth * 0.8
-    const slideInOffset = interpolate(transitionProgress, [0, 1], [100, 0], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    })
-
-    if (transitionProgress <= 0) return null
+    // 当前参照物位置
+    const currentLeftPosition = viewWidth * 0.1
+    // 下一个参照物位置（紧挨着当前参照物）
+    const nextLeftPosition = currentLeftPosition + 100 // 紧挨着，间距100px
 
     return (
-      <div
-        key={`next-${currentLandmarkIndex + 1}`}
-        style={{
-          position: "absolute",
-          left: rightPosition + slideInOffset,
-          bottom: groundHeight,
-          display: "flex",
-          flexDirection: "column-reverse",
-          alignItems: "center",
-          opacity: transitionProgress,
-        }}
-      >
-        {/* 参照物图形 */}
+      <>
+        {/* 当前参照物 */}
         <div
+          key={`current-${currentLandmarkIndex}`}
           style={{
-            width: 80,
-            height: nextLandmarkHeight,
-            background: getLandmarkColor(currentLandmarkIndex + 1),
-            borderRadius: 4,
+            position: "absolute",
+            left: currentLeftPosition,
+            bottom: groundHeight,
             display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "center",
-            paddingBottom: 8,
+            flexDirection: "column-reverse",
+            alignItems: "center",
+            opacity: 1 - transitionProgress * 0.5,
           }}
         >
-          {/* 窗户效果 */}
-          {currentLandmarkIndex + 1 < 4 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: 60,
-                    height: 2,
-                    background: "rgba(255,255,255,0.3)",
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+          {/* 参照物图形 */}
+          <div
+            style={{
+              width: 80,
+              height: landmarkHeight,
+              background: getLandmarkColor(currentLandmarkIndex),
+              borderRadius: 4,
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "center",
+              paddingBottom: 8,
+            }}
+          >
+            {currentLandmarkIndex < 4 && (
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                {Array.from({ length: Math.min(5, Math.floor(landmarkHeight / 20)) }).map((_, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      width: 60,
+                      height: 2,
+                      background: "rgba(255,255,255,0.3)",
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
 
-        {/* 参照物名称和高度 - 移到顶部 */}
-        <div
-          style={{
-            marginBottom: 8,
-            textAlign: "center",
-            color: "#fff",
-            fontSize: 14,
-            fontWeight: "bold",
-            textShadow: "0 0 4px rgba(0,0,0,0.8)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          <div>{nextLandmark.name}</div>
-          <div style={{ color: "#8AD4FF", fontSize: 12 }}>
-            {formatHeight(nextLandmark.height)}
+          {/* 参照物名称和高度 */}
+          <div
+            style={{
+              marginBottom: 8,
+              textAlign: "center",
+              color: "#fff",
+              fontSize: 14,
+              fontWeight: "bold",
+              textShadow: "0 0 4px rgba(0,0,0,0.8)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <div>{currentLandmark.name}</div>
+            <div style={{ color: "#8AD4FF", fontSize: 12 }}>
+              {formatHeight(currentLandmark.height)}
+            </div>
           </div>
         </div>
-      </div>
+
+        {/* 下一个参照物（过渡时显示在旁边） */}
+        {nextLandmark && transitionProgress > 0 && (
+          <div
+            key={`next-${currentLandmarkIndex + 1}`}
+            style={{
+              position: "absolute",
+              left: nextLeftPosition,
+              bottom: groundHeight,
+              display: "flex",
+              flexDirection: "column-reverse",
+              alignItems: "center",
+              opacity: transitionProgress,
+            }}
+          >
+            {/* 参照物图形 */}
+            <div
+              style={{
+                width: 80,
+                height: landmarkHeight,
+                background: getLandmarkColor(currentLandmarkIndex + 1),
+                borderRadius: 4,
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: "center",
+                paddingBottom: 8,
+              }}
+            >
+              {currentLandmarkIndex + 1 < 4 && (
+                <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        width: 60,
+                        height: 2,
+                        background: "rgba(255,255,255,0.3)",
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 参照物名称和高度 */}
+            <div
+              style={{
+                marginBottom: 8,
+                textAlign: "center",
+                color: "#fff",
+                fontSize: 14,
+                fontWeight: "bold",
+                textShadow: "0 0 4px rgba(0,0,0,0.8)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <div>{nextLandmark.name}</div>
+              <div style={{ color: "#8AD4FF", fontSize: 12 }}>
+                {formatHeight(nextLandmark.height)}
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     )
   }
 
-  return (
-    <>
-      {renderMainLandmark()}
-      {renderNextLandmark()}
-    </>
-  )
+  return <>{renderLandmarks()}</>
 }
 
 // 根据索引获取参照物颜色
