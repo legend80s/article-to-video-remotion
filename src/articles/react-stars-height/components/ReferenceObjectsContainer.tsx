@@ -4,8 +4,6 @@ type ReferenceObjectsContainerProps = {
   readonly columnHeight: number
   readonly viewHeight: number
   readonly viewWidth: number
-  readonly columnX: number
-  readonly currentStars: number
   readonly currentLandmarkIndex: number
   readonly transitionProgress: number
   readonly landmarks: { name: string; height: number }[]
@@ -15,8 +13,6 @@ export const ReferenceObjectsContainer = ({
   columnHeight,
   viewHeight,
   viewWidth,
-  columnX,
-  currentStars,
   currentLandmarkIndex,
   transitionProgress,
   landmarks,

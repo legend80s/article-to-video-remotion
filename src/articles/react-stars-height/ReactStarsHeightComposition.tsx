@@ -115,7 +115,7 @@ function StarHeightScene() {
     finalColumnHeight = maxColumnHeight
   }
 
-  const columnX = viewWidth / 2
+  const columnX = viewWidth / 2 + 350
 
   const titleOpacity = interpolate(frame, [0, 30], [0, 1], {
     extrapolateLeft: "clamp",
@@ -163,6 +163,7 @@ function StarHeightScene() {
             columnHeight={finalColumnHeight}
             viewHeight={viewHeight}
             viewWidth={viewWidth}
+            columnX={columnX}
             currentLandmark={currentLandmark}
           />
 
@@ -170,8 +171,6 @@ function StarHeightScene() {
             columnHeight={finalColumnHeight}
             viewHeight={viewHeight}
             viewWidth={viewWidth}
-            columnX={columnX}
-            currentStars={currentStars}
             currentLandmarkIndex={currentLandmarkIndex}
             transitionProgress={transitionProgress}
             landmarks={landmarks}

@@ -1,21 +1,27 @@
 import type React from "react"
-import { COLUMN_WIDTH, REACT_COLOR, formatStars } from "../data/referenceObjects"
+import {
+  COLUMN_WIDTH,
+  formatStars,
+  REACT_COLOR,
+} from "../data/referenceObjects"
 
 interface ReactStarsColumnProps {
   readonly currentStars: number
   readonly columnHeight: number
   readonly viewHeight: number
   readonly viewWidth: number
+  readonly columnX: number
   readonly currentLandmark: { name: string; height: number }
 }
 
-export const ReactStarsColumn: React.FC<ReactStarsColumnProps> = ({
+export const ReactStarsColumn = ({
   currentStars,
   columnHeight,
   viewHeight,
   viewWidth,
+  columnX,
   currentLandmark,
-}) => {
+}: ReactStarsColumnProps) => {
   const columnWidth = COLUMN_WIDTH
 
   return (
@@ -23,7 +29,7 @@ export const ReactStarsColumn: React.FC<ReactStarsColumnProps> = ({
       style={{
         position: "absolute",
         bottom: 0,
-        left: "50%",
+        left: columnX,
         transform: "translateX(-50%)",
         display: "flex",
         flexDirection: "column",
@@ -44,7 +50,13 @@ export const ReactStarsColumn: React.FC<ReactStarsColumnProps> = ({
           style={{ position: "absolute", bottom: 0, left: 0 }}
         >
           <defs>
-            <linearGradient id="column-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient
+              id="column-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
               <stop offset="0%" stopColor={REACT_COLOR} stopOpacity="0.85" />
               <stop offset="50%" stopColor={REACT_COLOR} stopOpacity="1" />
               <stop offset="100%" stopColor={REACT_COLOR} stopOpacity="0.85" />
@@ -98,7 +110,8 @@ export const ReactStarsColumn: React.FC<ReactStarsColumnProps> = ({
           fontSize: 24,
           color: "#FFD700",
           fontWeight: "bold",
-          textShadow: "0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5)",
+          textShadow:
+            "0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5)",
           whiteSpace: "nowrap",
         }}
       >
