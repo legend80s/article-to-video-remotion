@@ -116,7 +116,7 @@ export const ReactStarsColumn = ({
         }}
       >
         <div
-          className={isFinal ? "text-5xl" : "text-4xl"}
+          className={isFinal ? "text-6xl" : "text-4xl"}
           style={{
             color: "#FFD700",
             fontWeight: "bold",
