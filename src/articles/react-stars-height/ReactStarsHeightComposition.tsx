@@ -18,6 +18,9 @@ const VIDEO_CONFIG = {
   durationInFrames: 1500,
 }
 
+// 最大参照物显示高度（像素）
+const MAX_LANDMARK_HEIGHT = 540
+
 // 计算每个参照物阶段的起始和结束高度
 const getStageHeights = () => {
   const stages: { startHeight: number; endHeight: number }[] = []
@@ -36,33 +39,41 @@ const STAGES = getStageHeights()
 function calculateHeight(progress: number): number {
   if (progress <= 0) return 0
   if (progress >= 1) return landmarks[landmarks.length - 1].height
-  
+
   const numStages = STAGES.length
   const progressPerStage = 1 / numStages
-  
+
   // 找到当前所在的阶段
   const currentStageIndex = Math.floor(progress / progressPerStage)
   const progressInStage = (progress % progressPerStage) / progressPerStage
-  
+
   const stage = STAGES[Math.min(currentStageIndex, numStages - 1)]
-  
+
   // 在当前阶段内线性插值
-  return interpolate(progressInStage, [0, 1], [stage.startHeight, stage.endHeight], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  })
+  return interpolate(
+    progressInStage,
+    [0, 1],
+    [stage.startHeight, stage.endHeight],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  )
 }
 
 function StarHeightScene() {
   const frame = useCurrentFrame()
   const { height: viewHeight, width: viewWidth } = useVideoConfig()
 
-  // 主参照物目标高度 = 视频高度的一半
-  const mainLandmarkTargetHeight = viewHeight * 0.5
+  // 主参照物目标高度 = 视频高度的一半（540px）
+  const mainLandmarkTargetHeight = Math.min(
+    viewHeight * 0.5,
+    MAX_LANDMARK_HEIGHT,
+  )
 
   // 计算当前进度（0-1）
   const heightProgress = Math.min(frame / VIDEO_CONFIG.durationInFrames, 1)
-  
+
   // 使用分段式高度计算，每个参照物阶段有相等的展示时间
   const columnHeightInMeters = calculateHeight(heightProgress)
 
@@ -91,12 +102,13 @@ function StarHeightScene() {
   // 柱子高度（像素）= 柱子实际高度（米）* 缩放比例
   const columnHeightInPixels = columnHeightInMeters * scaleRatio
 
-  // 限制柱子最高不超过视频高度的 90%
-  const maxColumnHeight = viewHeight * 0.9
+  // 限制柱子最高不超过主参照物高度的 1.8 倍（确保不会超出屏幕）
+  const maxColumnHeight = mainLandmarkTargetHeight * 1.8
   const finalColumnHeight = Math.min(columnHeightInPixels, maxColumnHeight)
 
-  // 柱子和参照物紧挨着显示
-  const columnX = viewWidth * 0.5
+  // 柱子和参照物保持距离显示
+  // 柱子的 X 位置：保持向右移动 300px 的位置不变
+  const columnX = viewWidth * 0.5 + 300
 
   const titleOpacity = interpolate(frame, [0, 30], [0, 1], {
     extrapolateLeft: "clamp",
@@ -106,12 +118,14 @@ function StarHeightScene() {
   // 下一个参照物出现的过渡进度
   // 当柱子高度接近下一个参照物高度时，显示下一个参照物
   let nextLandmarkTransitionProgress = 0
+  let nextLandmarkIndex = -1
   if (mainLandmarkIndex < landmarks.length - 1) {
     const nextLandmark = landmarks[mainLandmarkIndex + 1]
     const progressToNext = columnHeightInMeters / nextLandmark.height
     // 当进度超过 80% 时开始显示下一个参照物
     if (progressToNext > 0.8) {
       nextLandmarkTransitionProgress = Math.min((progressToNext - 0.8) / 0.2, 1)
+      nextLandmarkIndex = mainLandmarkIndex + 1
     }
   }
 
@@ -167,6 +181,7 @@ function StarHeightScene() {
             mainLandmarkIndex={mainLandmarkIndex}
             scaleRatio={scaleRatio}
             nextLandmarkTransitionProgress={nextLandmarkTransitionProgress}
+            nextLandmarkIndex={nextLandmarkIndex}
             landmarks={landmarks}
             columnX={columnX}
           />

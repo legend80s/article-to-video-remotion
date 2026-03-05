@@ -7,19 +7,21 @@ type ReferenceObjectsContainerProps = {
   readonly mainLandmarkIndex: number
   readonly scaleRatio: number
   readonly nextLandmarkTransitionProgress: number
+  readonly nextLandmarkIndex: number
   readonly landmarks: { name: string; height: number }[]
+  readonly columnX: number
 }
 
 export const ReferenceObjectsContainer = ({
   viewHeight,
-  viewWidth,
   mainLandmarkIndex,
   scaleRatio,
   nextLandmarkTransitionProgress,
+  nextLandmarkIndex,
   landmarks,
+  columnX,
 }: ReferenceObjectsContainerProps) => {
   const groundHeight = 0
-  const mainLandmarkTargetHeight = viewHeight * 0.5
 
   // 计算参照物在屏幕上的显示高度
   // 所有参照物都使用相同的 scaleRatio 进行缩放
@@ -30,17 +32,19 @@ export const ReferenceObjectsContainer = ({
   const renderLandmarks = () => {
     const elements: React.ReactNode[] = []
 
-    // 主参照物的 X 位置（固定在屏幕中间偏左）
-    const mainLandmarkX = viewWidth * 0.3
+    // 主参照物的 X 位置（在柱子左侧，保持 600px 间距）
+    const mainLandmarkX = columnX - 600
 
     // 渲染所有已展示的参照物（包括当前主参照物和之前的参照物）
+    // 注意：所有参照物都使用当前的 scaleRatio，这样它们会按比例缩小
     for (let i = 0; i <= mainLandmarkIndex; i++) {
       const landmark = landmarks[i]
       const displayHeight = getLandmarkDisplayHeight(landmark.height)
 
       // 计算位置：主参照物在 mainLandmarkX，之前的参照物向左偏移
+      // 保持每个参照物之间 150px 的恒定间距
       const offsetFromMain = mainLandmarkIndex - i
-      const leftPosition = mainLandmarkX - offsetFromMain * 120
+      const leftPosition = mainLandmarkX - offsetFromMain * 150
 
       // 当前主参照物完全不透明，之前的参照物透明度降低
       const isMainLandmark = i === mainLandmarkIndex
@@ -111,15 +115,15 @@ export const ReferenceObjectsContainer = ({
     }
 
     // 渲染下一个参照物（带过渡动画）
-    if (mainLandmarkIndex < landmarks.length - 1 && nextLandmarkTransitionProgress > 0) {
-      const nextIndex = mainLandmarkIndex + 1
-      const nextLandmark = landmarks[nextIndex]
+    if (nextLandmarkIndex >= 0 && nextLandmarkTransitionProgress > 0) {
+      const nextLandmark = landmarks[nextLandmarkIndex]
       const nextDisplayHeight = getLandmarkDisplayHeight(nextLandmark.height)
-      const nextLeftPosition = mainLandmarkX + 120
+      // 下一个参照物也在柱子左侧，保持恒定间距
+      const nextLeftPosition = mainLandmarkX - 150
 
       elements.push(
         <div
-          key={`next-${nextIndex}`}
+          key={`next-${nextLandmarkIndex}`}
           style={{
             position: "absolute",
             left: nextLeftPosition,
@@ -134,7 +138,7 @@ export const ReferenceObjectsContainer = ({
             style={{
               width: 80,
               height: nextDisplayHeight,
-              background: getLandmarkColor(nextIndex),
+              background: getLandmarkColor(nextLandmarkIndex),
               borderRadius: 4,
               display: "flex",
               alignItems: "flex-end",
@@ -142,7 +146,7 @@ export const ReferenceObjectsContainer = ({
               paddingBottom: 8,
             }}
           >
-            {nextIndex < 4 && nextDisplayHeight > 30 && (
+            {nextLandmarkIndex < 4 && nextDisplayHeight > 30 && (
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {Array.from({ length: 5 }).map((_, j) => (
                   <div
