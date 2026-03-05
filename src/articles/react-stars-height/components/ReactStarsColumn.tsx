@@ -51,7 +51,8 @@ export const ReactStarsColumn = ({
           width={columnWidth}
           height={Math.max(columnHeight, 1)}
           viewBox={`0 0 ${columnWidth} ${Math.max(columnHeight, 1)}`}
-          style={{ position: "absolute", bottom: 0, left: 0 }}
+          className='rounded-full'
+          style={{ position: "absolute", bottom: 0, left: 0, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
         >
           <defs>
             <linearGradient

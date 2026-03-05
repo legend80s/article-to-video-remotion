@@ -44,7 +44,7 @@ export const referenceObjects: ReferenceObject[] = [
 
 export const MAX_HEIGHT = 243550
 // react star 柱子宽度
-export const COLUMN_WIDTH = 70
+export const COLUMN_WIDTH = 60
 export const REACT_COLOR = "rgb(8, 126, 164)"
 
 export function formatHeight(meters: number): string {

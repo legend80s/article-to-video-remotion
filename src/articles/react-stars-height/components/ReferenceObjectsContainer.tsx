@@ -14,6 +14,7 @@ type ReferenceObjectsContainerProps = {
     height: number
     image?: string
     emoji?: string
+    placement?: React.CSSProperties["alignItems"]
   }[]
   readonly columnX: number
 }
@@ -84,22 +85,26 @@ export const ReferenceObjectsContainer = ({
           <div
             style={{
               height: displayHeight,
+              width: landmark.emoji ? 80 : 'auto',
               display: "flex",
-              alignItems: landmark.image ? "flex-end" : "flex-start",
+              alignItems: landmark.image ? "flex-end" : ( landmark.placement ?? "flex-start"),
               justifyContent: "center",
+              background: landmark.image ? "none" : "#4A90D9",
+              borderTopRightRadius: 12,
+              borderTopLeftRadius: 12,
             }}
           >
             {landmark.image ? (
               <Img
                 src={staticFile(landmark.image)}
-                className='w-auto'
+                className="w-auto"
                 style={{
                   height: displayHeight,
                   objectFit: "contain",
                 }}
               />
             ) : (
-              <span style={{ fontSize: Math.min(displayHeight * 0.8, 120) }}>
+              <span style={{ fontSize: Math.min(displayHeight * 0.5, 60) }}>
                 {landmark.emoji || "🏗️"}
               </span>
             )}
@@ -149,9 +154,13 @@ export const ReferenceObjectsContainer = ({
           <div
             style={{
               height: Math.min(900, nextDisplayHeight),
+              width: nextLandmark.emoji ? 80 : 'auto',
               display: "flex",
-              alignItems: nextLandmark.image ? "flex-end" : "flex-start",
+              alignItems: nextLandmark.image ? "flex-end" : (nextLandmark.placement ?? "flex-start"),
               justifyContent: "center",
+              background: nextLandmark.image ? "none" : "#4A90D9",
+              borderTopRightRadius: 12,
+              borderTopLeftRadius: 12,
             }}
           >
             {nextLandmark.image ? (
@@ -164,16 +173,14 @@ export const ReferenceObjectsContainer = ({
                 }}
               />
             ) : (
-              <span
-                style={{ fontSize: Math.min(nextDisplayHeight * 0.8, 120) }}
-              >
+              <span style={{ fontSize: Math.min(nextDisplayHeight * 0.5, 60) }}>
                 {nextLandmark.emoji || "🏗️"}
               </span>
             )}
           </div>
 
           <div
-            className="text-3xl"
+            className="text-4xl"
             style={{
               marginBottom: 8,
               textAlign: "center",

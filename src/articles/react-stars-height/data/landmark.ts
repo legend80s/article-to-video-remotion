@@ -3,10 +3,11 @@ type ILandmark = {
   height: number
   image?: string
   emoji?: string
+  placement?: React.CSSProperties["alignItems"]
 }
 
 export const landmarks: ILandmark[] = [
-  { name: "7层住宅楼", height: 22, emoji: "🏠" },
+  { name: "7层住宅楼", height: 22, emoji: "🏠", placement: "flex-end" },
   // { name: "上海国际商贸中心T2", height: 370 },
   {
     name: "深圳华润大厦",
