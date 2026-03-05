@@ -4,39 +4,6 @@
 
 This is a Remotion video project that creates programmatic videos using React. The project uses TypeScript, Tailwind CSS v4, and follows Remotion's composition-based architecture for creating animated video content.
 
-## Essential Commands
-
-### Development & Building
-
-```bash
-# Start Remotion Studio for preview and development
-npm run dev
-
-# Build the video for production
-npm run build
-
-# Upgrade Remotion dependencies
-npm run upgrade
-```
-
-### Code Quality & Type Checking
-
-```bash
-# Run ESLint and TypeScript checking (no test suite exists)
-npm run lint
-
-# Type check only
-npx tsc --noEmit
-
-# Format code with Biome
-npx @biomejs/biome format --write .
-
-# Lint with Biome
-npx @biomejs/biome lint .
-```
-
-**Note: No test framework is currently configured in this project.** All validation is done through ESLint and TypeScript checking.
-
 ## Code Style Guidelines
 
 ### TypeScript & React Patterns
@@ -92,12 +59,6 @@ export const ComponentName = ({ propName, optionalProp }: IComponentNameProps) =
 - LF line endings
 - Insert final newline
 
-#### ESLint Configuration
-
-- Uses `@remotion/eslint-config-flat`
-- Strict TypeScript checking enabled
-- No unused locals allowed
-
 ### Animation & Timing Patterns
 
 #### Hook Creation
@@ -125,15 +86,6 @@ export const ComponentName = ({ propName, optionalProp }: IComponentNameProps) =
 - Use React.memo for expensive components if needed
 - Optimize frame calculations to avoid re-renders
 - Cache expensive calculations outside render cycles
-
-## Development Workflow
-
-1. Run `npm run dev` to start Remotion Studio
-2. Make changes to components
-3. Run `npm run lint` to check code quality
-4. Use Biome for formatting: `npx @biomejs/biome format --write .`
-5. Preview videos in Remotion Studio
-6. Build with `npm run build` when complete
 
 ## Project-Specific Notes
 
