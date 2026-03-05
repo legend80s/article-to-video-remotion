@@ -1,30 +1,20 @@
-import type React from "react"
+import "../handwritten-fonts.css"
 
-interface TitleProps {
+type TitleProps = {
   readonly opacity?: number
 }
 
-export const Title: React.FC<TitleProps> = ({ opacity = 1 }) => {
+export const Title = ({ opacity = 1 }: TitleProps) => {
   return (
     <div
-      style={{
-        position: "absolute",
-        top: 40,
-        left: 0,
-        right: 0,
-        display: "flex",
-        justifyContent: "center",
-        opacity,
-        zIndex: 100,
-      }}
+      className="absolute top-10 left-0 right-0 flex justify-center z-[100]"
+      style={{ opacity }}
     >
       <div
+        className="handwritten-title text-5xl font-bold text-white text-center"
         style={{
-          fontSize: 48,
-          fontWeight: "bold",
-          color: "#fff",
-          textShadow: "0 0 20px rgba(8, 126, 164, 0.8), 0 0 40px rgba(8, 126, 164, 0.4)",
-          textAlign: "center",
+          textShadow:
+            "0 0 20px rgba(8, 126, 164, 0.8), 0 0 40px rgba(8, 126, 164, 0.4)",
         }}
       >
         React GitHub Star ⭐ 增长趋势 2013 至 2026
