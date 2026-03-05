@@ -1,3 +1,8 @@
+## TODO
+
+todo: 龙虾 icon 替换成动图 <https://www.star-history.com/assets/lobster-animated.gif>
+
+## 素材
 
 2026-3-4 243550
 
@@ -5,6 +10,7 @@
 2018-06: ⭐ 100,000 Stars 里程碑
 
 ### 前端
+
 - react
 - vue
 - angular
@@ -32,9 +38,8 @@
 - fastapi
 - springboot
 
-
-
 ## python
+
 - FastApi
 - langchain
 - uv
@@ -42,9 +47,11 @@
 ## rust
 
 ## sqlite
+
 ## myssql
+
 ## postgresql
 
 ## java
-## go
 
+## go
