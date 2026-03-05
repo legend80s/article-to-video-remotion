@@ -76,8 +76,8 @@ export const ReferenceObjectsContainer = ({
           }}
         >
           <div
+            className="w-[80px] 1"
             style={{
-              width: 80,
               height: displayHeight,
               background: getLandmarkColor(i),
               borderRadius: 4,
@@ -147,9 +147,9 @@ export const ReferenceObjectsContainer = ({
           }}
         >
           <div
+            className="w-[80px] 2"
             style={{
-              width: 80,
-              height: nextDisplayHeight,
+              height: Math.min(900, nextDisplayHeight),
               background: getLandmarkColor(nextLandmarkIndex),
               borderRadius: 4,
               display: "flex",

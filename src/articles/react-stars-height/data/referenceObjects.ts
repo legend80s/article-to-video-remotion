@@ -9,9 +9,21 @@ export interface ReferenceObject {
 
 export const referenceObjects: ReferenceObject[] = [
   { id: "building-1", name: "7层住宅楼", height: 22, type: "building" },
-  { id: "building-2", name: "上海国际商贸中心T2", height: 370, type: "building" },
+  {
+    id: "building-2",
+    name: "上海国际商贸中心T2",
+    height: 370,
+    type: "building",
+  },
   { id: "building-3", name: "上海中心大厦", height: 632, type: "building" },
-  { id: "building-4", name: "哈利法塔", height: 828, type: "building", color: "#FFAA00", special: true },
+  {
+    id: "building-4",
+    name: "哈利法塔",
+    height: 828,
+    type: "building",
+    color: "#FFAA00",
+    special: true,
+  },
   { id: "mountain-1", name: "泰山", height: 1545, type: "mountain" },
   { id: "mountain-2", name: "富士山", height: 3776, type: "mountain" },
   { id: "mountain-3", name: "玉龙雪山", height: 5596, type: "mountain" },
@@ -22,11 +34,17 @@ export const referenceObjects: ReferenceObject[] = [
   { id: "layer-1", name: "平流层顶", height: 50000, type: "layer" },
   { id: "layer-2", name: "中间层顶", height: 85000, type: "layer" },
   { id: "layer-3", name: "卡门线（太空边界）", height: 100000, type: "layer" },
-  { id: "satellite-1", name: "低地球轨道卫星", height: 200000, type: "satellite" },
+  {
+    id: "satellite-1",
+    name: "低地球轨道卫星",
+    height: 200000,
+    type: "satellite",
+  },
 ]
 
 export const MAX_HEIGHT = 243550
-export const COLUMN_WIDTH = 80
+// react star 柱子宽度
+export const COLUMN_WIDTH = 70
 export const REACT_COLOR = "rgb(8, 126, 164)"
 
 export function formatHeight(meters: number): string {
