@@ -6,6 +6,10 @@ type ILandmark = {
 export const landmarks: ILandmark[] = [
   { name: "7层住宅楼", height: 22 },
   { name: "上海国际商贸中心T2", height: 370 },
+  { name: "深圳华润大厦", height: 392 },
+  { name: "上海环球金融中心", height: 492 },
+  { name: "台北 101", height: 508 },
+  { name: "深圳平安国际金融中心", height: 599 },
   { name: "上海中心大厦", height: 632 },
   { name: "哈利法塔", height: 828 },
   { name: "泰山", height: 1545 },
