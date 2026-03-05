@@ -79,31 +79,13 @@ export const ReferenceObjectsContainer = ({
             className="w-[80px] 1"
             style={{
               height: displayHeight,
-              background: getLandmarkColor(i),
-              borderRadius: 4,
               display: "flex",
               alignItems: "flex-end",
               justifyContent: "center",
-              paddingBottom: 8,
+              fontSize: Math.min(displayHeight * 0.8, 120),
             }}
           >
-            {/* 建筑物窗户效果 - 只对较低的建筑物显示 */}
-            {i < 4 && displayHeight > 30 && (
-              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                {Array.from({
-                  length: Math.min(5, Math.floor(displayHeight / 20)),
-                }).map((_, j) => (
-                  <div
-                    key={j}
-                    style={{
-                      width: 60,
-                      height: 2,
-                      background: "rgba(255,255,255,0.3)",
-                    }}
-                  />
-                ))}
-              </div>
-            )}
+            {getLandmarkIcon(i)}
           </div>
 
           <div
@@ -151,28 +133,13 @@ export const ReferenceObjectsContainer = ({
             className="w-[80px] 2"
             style={{
               height: Math.min(900, nextDisplayHeight),
-              background: getLandmarkColor(nextLandmarkIndex),
-              borderRadius: 4,
               display: "flex",
               alignItems: "flex-end",
               justifyContent: "center",
-              paddingBottom: 8,
+              fontSize: Math.min(nextDisplayHeight * 0.8, 120),
             }}
           >
-            {nextLandmarkIndex < 4 && nextDisplayHeight > 30 && (
-              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <div
-                    key={j}
-                    style={{
-                      width: 60,
-                      height: 2,
-                      background: "rgba(255,255,255,0.3)",
-                    }}
-                  />
-                ))}
-              </div>
-            )}
+            {getLandmarkIcon(nextLandmarkIndex)}
           </div>
 
           <div
@@ -202,25 +169,25 @@ export const ReferenceObjectsContainer = ({
   return <>{renderLandmarks()}</>
 }
 
-function getLandmarkColor(index: number): string {
-  const colors = [
-    "#4A90D9",
-    "#4A90D9",
-    "#4A90D9",
-    "#FFAA00",
-    "#5D4E37",
-    "#5D4E37",
-    "#5D4E37",
-    "#5D4E37",
-    "#5D4E37",
-    "#5D4E37",
-    "#E8E8E8",
-    "#8AD4FF",
-    "#8AD4FF",
-    "#8AD4FF",
-    "#C0C0C0",
+function getLandmarkIcon(index: number) {
+  const icons = [
+    "🏢", // 7层住宅楼
+    "🏢", // 上海国际商贸中心T2
+    "🏢", // 上海中心大厦
+    "🏢", // 哈利法塔
+    "⛰️", // 泰山
+    "🗻", // 富士山
+    "🏔️", // 玉龙雪山
+    "🏔️", // 念青唐古拉山
+    "🏔️", // 乔戈里峰
+    "🏔️", // 珠穆朗玛峰
+    "✈️", // 民航客机
+    "☁️", // 平流层顶
+    "🌌", // 中间层顶
+    "🚀", // 卡门线
+    "🛰️", // 低地球轨道卫星
   ]
-  return colors[index] || "#4A90D9"
+  return icons[index] || "🏗️"
 }
 
 function formatHeight(meters: number): string {
