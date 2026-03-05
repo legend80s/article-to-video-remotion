@@ -15,7 +15,7 @@ const VIDEO_CONFIG = {
   width: 1920,
   height: 1080,
   fps: 30,
-  durationInFrames: 1500, // 50秒，放慢柱子增长速度
+  durationInFrames: 1500,
 }
 
 const MAX_STARS = 243550
@@ -24,96 +24,62 @@ function StarHeightScene() {
   const frame = useCurrentFrame()
   const { height: viewHeight, width: viewWidth } = useVideoConfig()
 
-  // 根据帧数平均分配每个参照物的展示时间
-  // 总帧数减去一些缓冲帧
+  // 主参照物目标高度 = 视频高度的一半
+  const mainLandmarkTargetHeight = viewHeight * 0.5
+
+  // 计算当前应该展示到第几个参照物
+  // 每个参照物的展示时间 = 总时间 / 参照物数量
   const totalActiveFrames = VIDEO_CONFIG.durationInFrames - 60
   const framesPerLandmark = totalActiveFrames / landmarks.length
 
-  // 停留时间 0.5 秒 = 15 帧
-  const pauseFrames = 15
+  // 增长阶段占 80%，停留阶段占 20%
+  const growthRatio = 0.8
+  const growthFrames = framesPerLandmark * growthRatio
+  const pauseFrames = framesPerLandmark - growthFrames
 
-  // 每个参照物的周期 = 增长时间 + 停留时间
-  const growthFrames = framesPerLandmark - pauseFrames
-  const framesPerLandmarkWithPause = growthFrames + pauseFrames
+  // 当前处于第几个参照物周期（基于完整周期）
+  const currentCycleIndex = Math.floor(frame / framesPerLandmark)
+  const timeInCurrentCycle = frame % framesPerLandmark
 
-  // 柱子增长进度（0-1）基于增长时间
-  const columnGrowthProgress = Math.min(frame / growthFrames, 1)
-
-  // 参照物切换进度基于完整周期（增长 + 停留）
-  const rawLandmarkIndex = frame / framesPerLandmarkWithPause
-
-  // 当前柱子高度 = 当前进度对应的star数
-  const progress = interpolate(frame, [0, totalActiveFrames], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  })
-
-  // 柱子高度计算：先快速增长到参照物高度，然后停留
-  // - 增长阶段：每 growthFrames 帧，柱子从 0 增长到当前参照物高度
-  // - 停留阶段：在达到当前参照物高度后停留 pauseFrames 帧
-  // - 过渡：然后切换到下一个参照物
-
-  const growthTimePerLandmark = growthFrames // 每参照物增长时间
-
-  // 计算当前处于第几个增长周期（基于纯增长时间）
-  const currentGrowthIndex = Math.floor(frame / growthTimePerLandmark)
-
-  // 计算在当前增长周期内的进度（0-1）
-  const progressInGrowth =
-    (frame % growthTimePerLandmark) / growthTimePerLandmark
-
-  // 确定当前柱子应该达到的参照物索引
-  let actualLandmarkIndex = currentGrowthIndex
-  if (actualLandmarkIndex >= landmarks.length) {
-    actualLandmarkIndex = landmarks.length - 1
+  // 确定当前主参照物索引
+  let mainLandmarkIndex = currentCycleIndex
+  if (mainLandmarkIndex >= landmarks.length) {
+    mainLandmarkIndex = landmarks.length - 1
   }
-  const actualLandmark = landmarks[actualLandmarkIndex]
+  if (mainLandmarkIndex < 0) {
+    mainLandmarkIndex = 0
+  }
 
-  // 计算柱子目标高度
-  let columnTargetHeight: number
-  const timeInCurrentCycle = frame % framesPerLandmarkWithPause
+  // 当前主参照物
+  const mainLandmark = landmarks[mainLandmarkIndex]
 
-  if (timeInCurrentCycle >= growthFrames) {
-    // 停留阶段：保持在当前参照物高度
-    columnTargetHeight = actualLandmark.height
+  // 计算柱子目标高度（米）
+  let columnTargetHeightInMeters: number
+
+  if (timeInCurrentCycle < growthFrames) {
+    // 增长阶段：从 0 增长到当前主参照物高度
+    const growthProgress = timeInCurrentCycle / growthFrames
+    columnTargetHeightInMeters = growthProgress * mainLandmark.height
   } else {
-    // 增长阶段：从 0 增长到当前参照物高度
-    columnTargetHeight = progressInGrowth * actualLandmark.height
+    // 停留阶段：保持在当前主参照物高度
+    columnTargetHeightInMeters = mainLandmark.height
   }
 
-  // 当前参照物索引（用于显示）：基于完整周期（增长+停留）
-  let currentLandmarkIndex = Math.floor(frame / framesPerLandmarkWithPause)
-  if (currentLandmarkIndex >= landmarks.length) {
-    currentLandmarkIndex = landmarks.length - 1
-  }
-  if (currentLandmarkIndex < 0) {
-    currentLandmarkIndex = 0
-  }
+  // 计算当前柱子实际 star 数（用于显示）
+  const totalProgress = Math.min(frame / totalActiveFrames, 1)
+  const currentStars = interpolate(totalProgress, [0, 1], [0, MAX_STARS])
 
-  const currentLandmark = landmarks[currentLandmarkIndex]
-  const nextLandmark = landmarks[currentLandmarkIndex + 1]
+  // 计算缩放比例：基于主参照物高度
+  // 主参照物在屏幕上永远显示为 mainLandmarkTargetHeight 高度
+  // 所以缩放比例 = mainLandmarkTargetHeight / mainLandmark.height
+  const scaleRatio = mainLandmarkTargetHeight / mainLandmark.height
 
-  // 过渡进度（用于显示下一个参照物）
-  let transitionProgress = 0
-  if (timeInCurrentCycle >= growthFrames) {
-    transitionProgress = (timeInCurrentCycle - growthFrames) / pauseFrames
-  }
-
-  // 当前柱子实际 star 数（用于显示）
-  const currentStars = interpolate(progress, [0, 1], [0, MAX_STARS])
-
-  // 转换柱子高度为像素值
-  // 当柱子高度等于参照物高度时，显示为视频高度的一半
-  const mainLandmarkTargetHeight = viewHeight * 0.5
-  const columnHeight =
-    (columnTargetHeight / actualLandmark.height) * mainLandmarkTargetHeight
+  // 柱子高度（像素）= 柱子目标高度（米）* 缩放比例
+  const columnHeightInPixels = columnTargetHeightInMeters * scaleRatio
 
   // 限制柱子最高不超过视频高度的 90%
   const maxColumnHeight = viewHeight * 0.9
-  let finalColumnHeight = columnHeight
-  if (finalColumnHeight > maxColumnHeight) {
-    finalColumnHeight = maxColumnHeight
-  }
+  const finalColumnHeight = Math.min(columnHeightInPixels, maxColumnHeight)
 
   const columnX = viewWidth / 2 + 350
 
@@ -121,6 +87,16 @@ function StarHeightScene() {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   })
+
+  // 下一个参照物出现的过渡进度
+  let nextLandmarkTransitionProgress = 0
+  if (
+    timeInCurrentCycle >= growthFrames &&
+    mainLandmarkIndex < landmarks.length - 1
+  ) {
+    nextLandmarkTransitionProgress =
+      (timeInCurrentCycle - growthFrames) / pauseFrames
+  }
 
   return (
     <div
@@ -164,15 +140,16 @@ function StarHeightScene() {
             viewHeight={viewHeight}
             viewWidth={viewWidth}
             columnX={columnX}
-            currentLandmark={currentLandmark}
+            currentLandmark={mainLandmark}
           />
 
           <ReferenceObjectsContainer
             columnHeight={finalColumnHeight}
             viewHeight={viewHeight}
             viewWidth={viewWidth}
-            currentLandmarkIndex={currentLandmarkIndex}
-            transitionProgress={transitionProgress}
+            mainLandmarkIndex={mainLandmarkIndex}
+            scaleRatio={scaleRatio}
+            nextLandmarkTransitionProgress={nextLandmarkTransitionProgress}
             landmarks={landmarks}
           />
         </div>

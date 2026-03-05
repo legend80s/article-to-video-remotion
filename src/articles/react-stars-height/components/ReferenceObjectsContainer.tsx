@@ -4,39 +4,47 @@ type ReferenceObjectsContainerProps = {
   readonly columnHeight: number
   readonly viewHeight: number
   readonly viewWidth: number
-  readonly currentLandmarkIndex: number
-  readonly transitionProgress: number
+  readonly mainLandmarkIndex: number
+  readonly scaleRatio: number
+  readonly nextLandmarkTransitionProgress: number
   readonly landmarks: { name: string; height: number }[]
 }
 
 export const ReferenceObjectsContainer = ({
-  columnHeight,
   viewHeight,
   viewWidth,
-  currentLandmarkIndex,
-  transitionProgress,
+  mainLandmarkIndex,
+  scaleRatio,
+  nextLandmarkTransitionProgress,
   landmarks,
 }: ReferenceObjectsContainerProps) => {
   const groundHeight = 0
-
   const mainLandmarkTargetHeight = viewHeight * 0.5
 
-  const getLandmarkHeight = (index: number) => {
-    const landmark = landmarks[index]
-    const ratio = columnHeight / mainLandmarkTargetHeight
-    return landmark.height * ratio
+  // 计算参照物在屏幕上的显示高度
+  // 所有参照物都使用相同的 scaleRatio 进行缩放
+  const getLandmarkDisplayHeight = (landmarkHeight: number) => {
+    return landmarkHeight * scaleRatio
   }
 
   const renderLandmarks = () => {
     const elements: React.ReactNode[] = []
 
-    const currentLandmarkX = viewWidth * 0.3
+    // 主参照物的 X 位置（固定在屏幕中间偏左）
+    const mainLandmarkX = viewWidth * 0.3
 
-    for (let i = 0; i < currentLandmarkIndex; i++) {
-      const offsetFromCurrent = currentLandmarkIndex - i
-      const leftPosition = currentLandmarkX - offsetFromCurrent * 120
-      const landmarkHeight = getLandmarkHeight(i)
-      const opacity = 0.3
+    // 渲染所有已展示的参照物（包括当前主参照物和之前的参照物）
+    for (let i = 0; i <= mainLandmarkIndex; i++) {
+      const landmark = landmarks[i]
+      const displayHeight = getLandmarkDisplayHeight(landmark.height)
+
+      // 计算位置：主参照物在 mainLandmarkX，之前的参照物向左偏移
+      const offsetFromMain = mainLandmarkIndex - i
+      const leftPosition = mainLandmarkX - offsetFromMain * 120
+
+      // 当前主参照物完全不透明，之前的参照物透明度降低
+      const isMainLandmark = i === mainLandmarkIndex
+      const opacity = isMainLandmark ? 1 : 0.4
 
       elements.push(
         <div
@@ -54,7 +62,7 @@ export const ReferenceObjectsContainer = ({
           <div
             style={{
               width: 80,
-              height: landmarkHeight,
+              height: displayHeight,
               background: getLandmarkColor(i),
               borderRadius: 4,
               display: "flex",
@@ -63,10 +71,11 @@ export const ReferenceObjectsContainer = ({
               paddingBottom: 8,
             }}
           >
-            {i < 4 && landmarkHeight > 30 && (
+            {/* 建筑物窗户效果 - 只对较低的建筑物显示 */}
+            {i < 4 && displayHeight > 30 && (
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {Array.from({
-                  length: Math.min(5, Math.floor(landmarkHeight / 20)),
+                  length: Math.min(5, Math.floor(displayHeight / 20)),
                 }).map((_, j) => (
                   <div
                     key={j}
@@ -92,82 +101,21 @@ export const ReferenceObjectsContainer = ({
               whiteSpace: "nowrap",
             }}
           >
-            <div>{landmarks[i].name}</div>
+            <div>{landmark.name}</div>
             <div style={{ color: "#8AD4FF", fontSize: 12 }}>
-              {formatHeight(landmarks[i].height)}
+              {formatHeight(landmark.height)}
             </div>
           </div>
         </div>,
       )
     }
 
-    const currentLandmarkHeight = getLandmarkHeight(currentLandmarkIndex)
-    elements.push(
-      <div
-        key={`landmark-${currentLandmarkIndex}`}
-        style={{
-          position: "absolute",
-          left: currentLandmarkX,
-          bottom: groundHeight,
-          display: "flex",
-          flexDirection: "column-reverse",
-          alignItems: "center",
-          opacity: 1,
-        }}
-      >
-        <div
-          style={{
-            width: 80,
-            height: currentLandmarkHeight,
-            background: getLandmarkColor(currentLandmarkIndex),
-            borderRadius: 4,
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "center",
-            paddingBottom: 8,
-          }}
-        >
-          {currentLandmarkIndex < 4 && currentLandmarkHeight > 30 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              {Array.from({
-                length: Math.min(5, Math.floor(currentLandmarkHeight / 20)),
-              }).map((_, j) => (
-                <div
-                  key={j}
-                  style={{
-                    width: 60,
-                    height: 2,
-                    background: "rgba(255,255,255,0.3)",
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div
-          style={{
-            marginBottom: 8,
-            textAlign: "center",
-            color: "#fff",
-            fontSize: 14,
-            fontWeight: "bold",
-            textShadow: "0 0 4px rgba(0,0,0,0.8)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          <div>{landmarks[currentLandmarkIndex].name}</div>
-          <div style={{ color: "#8AD4FF", fontSize: 12 }}>
-            {formatHeight(landmarks[currentLandmarkIndex].height)}
-          </div>
-        </div>
-      </div>,
-    )
-
-    if (currentLandmarkIndex < landmarks.length - 1 && transitionProgress > 0) {
-      const nextIndex = currentLandmarkIndex + 1
-      const nextLeftPosition = currentLandmarkX + 120
-      const nextLandmarkHeight = getLandmarkHeight(nextIndex)
+    // 渲染下一个参照物（带过渡动画）
+    if (mainLandmarkIndex < landmarks.length - 1 && nextLandmarkTransitionProgress > 0) {
+      const nextIndex = mainLandmarkIndex + 1
+      const nextLandmark = landmarks[nextIndex]
+      const nextDisplayHeight = getLandmarkDisplayHeight(nextLandmark.height)
+      const nextLeftPosition = mainLandmarkX + 120
 
       elements.push(
         <div
@@ -179,13 +127,13 @@ export const ReferenceObjectsContainer = ({
             display: "flex",
             flexDirection: "column-reverse",
             alignItems: "center",
-            opacity: transitionProgress,
+            opacity: nextLandmarkTransitionProgress,
           }}
         >
           <div
             style={{
               width: 80,
-              height: nextLandmarkHeight,
+              height: nextDisplayHeight,
               background: getLandmarkColor(nextIndex),
               borderRadius: 4,
               display: "flex",
@@ -194,7 +142,7 @@ export const ReferenceObjectsContainer = ({
               paddingBottom: 8,
             }}
           >
-            {nextIndex < 4 && nextLandmarkHeight > 30 && (
+            {nextIndex < 4 && nextDisplayHeight > 30 && (
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {Array.from({ length: 5 }).map((_, j) => (
                   <div
@@ -221,9 +169,9 @@ export const ReferenceObjectsContainer = ({
               whiteSpace: "nowrap",
             }}
           >
-            <div>{landmarks[nextIndex].name}</div>
+            <div>{nextLandmark.name}</div>
             <div style={{ color: "#8AD4FF", fontSize: 12 }}>
-              {formatHeight(landmarks[nextIndex].height)}
+              {formatHeight(nextLandmark.height)}
             </div>
           </div>
         </div>,
