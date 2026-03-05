@@ -107,18 +107,19 @@ export const ReferenceObjectsContainer = ({
           </div>
 
           <div
+            className="text-2xl"
             style={{
               marginBottom: 8,
               textAlign: "center",
               color: "#fff",
-              fontSize: 14,
+
               fontWeight: "bold",
               textShadow: "0 0 4px rgba(0,0,0,0.8)",
               whiteSpace: "nowrap",
             }}
           >
             <div>{landmark.name}</div>
-            <div style={{ color: "#8AD4FF", fontSize: 12 }}>
+            <div className="text-lg" style={{ color: "#8AD4FF" }}>
               {formatHeight(landmark.height)}
             </div>
           </div>
@@ -175,18 +176,19 @@ export const ReferenceObjectsContainer = ({
           </div>
 
           <div
+            className="text-3xl"
             style={{
               marginBottom: 8,
               textAlign: "center",
               color: "#fff",
-              fontSize: 14,
+
               fontWeight: "bold",
               textShadow: "0 0 4px rgba(0,0,0,0.8)",
               whiteSpace: "nowrap",
             }}
           >
             <div>{nextLandmark.name}</div>
-            <div style={{ color: "#8AD4FF", fontSize: 12 }}>
+            <div className="text-lg" style={{ color: "#8AD4FF" }}>
               {formatHeight(nextLandmark.height)}
             </div>
           </div>

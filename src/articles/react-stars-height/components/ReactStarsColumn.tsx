@@ -83,19 +83,20 @@ export const ReactStarsColumn = ({
         {/* React 标志 - 在柱子顶部下方 */}
         {columnHeight > 20 && (
           <div
+            className="text-4xl flex items-center flex-col gap-6"
             style={{
               position: "absolute",
               top: "50%",
               left: "50%",
               transform: "translateX(-50%)",
-              fontSize: 14,
+
               color: "#fff",
               fontWeight: "bold",
               textShadow: "0 0 8px rgba(0,0,0,0.8)",
               whiteSpace: "nowrap",
             }}
           >
-            ⚛ React
+            <span>⚛</span>
           </div>
         )}
       </div>
