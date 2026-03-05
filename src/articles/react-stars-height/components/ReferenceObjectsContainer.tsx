@@ -1,5 +1,5 @@
 import type React from "react"
-import { Img } from "remotion"
+import { Img, staticFile } from "remotion"
 
 type ReferenceObjectsContainerProps = {
   readonly columnHeight: number
@@ -91,10 +91,10 @@ export const ReferenceObjectsContainer = ({
           >
             {landmark.image ? (
               <Img
-                src={landmark.image}
+                src={staticFile(landmark.image)}
+                className='w-auto'
                 style={{
                   height: displayHeight,
-                  width: "auto",
                   objectFit: "contain",
                 }}
               />
@@ -106,7 +106,7 @@ export const ReferenceObjectsContainer = ({
           </div>
 
           <div
-            className="text-3xl"
+            className="text-xl 1"
             style={{
               marginBottom: 8,
               textAlign: "center",
@@ -156,7 +156,7 @@ export const ReferenceObjectsContainer = ({
           >
             {nextLandmark.image ? (
               <Img
-                src={nextLandmark.image}
+                src={staticFile(nextLandmark.image)}
                 style={{
                   height: Math.min(900, nextDisplayHeight),
                   width: "auto",
