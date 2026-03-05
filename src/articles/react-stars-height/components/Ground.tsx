@@ -12,8 +12,8 @@ export const Ground = ({ currentStars }: GroundProps) => {
       style={{ height: groundHeight }}
     >
       <div className="absolute inset-0"></div>
-      <div className="absolute bottom-4 left-[90%] -translate-x-1/2 text-3xl text-[#8AD4FF] whitespace-nowrap">
-        地平线 0 米
+      <div className="absolute bottom-1 left-[90%] -translate-x-1/2 text-3xl text-[#8AD4FF] whitespace-nowrap">
+        地平线
       </div>
     </div>
   )
