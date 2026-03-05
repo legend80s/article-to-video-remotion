@@ -147,7 +147,7 @@ function StarHeightScene() {
       <Title opacity={titleOpacity} />
 
       {/* 地面固定在底部 */}
-      <Ground width={viewWidth} currentStars={currentStars} />
+      <Ground currentStars={currentStars} />
 
       {/* 主内容区域 - 包含柱子和参照物 */}
       <div
