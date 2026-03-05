@@ -1,31 +1,32 @@
 import type React from "react"
-import { COLUMN_WIDTH, REACT_COLOR, formatStars, MAX_HEIGHT } from "../data/referenceObjects"
+import { COLUMN_WIDTH, REACT_COLOR, formatStars } from "../data/referenceObjects"
 
 interface ReactStarsColumnProps {
   readonly currentStars: number
   readonly scale: number
-  readonly cameraY: number
   readonly viewHeight: number
+  readonly viewWidth: number
+  readonly currentLandmark: { name: string; height: number }
 }
 
 export const ReactStarsColumn: React.FC<ReactStarsColumnProps> = ({
   currentStars,
   scale,
-  cameraY,
   viewHeight,
+  viewWidth,
+  currentLandmark,
 }) => {
   const columnHeight = currentStars * scale
   const columnWidth = COLUMN_WIDTH
-  const relativeY = columnHeight - cameraY
 
-  const showReactLabel = relativeY > 0 && relativeY < viewHeight
-  const showStarsLabel = relativeY > -50 && relativeY < viewHeight + 50
+  // 柱子底部固定在地面（底部）
+  const columnBottom = 0 // 地面高度
 
   return (
     <div
       style={{
         position: "absolute",
-        bottom: 0,
+        bottom: columnBottom,
         left: "50%",
         transform: "translateX(-50%)",
         display: "flex",
@@ -71,17 +72,19 @@ export const ReactStarsColumn: React.FC<ReactStarsColumnProps> = ({
           />
         </svg>
 
-        {showReactLabel && (
+        {/* React 标志 - 在柱子顶部下方 */}
+        {columnHeight > 20 && (
           <div
             style={{
               position: "absolute",
-              top: columnHeight - 30,
+              top: -25,
               left: "50%",
               transform: "translateX(-50%)",
               fontSize: 14,
               color: "#fff",
               fontWeight: "bold",
               textShadow: "0 0 8px rgba(0,0,0,0.8)",
+              whiteSpace: "nowrap",
             }}
           >
             ⚛ React
@@ -89,23 +92,22 @@ export const ReactStarsColumn: React.FC<ReactStarsColumnProps> = ({
         )}
       </div>
 
-      {showStarsLabel && (
-        <div
-          style={{
-            position: "absolute",
-            bottom: columnHeight + 30,
-            left: "50%",
-            transform: "translateX(-50%)",
-            fontSize: 24,
-            color: "#FFD700",
-            fontWeight: "bold",
-            textShadow: "0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {formatStars(Math.round(currentStars))} ★
-        </div>
-      )}
+      {/* Star 数量显示 - 在柱子顶部上方 */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: columnHeight + 30,
+          left: "50%",
+          transform: "translateX(-50%)",
+          fontSize: 24,
+          color: "#FFD700",
+          fontWeight: "bold",
+          textShadow: "0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {formatStars(Math.round(currentStars))} ★
+      </div>
     </div>
   )
 }
