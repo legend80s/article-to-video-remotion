@@ -43,16 +43,18 @@ npx @biomejs/biome lint .
 
 #### Component Definitions
 
-- Use `React.FC` with readonly props for functional components
-- Define props interfaces with `readonly` properties
+- NOT Use `React.FC` for functional components
+- Define props `type` instead of `interface` with `readonly` properties
 - Use React.CSSProperties for style objects
 - Export components using named exports
 
 ```typescript
-export const ComponentName: React.FC<{
+type IComponentNameProps = {
   readonly propName: string;
   readonly optionalProp?: number;
-}> = ({ propName, optionalProp }) => {
+}
+
+export const ComponentName = ({ propName, optionalProp }: IComponentNameProps) => {
   // Component logic
 };
 ```
@@ -70,18 +72,6 @@ export const ComponentName: React.FC<{
 - Use `spring()` for smooth animations with configurable damping
 - Structure videos using `Composition` and `Sequence` components
 - Define video configuration in separate constants files
-
-### File Organization
-
-#### Directory Structure
-
-- `src/` - Main source code
-- `src/HelloWorld/` - Basic example components
-- `src/articles/[article-name]/` - Article-specific video components
-- `src/articles/[article-name]/scenes/` - Individual scene components
-- `src/articles/[article-name]/components/` - Reusable components
-- `src/articles/[article-name]/utils/` - Helper functions and hooks
-- Constants files: `constants.ts` or `data/constants.ts`
 
 #### Naming Conventions
 
