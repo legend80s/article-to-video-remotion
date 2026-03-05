@@ -114,12 +114,12 @@ export const ReactStarsColumn = ({
         }}
       >
         <div
+          className="text-4xl"
           style={{
-            fontSize: 24,
             color: "#FFD700",
             fontWeight: "bold",
             textShadow:
-              "0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5)",
+              "0 0 6px rgba(255, 215, 0, 0.6), 0 0 12px rgba(255, 215, 0, 0.3)",
             whiteSpace: "nowrap",
           }}
         >
