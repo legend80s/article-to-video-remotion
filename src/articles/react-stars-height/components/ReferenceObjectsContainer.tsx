@@ -1,10 +1,5 @@
 import type React from "react"
 import { interpolate } from "remotion"
-import { Building } from "./Building"
-import { Mountain } from "./Mountain"
-import { Airplane } from "./Airplane"
-import { AtmosphereLayer } from "./AtmosphereLayer"
-import { Satellite } from "./Satellite"
 
 interface ReferenceObjectsContainerProps {
   readonly scale: number
@@ -46,7 +41,7 @@ export const ReferenceObjectsContainer: React.FC<ReferenceObjectsContainerProps>
           left: leftPosition,
           bottom: groundHeight,
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "column-reverse",
           alignItems: "center",
           opacity: 1 - transitionProgress * 0.3, // 过渡时稍微变淡
         }}
@@ -81,10 +76,10 @@ export const ReferenceObjectsContainer: React.FC<ReferenceObjectsContainerProps>
           )}
         </div>
 
-        {/* 参照物名称和高度 */}
+        {/* 参照物名称和高度 - 移到顶部 */}
         <div
           style={{
-            marginTop: 8,
+            marginBottom: 8,
             textAlign: "center",
             color: "#fff",
             fontSize: 14,
@@ -126,7 +121,7 @@ export const ReferenceObjectsContainer: React.FC<ReferenceObjectsContainerProps>
           left: rightPosition + slideInOffset,
           bottom: groundHeight,
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "column-reverse",
           alignItems: "center",
           opacity: transitionProgress,
         }}
@@ -161,10 +156,10 @@ export const ReferenceObjectsContainer: React.FC<ReferenceObjectsContainerProps>
           )}
         </div>
 
-        {/* 参照物名称和高度 */}
+        {/* 参照物名称和高度 - 移到顶部 */}
         <div
           style={{
-            marginTop: 8,
+            marginBottom: 8,
             textAlign: "center",
             color: "#fff",
             fontSize: 14,
