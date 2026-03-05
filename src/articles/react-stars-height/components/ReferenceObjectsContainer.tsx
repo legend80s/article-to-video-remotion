@@ -1,5 +1,5 @@
 import type React from "react"
-import { Img, staticFile } from "remotion"
+import { Img } from "remotion"
 
 type ReferenceObjectsContainerProps = {
   readonly columnHeight: number
@@ -9,7 +9,12 @@ type ReferenceObjectsContainerProps = {
   readonly scaleRatio: number
   readonly nextLandmarkTransitionProgress: number
   readonly nextLandmarkIndex: number
-  readonly landmarks: { name: string; height: number; image?: string }[]
+  readonly landmarks: {
+    name: string
+    height: number
+    image?: string
+    emoji?: string
+  }[]
   readonly columnX: number
 }
 
@@ -95,7 +100,7 @@ export const ReferenceObjectsContainer = ({
               />
             ) : (
               <span style={{ fontSize: Math.min(displayHeight * 0.8, 120) }}>
-                {getLandmarkIcon(i)}
+                {landmark.emoji || "🏗️"}
               </span>
             )}
           </div>
@@ -162,7 +167,7 @@ export const ReferenceObjectsContainer = ({
               <span
                 style={{ fontSize: Math.min(nextDisplayHeight * 0.8, 120) }}
               >
-                {getLandmarkIcon(nextLandmarkIndex)}
+                {nextLandmark.emoji || "🏗️"}
               </span>
             )}
           </div>
@@ -192,27 +197,6 @@ export const ReferenceObjectsContainer = ({
   }
 
   return <>{renderLandmarks()}</>
-}
-
-function getLandmarkIcon(index: number) {
-  const icons = [
-    "🏢", // 7层住宅楼
-    "🏢", // 上海国际商贸中心T2
-    "🏢", // 上海中心大厦
-    "🏢", // 哈利法塔
-    "⛰️", // 泰山
-    "🗻", // 富士山
-    "🏔️", // 玉龙雪山
-    "🏔️", // 念青唐古拉山
-    "🏔️", // 乔戈里峰
-    "🏔️", // 珠穆朗玛峰
-    "✈️", // 民航客机
-    "☁️", // 平流层顶
-    "🌌", // 中间层顶
-    "🚀", // 卡门线
-    "🛰️", // 低地球轨道卫星
-  ]
-  return icons[index] || "🏗️"
 }
 
 function formatHeight(meters: number): string {
