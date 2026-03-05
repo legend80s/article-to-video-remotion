@@ -13,7 +13,8 @@ export const Ground: React.FC<GroundProps> = ({ width }) => {
         left: 0,
         right: 0,
         height: 4,
-        background: "linear-gradient(90deg, transparent, #4A6B4A 10%, #4A6B4A 90%, transparent)",
+        background:
+          "linear-gradient(90deg, transparent, #4A6B4A 10%, #4A6B4A 90%, transparent)",
         boxShadow: "0 0 20px rgba(74, 107, 74, 0.8)",
       }}
     >
@@ -21,7 +22,7 @@ export const Ground: React.FC<GroundProps> = ({ width }) => {
         style={{
           position: "absolute",
           bottom: 10,
-          left: "50%",
+          left: "90%",
           transform: "translateX(-50%)",
           fontSize: 14,
           color: "#8AD4FF",
