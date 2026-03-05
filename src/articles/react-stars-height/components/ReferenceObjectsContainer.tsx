@@ -107,7 +107,7 @@ export const ReferenceObjectsContainer = ({
           </div>
 
           <div
-            className="text-2xl"
+            className="text-3xl"
             style={{
               marginBottom: 8,
               textAlign: "center",
