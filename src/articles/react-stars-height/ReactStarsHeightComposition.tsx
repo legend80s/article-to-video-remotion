@@ -9,6 +9,7 @@ import { Ground } from "./components/Ground"
 import { ReactStarsColumn } from "./components/ReactStarsColumn"
 import { ReferenceObjectsContainer } from "./components/ReferenceObjectsContainer"
 import { Title } from "./components/Title"
+import { formatDate, getDateByStars } from "./data/dateUtils"
 import { landmarks } from "./data/landmark"
 
 const VIDEO_CONFIG = {
@@ -79,6 +80,8 @@ function StarHeightScene() {
   const columnHeightInMeters = calculateHeight(heightProgress)
 
   const currentStars = heightProgress >= 1 ? MAX_STARS : columnHeightInMeters
+
+  const currentDate = formatDate(getDateByStars(currentStars))
 
   let mainLandmarkIndex = 0
   for (let i = 0; i < landmarks.length; i++) {
@@ -161,6 +164,7 @@ function StarHeightScene() {
             viewWidth={viewWidth}
             columnX={columnX}
             currentLandmark={mainLandmark}
+            currentDate={currentDate}
           />
 
           <ReferenceObjectsContainer

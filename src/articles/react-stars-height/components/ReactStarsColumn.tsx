@@ -1,17 +1,18 @@
-import type React from "react"
+import "../handwritten-fonts.css"
 import {
   COLUMN_WIDTH,
   formatStars,
   REACT_COLOR,
 } from "../data/referenceObjects"
 
-interface ReactStarsColumnProps {
+type ReactStarsColumnProps = {
   readonly currentStars: number
   readonly columnHeight: number
   readonly viewHeight: number
   readonly viewWidth: number
   readonly columnX: number
   readonly currentLandmark: { name: string; height: number }
+  readonly currentDate: string
 }
 
 export const ReactStarsColumn = ({
@@ -21,6 +22,7 @@ export const ReactStarsColumn = ({
   viewWidth,
   columnX,
   currentLandmark,
+  currentDate,
 }: ReactStarsColumnProps) => {
   const columnWidth = COLUMN_WIDTH
 
@@ -80,7 +82,6 @@ export const ReactStarsColumn = ({
           />
         </svg>
 
-        {/* React 标志 - 在柱子顶部下方 */}
         {columnHeight > 20 && (
           <div
             className="text-4xl flex items-center flex-col gap-6"
@@ -89,7 +90,6 @@ export const ReactStarsColumn = ({
               top: "50%",
               left: "50%",
               transform: "translateX(-50%)",
-
               color: "#fff",
               fontWeight: "bold",
               textShadow: "0 0 8px rgba(0,0,0,0.8)",
@@ -101,22 +101,41 @@ export const ReactStarsColumn = ({
         )}
       </div>
 
-      {/* Star 数量显示 - 在柱子顶部上方 */}
       <div
         style={{
           position: "absolute",
           bottom: columnHeight + 10,
           left: "50%",
           transform: "translateX(-50%)",
-          fontSize: 24,
-          color: "#FFD700",
-          fontWeight: "bold",
-          textShadow:
-            "0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5)",
-          whiteSpace: "nowrap",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
         }}
       >
-        {formatStars(Math.round(currentStars))} ★
+        <div
+          style={{
+            fontSize: 24,
+            color: "#FFD700",
+            fontWeight: "bold",
+            textShadow:
+              "0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5)",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {formatStars(Math.round(currentStars))} ★
+        </div>
+        <div
+          className="handwritten-text"
+          style={{
+            fontSize: 18,
+            color: "#8AD4FF",
+            textShadow: "0 0 8px rgba(0,0,0,0.8)",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {currentDate}
+        </div>
       </div>
     </div>
   )
