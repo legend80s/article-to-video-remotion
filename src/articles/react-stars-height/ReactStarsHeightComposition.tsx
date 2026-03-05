@@ -156,7 +156,7 @@ function StarHeightScene() {
           top: 0,
           left: 0,
           right: 0,
-          bottom: 0,
+          bottom: 8,
           display: "flex",
           alignItems: "flex-end",
           justifyContent: "center",

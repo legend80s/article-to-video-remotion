@@ -223,7 +223,7 @@ function getLandmarkColor(index: number): string {
 
 function formatHeight(meters: number): string {
   if (meters >= 1000) {
-    return `${(meters / 1000).toFixed(0)} km`
+    return `${(meters / 1000).toFixed(0)} 千米`
   }
-  return `${meters} m`
+  return `${meters} 米`
 }
