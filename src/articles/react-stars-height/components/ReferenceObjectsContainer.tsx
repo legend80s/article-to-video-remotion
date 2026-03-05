@@ -1,4 +1,5 @@
 import type React from "react"
+import { Img, staticFile } from "remotion"
 
 type ReferenceObjectsContainerProps = {
   readonly columnHeight: number
@@ -8,7 +9,7 @@ type ReferenceObjectsContainerProps = {
   readonly scaleRatio: number
   readonly nextLandmarkTransitionProgress: number
   readonly nextLandmarkIndex: number
-  readonly landmarks: { name: string; height: number }[]
+  readonly landmarks: { name: string; height: number; image?: string }[]
   readonly columnX: number
 }
 
@@ -76,16 +77,27 @@ export const ReferenceObjectsContainer = ({
           }}
         >
           <div
-            className="w-[80px] 1"
             style={{
               height: displayHeight,
               display: "flex",
               alignItems: "flex-end",
               justifyContent: "center",
-              fontSize: Math.min(displayHeight * 0.8, 120),
             }}
           >
-            {getLandmarkIcon(i)}
+            {landmark.image ? (
+              <Img
+                src={landmark.image}
+                style={{
+                  height: displayHeight,
+                  width: "auto",
+                  objectFit: "contain",
+                }}
+              />
+            ) : (
+              <span style={{ fontSize: Math.min(displayHeight * 0.8, 120) }}>
+                {getLandmarkIcon(i)}
+              </span>
+            )}
           </div>
 
           <div
@@ -130,16 +142,29 @@ export const ReferenceObjectsContainer = ({
           }}
         >
           <div
-            className="w-[80px] 2"
             style={{
               height: Math.min(900, nextDisplayHeight),
               display: "flex",
               alignItems: "flex-end",
               justifyContent: "center",
-              fontSize: Math.min(nextDisplayHeight * 0.8, 120),
             }}
           >
-            {getLandmarkIcon(nextLandmarkIndex)}
+            {nextLandmark.image ? (
+              <Img
+                src={nextLandmark.image}
+                style={{
+                  height: Math.min(900, nextDisplayHeight),
+                  width: "auto",
+                  objectFit: "contain",
+                }}
+              />
+            ) : (
+              <span
+                style={{ fontSize: Math.min(nextDisplayHeight * 0.8, 120) }}
+              >
+                {getLandmarkIcon(nextLandmarkIndex)}
+              </span>
+            )}
           </div>
 
           <div

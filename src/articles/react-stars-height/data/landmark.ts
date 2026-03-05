@@ -1,17 +1,44 @@
+import { staticFile } from "remotion"
+
 type ILandmark = {
   name: string
   height: number
+  image?: string
 }
 
 export const landmarks: ILandmark[] = [
   { name: "7层住宅楼", height: 22 },
-  { name: "上海国际商贸中心T2", height: 370 },
-  { name: "深圳华润大厦", height: 392 },
-  { name: "上海环球金融中心", height: 492 },
-  { name: "台北 101", height: 508 },
-  { name: "深圳平安国际金融中心", height: 599 },
-  { name: "上海中心大厦", height: 632 },
-  { name: "哈利法塔", height: 828 },
+  // { name: "上海国际商贸中心T2", height: 370 },
+  {
+    name: "深圳华润大厦",
+    height: 392,
+    image: staticFile("imgs/landmark/深圳华润大厦.png"),
+  },
+  {
+    name: "上海环球金融中心",
+    height: 492,
+    image: staticFile("imgs/landmark/上海环球金融中心.png"),
+  },
+  {
+    name: "台北 101",
+    height: 508,
+    image: staticFile("imgs/landmark/台北101.png"),
+  },
+  {
+    name: "深圳平安国际金融中心",
+    height: 599,
+    image: staticFile("imgs/landmark/深圳平安国际金融中心.png"),
+  },
+  {
+    name: "上海中心大厦",
+    height: 632,
+    image: staticFile("imgs/landmark/上海中心大厦.png"),
+  },
+  {
+    name: "阿联酋哈利法塔",
+    height: 828,
+    image: staticFile("imgs/landmark/阿联酋哈利法塔.png"),
+  },
   { name: "泰山", height: 1545 },
   { name: "富士山", height: 3776 },
   { name: "玉龙雪山", height: 5596 },
