@@ -85,7 +85,7 @@ export const ReactStarsColumn = ({
           <div
             style={{
               position: "absolute",
-              top: -25,
+              top: "50%",
               left: "50%",
               transform: "translateX(-50%)",
               fontSize: 14,
