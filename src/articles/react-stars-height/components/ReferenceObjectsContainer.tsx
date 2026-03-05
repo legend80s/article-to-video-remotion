@@ -32,19 +32,31 @@ export const ReferenceObjectsContainer = ({
   const renderLandmarks = () => {
     const elements: React.ReactNode[] = []
 
-    // 主参照物的 X 位置（在柱子左侧，保持 600px 间距）
-    const mainLandmarkX = columnX - 600
+    // 新的参照物出现逻辑：
+    // 1. 新的参照物出现在最右侧（靠近柱子的位置）
+    // 2. 当新的参照物出现时，所有已存在的参照物向左移动50px
+    // 3. 参照物列表始终保持从右到左的顺序
 
-    // 渲染所有已展示的参照物（包括当前主参照物和之前的参照物）
-    // 注意：所有参照物都使用当前的 scaleRatio，这样它们会按比例缩小
-    for (let i = 0; i <= mainLandmarkIndex; i++) {
+    // 最右侧参照物的位置（靠近柱子）
+    const rightmostLandmarkX = columnX - 600
+
+    // 渲染所有已展示的参照物（从最新的到最旧的）
+    for (let i = mainLandmarkIndex; i >= 0; i--) {
       const landmark = landmarks[i]
       const displayHeight = getLandmarkDisplayHeight(landmark.height)
 
-      // 计算位置：主参照物在 mainLandmarkX，之前的参照物向左偏移
-      // 保持每个参照物之间 150px 的恒定间距
-      const offsetFromMain = mainLandmarkIndex - i
-      const leftPosition = mainLandmarkX - offsetFromMain * 150
+      // 计算位置：最新的参照物在最右侧，之前的参照物依次向左移动
+      // 每个参照物向左移动 120px（确保有足够间距避免重叠）
+      // 当下一个参照物出现时，所有参照物整体向左移动 120px，为新的参照物让出空间
+      const offsetFromRightmost = mainLandmarkIndex - i
+
+      // 计算下一个参照物出现时的过渡偏移量
+      // 当有下一个参照物时，所有已存在的参照物向左移动 120px
+      const transitionOffset = nextLandmarkTransitionProgress * 120
+
+      // 当前参照物的位置 = 基础位置 - 过渡偏移量
+      const leftPosition =
+        rightmostLandmarkX - offsetFromRightmost * 120 - transitionOffset
 
       // 当前主参照物完全不透明，之前的参照物透明度降低
       const isMainLandmark = i === mainLandmarkIndex
@@ -118,8 +130,8 @@ export const ReferenceObjectsContainer = ({
     if (nextLandmarkIndex >= 0 && nextLandmarkTransitionProgress > 0) {
       const nextLandmark = landmarks[nextLandmarkIndex]
       const nextDisplayHeight = getLandmarkDisplayHeight(nextLandmark.height)
-      // 下一个参照物也在柱子左侧，保持恒定间距
-      const nextLeftPosition = mainLandmarkX - 150
+      // 下一个参照物始终出现在最右侧位置（靠近柱子）
+      const nextLeftPosition = rightmostLandmarkX
 
       elements.push(
         <div
