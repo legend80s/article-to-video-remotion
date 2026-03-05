@@ -7,7 +7,7 @@ type ILandmark = {
 }
 
 export const landmarks: ILandmark[] = [
-  { name: "7层住宅楼", height: 22, emoji: "🏠", placement: "flex-end" },
+  { name: "灯塔", height: 22, image: "imgs/landmark/remove灯塔.png" },
   // { name: "上海国际商贸中心T2", height: 370 },
   {
     name: "深圳华润大厦",
@@ -18,11 +18,12 @@ export const landmarks: ILandmark[] = [
     name: "上海环球金融中心",
     height: 492,
     image: "imgs/landmark/remove上海环球金融中心.png",
+    // image: "imgs/landmark/remove上海环球金融中心cropped.png",
   },
   {
     name: "台北101",
     height: 508,
-    image: "imgs/landmark/remove台北101.png",
+    image: "imgs/landmark/remove台北101cropped.png",
   },
   {
     name: "深圳平安国际金融中心",
