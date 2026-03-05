@@ -16,7 +16,7 @@ const VIDEO_CONFIG = {
   width: 1920,
   height: 1080,
   fps: 30,
-  durationInFrames: 1500,
+  durationInFrames: 1600,
 }
 
 const MAX_LANDMARK_HEIGHT = 540
