@@ -102,8 +102,12 @@ function StarHeightScene() {
   // 柱子高度（像素）= 柱子实际高度（米）* 缩放比例
   const columnHeightInPixels = columnHeightInMeters * scaleRatio
 
-  // 限制柱子最高不超过主参照物高度的 1.8 倍（确保不会超出屏幕）
-  const maxColumnHeight = mainLandmarkTargetHeight * 1.8
+  // 限制柱子最高不超过 800px
+  const MAX_COLUMN_HEIGHT = 800
+  const maxColumnHeight = Math.min(
+    mainLandmarkTargetHeight * 1.8,
+    MAX_COLUMN_HEIGHT,
+  )
   const finalColumnHeight = Math.min(columnHeightInPixels, maxColumnHeight)
 
   // 柱子和参照物保持距离显示
