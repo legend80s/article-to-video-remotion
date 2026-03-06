@@ -123,13 +123,23 @@ function StarHeightScene() {
     }
   }
 
+  // Background color changes with altitude:
+  // - Start: wheat (ground/reference)
+  // - After reaching ~10,000 stars: radial black
+  // - After reaching ~100,000 stars: pure black
+  const dynamicBg =
+    currentStars >= 100_000
+      ? "#000000"
+      : currentStars >= 10_000
+        ? "radial-gradient(ellipse at bottom, #1B2838 0%, #0D1B2A 40%, #000000 100%)"
+        : "wheat"
+
   return (
     <div
       style={{
         width: viewWidth,
         height: viewHeight,
-        background:
-          "radial-gradient(ellipse at bottom, #1B2838 0%, #0D1B2A 40%, #000000 100%)",
+        background: dynamicBg,
         position: "relative",
         overflow: "hidden",
       }}
