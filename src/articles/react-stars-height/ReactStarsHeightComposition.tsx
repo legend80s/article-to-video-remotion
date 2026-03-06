@@ -30,7 +30,6 @@ const getStageHeights = () => {
       endHeight: landmarks[i + 1].height,
     })
   }
-  // 添加最后一个阶段：从最后一个 landmark 到 MAX_STARS
   stages.push({
     startHeight: landmarks[landmarks.length - 1].height,
     endHeight: MAX_STARS,
@@ -62,6 +61,8 @@ function calculateHeight(progress: number): number {
     },
   )
 }
+
+type BgType = "wheat" | "gradient" | "black"
 
 function StarHeightScene() {
   const frame = useCurrentFrame()
@@ -107,6 +108,17 @@ function StarHeightScene() {
 
   const columnX = viewWidth * 0.5 + 300
 
+  let bgType: BgType = "wheat"
+  let dynamicBg = "wheat"
+  if (currentStars >= 100_000) {
+    bgType = "black"
+    dynamicBg = "#000000"
+  } else if (currentStars >= 10_000) {
+    bgType = "gradient"
+    dynamicBg =
+      "radial-gradient(ellipse at bottom, #1B2838 0%, #0D1B2A 40%, #000000 100%)"
+  }
+
   const titleOpacity = interpolate(frame, [0, 30], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -123,17 +135,6 @@ function StarHeightScene() {
     }
   }
 
-  // Background color changes with altitude:
-  // - Start: wheat (ground/reference)
-  // - After reaching ~10,000 stars: radial black
-  // - After reaching ~100,000 stars: pure black
-  const dynamicBg =
-    currentStars >= 100_000
-      ? "#000000"
-      : currentStars >= 10_000
-        ? "radial-gradient(ellipse at bottom, #1B2838 0%, #0D1B2A 40%, #000000 100%)"
-        : "wheat"
-
   return (
     <div
       style={{
@@ -144,9 +145,9 @@ function StarHeightScene() {
         overflow: "hidden",
       }}
     >
-      <Title opacity={titleOpacity} />
+      <Title opacity={titleOpacity} bgType={bgType} />
 
-      <Ground currentStars={currentStars} />
+      <Ground currentStars={currentStars} bgType={bgType} />
 
       <div
         style={{
@@ -176,6 +177,7 @@ function StarHeightScene() {
             currentLandmark={mainLandmark}
             currentDate={currentDate}
             isFinal={heightProgress >= 1}
+            bgType={bgType}
           />
 
           <ReferenceObjectsContainer
@@ -188,6 +190,7 @@ function StarHeightScene() {
             nextLandmarkIndex={nextLandmarkIndex}
             landmarks={landmarks}
             columnX={columnX}
+            bgType={bgType}
           />
         </div>
       </div>

@@ -17,6 +17,7 @@ type ReferenceObjectsContainerProps = {
     placement?: React.CSSProperties["alignItems"]
   }[]
   readonly columnX: number
+  readonly bgType?: "wheat" | "gradient" | "black"
 }
 
 export const ReferenceObjectsContainer = ({
@@ -27,8 +28,10 @@ export const ReferenceObjectsContainer = ({
   nextLandmarkIndex,
   landmarks,
   columnX,
+  bgType = "wheat",
 }: ReferenceObjectsContainerProps) => {
   const groundHeight = 0
+  const isLightBg = bgType === "wheat"
 
   // 计算参照物在屏幕上的显示高度
   // 所有参照物都使用相同的 scaleRatio 进行缩放
@@ -85,9 +88,11 @@ export const ReferenceObjectsContainer = ({
           <div
             style={{
               height: displayHeight,
-              width: landmark.emoji ? 80 : 'auto',
+              width: landmark.emoji ? 80 : "auto",
               display: "flex",
-              alignItems: landmark.image ? "flex-end" : ( landmark.placement ?? "flex-start"),
+              alignItems: landmark.image
+                ? "flex-end"
+                : (landmark.placement ?? "flex-start"),
               justifyContent: "center",
               background: landmark.image ? "none" : "#4A90D9",
               borderTopRightRadius: 12,
@@ -115,15 +120,20 @@ export const ReferenceObjectsContainer = ({
             style={{
               marginBottom: 8,
               textAlign: "center",
-              color: "#fff",
+              color: isLightBg ? "#1a1a1a" : "#fff",
 
               fontWeight: "bold",
-              textShadow: "0 0 4px rgba(0,0,0,0.8)",
+              textShadow: isLightBg
+                ? "0 0 4px rgba(255,255,255,0.3)"
+                : "0 0 4px rgba(0,0,0,0.8)",
               whiteSpace: "nowrap",
             }}
           >
             <div>{landmark.name}</div>
-            <div className="text-lg" style={{ color: "#8AD4FF" }}>
+            <div
+              className="text-lg"
+              style={{ color: isLightBg ? "#2d5a87" : "#8AD4FF" }}
+            >
               {formatHeight(landmark.height)}
             </div>
           </div>
@@ -154,9 +164,11 @@ export const ReferenceObjectsContainer = ({
           <div
             style={{
               height: Math.min(900, nextDisplayHeight),
-              width: nextLandmark.emoji ? 80 : 'auto',
+              width: nextLandmark.emoji ? 80 : "auto",
               display: "flex",
-              alignItems: nextLandmark.image ? "flex-end" : (nextLandmark.placement ?? "flex-start"),
+              alignItems: nextLandmark.image
+                ? "flex-end"
+                : (nextLandmark.placement ?? "flex-start"),
               justifyContent: "center",
               background: nextLandmark.image ? "none" : "#4A90D9",
               borderTopRightRadius: 12,
@@ -184,15 +196,20 @@ export const ReferenceObjectsContainer = ({
             style={{
               marginBottom: 8,
               textAlign: "center",
-              color: "#fff",
+              color: isLightBg ? "#1a1a1a" : "#fff",
 
               fontWeight: "bold",
-              textShadow: "0 0 4px rgba(0,0,0,0.8)",
+              textShadow: isLightBg
+                ? "0 0 4px rgba(255,255,255,0.3)"
+                : "0 0 4px rgba(0,0,0,0.8)",
               whiteSpace: "nowrap",
             }}
           >
             <div>{nextLandmark.name}</div>
-            <div className="text-lg" style={{ color: "#8AD4FF" }}>
+            <div
+              className="text-lg"
+              style={{ color: isLightBg ? "#2d5a87" : "#8AD4FF" }}
+            >
               {formatHeight(nextLandmark.height)}
             </div>
           </div>
