@@ -130,10 +130,10 @@ export const ReactStarsColumn = ({
         <div
           className={isFinal ? "text-6xl" : "text-4xl"}
           style={{
-            color: "#FFD700",
+            color: isLightBg ? "#8B4513" : "#FFD700",
             fontWeight: "bold",
             textShadow: isLightBg
-              ? "0 0 4px rgba(255,255,255,0.3)"
+              ? "0 0 4px rgba(255,255,255,0.5)"
               : "0 0 6px rgba(255, 215, 0, 0.6), 0 0 12px rgba(255, 215, 0, 0.3)",
             whiteSpace: "nowrap",
           }}
