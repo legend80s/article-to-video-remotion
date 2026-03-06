@@ -138,7 +138,7 @@ export const ReactStarsColumn = ({
             whiteSpace: "nowrap",
           }}
         >
-          {formatStars(Math.round(currentStars))} ★
+          {formatStars(Math.round(currentStars))} ⭐
         </div>
         <div
           className="handwritten-text"
