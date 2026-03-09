@@ -8,7 +8,7 @@ import {
 import { ReactStarsColumn } from "./components/ReactStarsColumn"
 import { ReferenceObjectsContainer } from "./components/ReferenceObjectsContainer"
 import { Title } from "./components/Title"
-import { UpcomingHint } from "./components/UpcomingHint"
+// import { UpcomingHint } from "./components/UpcomingHint"
 import { formatDate, getDateByStars } from "./data/dateUtils"
 import { landmarks } from "./data/landmark"
 
@@ -191,13 +191,13 @@ function StarHeightScene() {
             bgType={bgType}
           />
 
-          {nextLandmarkIndex >= 0 && nextLandmarkTransitionProgress > 0 && (
+          {/* {nextLandmarkIndex >= 0 && nextLandmarkTransitionProgress > 0 && (
             <UpcomingHint
               nextName={landmarks[nextLandmarkIndex].name}
               nextHeight={landmarks[nextLandmarkIndex].height}
               progress={nextLandmarkTransitionProgress}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>
