@@ -92,15 +92,17 @@ export const ReferenceObjectsContainer = ({
           }}
         >
           <div
+            className='flex border-dashed border-blue-500'
+
             style={{
+              borderWidth: landmark.image ? "0" : "2px",
               height: displayHeight,
               width: landmark.emoji ? 80 : "auto",
-              display: "flex",
               alignItems: landmark.image
                 ? "flex-end"
                 : (landmark.placement ?? "flex-start"),
               justifyContent: "center",
-              background: landmark.image ? "none" : "#4A90D9",
+              // background: landmark.image ? "none" : "#4A90D9",
               borderTopRightRadius: 12,
               borderTopLeftRadius: 12,
             }}
@@ -168,15 +170,16 @@ export const ReferenceObjectsContainer = ({
           }}
         >
           <div
+            className='flex border-dashed border-blue-500'
             style={{
+              borderWidth: nextLandmark.image ? "0" : "2px",
               height: Math.min(900, nextDisplayHeight),
               width: nextLandmark.emoji ? 80 : "auto",
-              display: "flex",
               alignItems: nextLandmark.image
                 ? "flex-end"
                 : (nextLandmark.placement ?? "flex-start"),
               justifyContent: "center",
-              background: nextLandmark.image ? "none" : "#4A90D9",
+              // background: nextLandmark.image ? "none" : "#4A90D9",
               borderTopRightRadius: 12,
               borderTopLeftRadius: 12,
             }}
