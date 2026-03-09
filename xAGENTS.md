@@ -14,7 +14,7 @@ This is a Remotion video project that creates programmatic videos using React. T
 
 #### Component Definitions
 
-- Define props `type` instead of `interface` with `readonly` properties
+- Never use `React.FC` to wrapper component props. Should define props use `type` instead of `interface` and with `readonly` properties
 - Use React.CSSProperties for style objects
 - Export components using named exports
 
