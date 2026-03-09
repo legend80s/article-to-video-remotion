@@ -1,4 +1,5 @@
 import type React from "react"
+import { formatHeight } from '../data/referenceObjects'
 
 type UpcomingHintProps = {
   nextName: string
@@ -6,12 +7,6 @@ type UpcomingHintProps = {
   progress: number
 }
 
-const formatHeight = (meters: number): string => {
-  if (meters >= 1000) {
-    return `${(meters / 1000).toFixed(0)} 千米`
-  }
-  return `${meters} 米`
-}
 
 export const UpcomingHint: React.FC<UpcomingHintProps> = ({
   nextName,
@@ -26,8 +21,6 @@ export const UpcomingHint: React.FC<UpcomingHintProps> = ({
     background: "rgba(0,0,0,0.6)",
     color: "#fff",
     borderRadius: 8,
-    fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto',
-    fontSize: 14,
     fontWeight: 600,
     display: "flex",
     alignItems: "center",
@@ -38,8 +31,8 @@ export const UpcomingHint: React.FC<UpcomingHintProps> = ({
   }
 
   return (
-    <div style={style} className="system-reminder">
-      <span style={{ opacity: 0.95 }}>Upcoming</span>
+    <div style={style} className="system-reminder text-lg">
+      <span style={{ opacity: 0.95 }}>下一个参照物</span>
       <span style={{ fontWeight: 700 }}>{nextName}</span>
       <span style={{ color: "#9bd7ff" }}>{formatHeight(nextHeight)}</span>
     </div>

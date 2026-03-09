@@ -1,5 +1,6 @@
 import type React from "react"
 import { Img, staticFile } from "remotion"
+import { formatHeight } from '../data/referenceObjects'
 
 type ReferenceObjectsContainerProps = {
   readonly columnHeight: number
@@ -226,11 +227,4 @@ export const ReferenceObjectsContainer = ({
   }
 
   return <>{renderLandmarks()}</>
-}
-
-function formatHeight(meters: number): string {
-  if (meters >= 1000) {
-    return `${(meters / 1000).toFixed(0)} 千米`
-  }
-  return `${meters} 米`
 }

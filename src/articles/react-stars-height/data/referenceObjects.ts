@@ -47,11 +47,11 @@ export const MAX_HEIGHT = 243550
 export const COLUMN_WIDTH = 60
 export const REACT_COLOR = "rgb(8, 126, 164)"
 
-export function formatHeight(meters: number): string {
-  if (meters >= 1000) {
-    return `${(meters / 1000).toFixed(1)} km`
+export const formatHeight = (meters: number): string => {
+  if (meters >= 1_0000) {
+    return Number.isInteger(meters / 1000) ? `${(meters / 1000)} 千米` : `${(meters / 1000).toFixed(3)} 千米`
   }
-  return `${meters} m`
+  return `${meters} 米`
 }
 
 export function formatStars(stars: number): string {
