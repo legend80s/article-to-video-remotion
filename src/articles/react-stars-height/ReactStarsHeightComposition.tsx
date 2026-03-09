@@ -147,7 +147,7 @@ function StarHeightScene() {
     >
       <Title opacity={titleOpacity} bgType={bgType} />
 
-      <Ground currentStars={currentStars} bgType={bgType} />
+      {/* <Ground currentStars={currentStars} bgType={bgType} /> */}
 
       <div
         style={{
