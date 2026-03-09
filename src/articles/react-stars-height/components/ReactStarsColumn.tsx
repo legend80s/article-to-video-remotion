@@ -54,7 +54,7 @@ export const ReactStarsColumn = ({
           width={columnWidth}
           height={Math.max(columnHeight, 1)}
           viewBox={`0 0 ${columnWidth} ${Math.max(columnHeight, 1)}`}
-          className="rounded-full"
+          className="rounded-xl"
           style={{
             position: "absolute",
             bottom: 0,

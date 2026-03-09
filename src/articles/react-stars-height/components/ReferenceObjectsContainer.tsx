@@ -72,6 +72,9 @@ export const ReferenceObjectsContainer = ({
       const isMainLandmark = i === mainLandmarkIndex
       const opacity = isMainLandmark ? 1 : 0.4
 
+      // compute subtle scale for earlier landmarks during transition
+      const scale =
+        i < mainLandmarkIndex ? 1 - nextLandmarkTransitionProgress * 0.25 : 1
       elements.push(
         <div
           key={`landmark-${i}`}
@@ -83,6 +86,8 @@ export const ReferenceObjectsContainer = ({
             flexDirection: "column-reverse",
             alignItems: "center",
             opacity,
+            transform: `translateX(-50%) scale(${scale})`,
+            transformOrigin: "50% 100%",
           }}
         >
           <div
