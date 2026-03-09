@@ -141,7 +141,7 @@ export const ReactStarsColumn = ({
           {formatStars(Math.round(currentStars))} ⭐
         </div>
         <div
-          className="handwritten-text"
+          className="font-bold"
           style={{
             fontSize: 18,
             color: isLightBg ? "#2d5a87" : "#8AD4FF",
