@@ -9,6 +9,7 @@ import { Ground } from "./components/Ground"
 import { ReactStarsColumn } from "./components/ReactStarsColumn"
 import { ReferenceObjectsContainer } from "./components/ReferenceObjectsContainer"
 import { Title } from "./components/Title"
+import { UpcomingHint } from "./components/UpcomingHint"
 import { formatDate, getDateByStars } from "./data/dateUtils"
 import { landmarks } from "./data/landmark"
 
@@ -147,7 +148,7 @@ function StarHeightScene() {
     >
       <Title opacity={titleOpacity} bgType={bgType} />
 
-      {/* <Ground currentStars={currentStars} bgType={bgType} /> */}
+      <Ground currentStars={currentStars} bgType={bgType} />
 
       <div
         style={{
@@ -192,6 +193,14 @@ function StarHeightScene() {
             columnX={columnX}
             bgType={bgType}
           />
+
+          {nextLandmarkIndex >= 0 && nextLandmarkTransitionProgress > 0 && (
+            <UpcomingHint
+              nextName={landmarks[nextLandmarkIndex].name}
+              nextHeight={landmarks[nextLandmarkIndex].height}
+              progress={nextLandmarkTransitionProgress}
+            />
+          )}
         </div>
       </div>
     </div>
