@@ -108,16 +108,55 @@ function StarHeightScene() {
 
   const columnX = viewWidth * 0.5 + 300
 
-  let bgType: BgType = "wheat"
-  let dynamicBg = "wheat"
-  if (currentStars >= 100_000) {
-    bgType = "black"
-    dynamicBg = "#000000"
-  } else if (currentStars >= 10_000) {
-    bgType = "gradient"
-    dynamicBg =
-      "radial-gradient(ellipse at bottom, #1B2838 0%, #0D1B2A 40%, #000000 100%)"
-  }
+  const starsForGradient = 10_000
+  const starsForBlack = 100_000
+
+  const gradientProgress = interpolate(
+    currentStars,
+    [starsForGradient * 0.8, starsForGradient],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  )
+
+  const blackProgress = interpolate(
+    currentStars,
+    [starsForBlack * 0.8, starsForBlack],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  )
+
+  const wheatColor = { r: 245, g: 222, b: 179 }
+  const gradientColor = { r: 13, g: 27, b: 42 }
+  const blackColor = { r: 0, g: 0, b: 0 }
+
+  const r = interpolate(
+    gradientProgress,
+    [0, 1],
+    [wheatColor.r, gradientColor.r],
+  )
+  const g = interpolate(
+    gradientProgress,
+    [0, 1],
+    [wheatColor.g, gradientColor.g],
+  )
+  const b = interpolate(
+    gradientProgress,
+    [0, 1],
+    [wheatColor.b, gradientColor.b],
+  )
+
+  const r2 = interpolate(blackProgress, [0, 1], [r, blackColor.r])
+  const g2 = interpolate(blackProgress, [0, 1], [g, blackColor.g])
+  const b2 = interpolate(blackProgress, [0, 1], [b, blackColor.b])
+
+  const dynamicBg = `rgb(${Math.round(r2)}, ${Math.round(g2)}, ${Math.round(b2)})`
+
+  const bgType: BgType =
+    blackProgress > 0.5
+      ? "black"
+      : gradientProgress > 0.5
+        ? "gradient"
+        : "wheat"
 
   const titleOpacity = interpolate(frame, [0, 30], [0, 1], {
     extrapolateLeft: "clamp",
