@@ -1,6 +1,6 @@
 import type React from "react"
 import { Img, staticFile } from "remotion"
-import { formatHeight } from '../data/referenceObjects'
+import { formatHeight } from "../data/referenceObjects"
 
 type ReferenceObjectsContainerProps = {
   readonly columnHeight: number
@@ -92,8 +92,7 @@ export const ReferenceObjectsContainer = ({
           }}
         >
           <div
-            className='flex border-dashed border-blue-500'
-
+            className="flex border-dashed border-blue-500"
             style={{
               borderWidth: landmark.image ? "0" : "2px",
               height: displayHeight,
@@ -117,7 +116,10 @@ export const ReferenceObjectsContainer = ({
                 }}
               />
             ) : (
-              <span style={{ fontSize: Math.min(displayHeight * 0.5, 60) }}>
+              <span
+                className="mt-[-1rem]"
+                style={{ fontSize: Math.min(displayHeight * 0.5, 60) }}
+              >
                 {landmark.emoji || "🏗️"}
               </span>
             )}
@@ -170,7 +172,7 @@ export const ReferenceObjectsContainer = ({
           }}
         >
           <div
-            className='flex border-dashed border-blue-500'
+            className="flex border-dashed border-blue-500"
             style={{
               borderWidth: nextLandmark.image ? "0" : "2px",
               height: Math.min(900, nextDisplayHeight),
@@ -194,7 +196,10 @@ export const ReferenceObjectsContainer = ({
                 }}
               />
             ) : (
-              <span style={{ fontSize: Math.min(nextDisplayHeight * 0.5, 60) }}>
+              <span
+                className="mt-[-1rem]"
+                style={{ fontSize: Math.min(nextDisplayHeight * 0.5, 60) }}
+              >
                 {nextLandmark.emoji || "🏗️"}
               </span>
             )}
