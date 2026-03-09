@@ -5,7 +5,6 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion"
-import { Ground } from "./components/Ground"
 import { ReactStarsColumn } from "./components/ReactStarsColumn"
 import { ReferenceObjectsContainer } from "./components/ReferenceObjectsContainer"
 import { Title } from "./components/Title"
@@ -147,9 +146,7 @@ function StarHeightScene() {
       }}
     >
       <Title opacity={titleOpacity} bgType={bgType} />
-
-      <Ground currentStars={currentStars} bgType={bgType} />
-
+      {/* Ground component hidden as per UI de-emphasis */}
       <div
         style={{
           position: "absolute",
