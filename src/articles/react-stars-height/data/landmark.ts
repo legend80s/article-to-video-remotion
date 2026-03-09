@@ -14,22 +14,22 @@ export const landmarks: ILandmark[] = [
     height: 392,
     image: "imgs/landmark/remove深圳华润大厦.png",
   },
-  {
-    name: "上海环球金融中心",
-    height: 492,
-    image: "imgs/landmark/remove上海环球金融中心.png",
-    // image: "imgs/landmark/remove上海环球金融中心cropped.png",
-  },
+  // {
+  //   name: "上海环球金融中心",
+  //   height: 492,
+  //   image: "imgs/landmark/remove上海环球金融中心.png",
+  //   // image: "imgs/landmark/remove上海环球金融中心cropped.png",
+  // },
   {
     name: "台北101",
     height: 508,
     image: "imgs/landmark/remove台北101cropped.png",
   },
-  {
-    name: "深圳平安国际金融中心",
-    height: 599,
-    image: "imgs/landmark/remove深圳平安国际金融中心.png",
-  },
+  // {
+  //   name: "深圳平安国际金融中心",
+  //   height: 599,
+  //   image: "imgs/landmark/remove深圳平安国际金融中心.png",
+  // },
   {
     name: "上海中心大厦",
     height: 632,
