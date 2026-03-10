@@ -112,16 +112,16 @@ const StarGrowthChart: React.FC = () => {
     return { randomX, randomY }
   }
 
-  // 生成路径 - 纵向增长
+  // 生成路径 - 纵向增长：从左上角到右下角
   const generatePath = () => {
     if (visibleData.length < 2) return ""
     return visibleData
       .map((point, i) => {
         // 使用基于索引的一致随机偏移量
         const { randomX, randomY } = getRandomOffset(i, 2)
-        // y = 时间（从下往上），x = stars（从左往右）
+        // x = stars（从左往右），y = 从上往下（i=0 在顶部）
         const x = CHART_MARGIN.left + point.stars * xScale + randomX
-        const y = CHART_MARGIN.bottom + i * yScale + randomY
+        const y = HEIGHT - CHART_MARGIN.top - i * yScale + randomY
         return `${i === 0 ? "M" : "L"} ${x} ${y}`
       })
       .join(" ")
@@ -135,7 +135,7 @@ const StarGrowthChart: React.FC = () => {
         // 使用基于索引的一致随机偏移量
         const { randomX, randomY } = getRandomOffset(i, 2)
         const x = CHART_MARGIN.left + point.stars * xScale + randomX
-        const y = CHART_MARGIN.bottom + i * yScale + randomY
+        const y = HEIGHT - CHART_MARGIN.top - i * yScale + randomY
         return `${i === 0 ? "M" : "L"} ${x} ${y}`
       })
       .join(" ")
@@ -144,12 +144,12 @@ const StarGrowthChart: React.FC = () => {
     const { randomX: lastRandomX } = getRandomOffset(lastIndex, 2)
     const lastPoint = visibleData[lastIndex]
     const lastX = CHART_MARGIN.left + lastPoint.stars * xScale + lastRandomX
-    const topY = CHART_MARGIN.bottom + lastIndex * yScale
+    const bottomY = HEIGHT - CHART_MARGIN.top - lastIndex * yScale
     const { randomX: firstRandomX } = getRandomOffset(0, 2)
     const firstX = CHART_MARGIN.left + firstRandomX
-    const firstY = CHART_MARGIN.bottom
+    const firstY = HEIGHT - CHART_MARGIN.top
 
-    return `${linePath} L ${lastX} ${topY} L ${firstX} ${firstY} Z`
+    return `${linePath} L ${lastX} ${bottomY} L ${firstX} ${firstY} Z`
   }
 
   // 当前显示的 star 数
@@ -349,33 +349,33 @@ const StarGrowthChart: React.FC = () => {
           )
         })}
 
-        {/* 年份标记 - 纵向：左侧 */}
+        {/* 年份标记 - 纵向：右侧 */}
         {[2025, 2026].map((year) => {
           // 找到每年1月1日的索引
           const firstDayOfYear = `${year}-01-01`
           const yearIndex = dailyData.findIndex((d) => d.date >= firstDayOfYear)
           if (yearIndex === -1) return null
-          const y = CHART_MARGIN.bottom + yearIndex * yScale
+          const y = HEIGHT - CHART_MARGIN.top - yearIndex * yScale
           // Add random offset for hand-drawn effect
           const randomY = (Math.random() - 0.5) * 2
           return (
             <g key={year}>
               <line
-                x1={CHART_MARGIN.left}
+                x1={WIDTH - CHART_MARGIN.right}
                 y1={y + randomY}
-                x2={CHART_MARGIN.left - 10 + (Math.random() - 0.5) * 2}
+                x2={WIDTH - CHART_MARGIN.right + 10 + (Math.random() - 0.5) * 2}
                 y2={y + (Math.random() - 0.5) * 2}
                 stroke="#666"
                 strokeWidth={1.2}
                 strokeLinecap="round"
               />
               <text
-                x={CHART_MARGIN.left - 20 + (Math.random() - 0.5) * 3}
+                x={WIDTH - CHART_MARGIN.right + 20 + (Math.random() - 0.5) * 3}
                 y={y + 8 + (Math.random() - 0.5) * 2}
                 fill="#333"
                 fontSize={28}
                 fontWeight="bold"
-                textAnchor="end"
+                textAnchor="start"
                 fontFamily="'Comic Neue', cursive"
               >
                 {year}
@@ -384,29 +384,29 @@ const StarGrowthChart: React.FC = () => {
           )
         })}
 
-        {/* 日期标记 - 纵向：左侧 */}
+        {/* 日期标记 - 纵向：右侧 */}
         {dailyData
           .map((d, i) => ({ date: d.date, index: i }))
           .filter((_, i) => i % 7 === 0) // 每7天显示一个刻度
           .map(({ date, index }) => {
-            const y = CHART_MARGIN.bottom + index * yScale
+            const y = HEIGHT - CHART_MARGIN.top - index * yScale
             const label = date.slice(5) // 显示 MM-DD 格式
             return (
               <g key={date}>
                 <line
-                  x1={CHART_MARGIN.left}
+                  x1={WIDTH - CHART_MARGIN.right}
                   y1={y}
-                  x2={CHART_MARGIN.left - 4}
+                  x2={WIDTH - CHART_MARGIN.right + 4}
                   y2={y}
                   stroke="#aaa"
                   strokeWidth={1}
                 />
                 <text
-                  x={CHART_MARGIN.left - 10}
+                  x={WIDTH - CHART_MARGIN.right + 10}
                   y={y + 8}
                   fill="#666"
                   fontSize={22}
-                  textAnchor="end"
+                  textAnchor="start"
                   fontFamily="'Comic Neue', cursive"
                 >
                   {label}
@@ -452,13 +452,13 @@ const StarGrowthChart: React.FC = () => {
           />
         )}
 
-        {/* 数据点 - 纵向增长 */}
+        {/* 数据点 - 纵向增长：从左上到右下 */}
         {visibleData.map((point, i) => {
           // 使用基于索引的一致随机偏移量
           const { randomX, randomY } = getRandomOffset(i, 2)
-          // y = 时间（从下往上），x = stars（从左往右）
+          // x = stars（从左往右），y = 从上往下（i=0 在顶部）
           const x = CHART_MARGIN.left + point.stars * xScale + randomX
-          const y = CHART_MARGIN.bottom + i * yScale + randomY
+          const y = HEIGHT - CHART_MARGIN.top - i * yScale + randomY
           // 检查是否是里程碑日期
           const isMilestone = milestones.some((m) => {
             const milestoneDate = `${m.year}-${String(m.month).padStart(2, "0")}-${m.day}`
@@ -503,9 +503,9 @@ const StarGrowthChart: React.FC = () => {
             const lastPoint = visibleData[lastIndex]
             if (!lastPoint) return null
             const { randomX, randomY } = getRandomOffset(lastIndex, 2)
-            // 纵向增长：y = 时间，x = stars
+            // 纵向增长：从左上到右下
             const x = CHART_MARGIN.left + lastPoint.stars * xScale + randomX
-            const y = CHART_MARGIN.bottom + lastIndex * yScale + randomY
+            const y = HEIGHT - CHART_MARGIN.top - lastIndex * yScale + randomY
 
             // 根据星星数量计算基础缩放（星星越多，龙虾越大）
             // 假设最大约 3000 stars，映射到 1.0-3.0 的缩放范围
@@ -587,13 +587,13 @@ const StarGrowthChart: React.FC = () => {
           )
           if (index === -1 || index > visibleDataCount) return null
 
-          // 里程碑位置 - 纵向增长
+          // 里程碑位置 - 纵向增长：从左上到右下
           // 使用基于索引的一致随机偏移量（与曲线相同）
           const { randomX, randomY } = getRandomOffset(index, 2)
-          // y = 时间（从下往上），x = stars（从左往右）
+          // x = stars（从左往右），y = 从上往下
           const x =
             CHART_MARGIN.left + dailyData[index].stars * xScale + randomX
-          const y = CHART_MARGIN.bottom + index * yScale + randomY
+          const y = HEIGHT - CHART_MARGIN.top - index * yScale + randomY
 
           // 里程碑随着曲线绘制逐个出现
           // 计算该里程碑应该出现的时间点（基于数据点索引）
