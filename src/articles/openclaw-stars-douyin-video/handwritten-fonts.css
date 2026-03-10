@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Comic+Neue:wght@400;700&display=swap');
+
+/* Apply handwritten font to all elements */
+.handwritten-container {
+  font-family: 'Comic Neue', 'Architects Daughter', cursive;
+}
+
+/* Apply handwritten font to specific elements */
+.handwritten-text {
+  font-family: 'Comic Neue', cursive;
+}
+
+.handwritten-title {
+  font-family: 'Architects Daughter', cursive;
+}

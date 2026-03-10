@@ -4,6 +4,8 @@ import { Composition } from "remotion"
 import { RocketComposition } from "./articles/compostions/Rocket/RocketComposition"
 import { TanStackStartComposition } from "./articles/ingenious-innovations-of-tanstack-start"
 import { StarsComposition as OpenClawStarsComposition } from "./articles/openclaw-stars/StarsComposition"
+
+import { StarsComposition as OpenClawStarsDouyinVideo } from "./articles/openclaw-stars-douyin-video/StarsComposition"
 import { ReactStarsComposition } from "./articles/react-stars/ReactStarsComposition"
 import { ReactStarsComposition as ReactStarsHeightComposition } from "./articles/react-stars-height/ReactStarsHeightComposition"
 import { HelloWorld, myCompSchema } from "./HelloWorld"
@@ -64,6 +66,7 @@ export const RemotionRoot: React.FC = () => {
       <ReactStarsComposition />
       <ReactStarsHeightComposition />
       <OpenClawStarsComposition />
+      <OpenClawStarsDouyinVideo />
       <RocketComposition />
     </>
   )

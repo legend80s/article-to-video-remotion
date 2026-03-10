@@ -10,3 +10,7 @@
 #### Formatting Rules (Biome + Prettier)
 
 Read existing code and follow the style.
+
+#### Linting
+
+Run `npm run build` for linting.
