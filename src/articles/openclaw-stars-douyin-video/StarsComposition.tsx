@@ -252,7 +252,7 @@ const StarGrowthChart: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 40,
+          top: 30,
           left: 0,
           right: 0,
           textAlign: "center",
@@ -269,11 +269,11 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          OpenClaw GitHub Stars ⭐ Growth (2025.11 —— 2026.03)
+          OpenClaw GitHub Star ⭐ 逆袭登顶记
         </h1>
         <p
           style={{
-            fontSize: 24,
+            // fontSize: 24,
             fontWeight: "bold",
             color: "#333",
             margin: "10px 0 0 0",
@@ -281,7 +281,10 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          From 0 to {formatNumber(dailyData[dailyData.length - 1].stars)} stars
+          <code className="text-3xl">
+            0 → {formatNumber(dailyData[dailyData.length - 1].stars)} stars
+            (2025.11 ~ 2026.03)
+          </code>
         </p>
       </div>
 
@@ -289,7 +292,7 @@ const StarGrowthChart: React.FC = () => {
       <svg
         width={WIDTH}
         height={HEIGHT}
-        style={{ position: "absolute", top: 0, left: 0 }}
+        style={{ position: "absolute", top: 122, left: 0 }}
       >
         {/* 渐变定义 */}
         <defs>
@@ -647,8 +650,8 @@ const StarGrowthChart: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 80,
-          right: 40,
+          top: "52%",
+          right: "39%",
           background: "rgba(0,0,0,0.6)",
           padding: "20px 30px",
           borderRadius: 12,
@@ -688,7 +691,7 @@ const StarGrowthChart: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 80,
+          top: 158,
           left: 40,
           display: "flex",
           flexDirection: "column",
