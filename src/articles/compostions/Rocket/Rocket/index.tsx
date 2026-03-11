@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
+// /** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
 import {
   AbsoluteFill,
   interpolate,
@@ -31,6 +31,14 @@ export const Rocket: React.FC = () => {
   })
 
   const launch = `translateY(${interpolate(up, [0, 1], [0, -3000])}px)`
+
+  const textOpacity = interpolate(frame, [25, 50, 75, 90], [0, 1, 1, 0], {
+    extrapolateRight: "clamp",
+  })
+
+  const textY = interpolate(frame, [25, 60], [50, 0], {
+    extrapolateRight: "clamp",
+  })
 
   return (
     <AbsoluteFill
@@ -512,6 +520,40 @@ export const Rocket: React.FC = () => {
           </g>
         </g>
       </svg>
+
+      <div
+        style={{
+          position: "absolute",
+          bottom: "42%",
+          // right: "0%",
+          left: "47%",
+          textAlign: "center",
+          opacity: textOpacity,
+          transform: `translateY(${textY}px)`,
+        }}
+      >
+        <span
+          className="text-6xl"
+          style={{
+            fontWeight: "bold",
+            // color: "#333",
+            // fontFamily: "sans-serif",
+            fontFamily: "'Cormorant Garamond', serif",
+            // fontFamily: "'Architects Daughter', cursive",
+            // fontFamily: "'JetBrains Mono', monospace",
+
+            // letterSpacing: "0.1em",
+            // textTransform: "uppercase",
+
+            // font-weight: 600;
+            // color: `rgb(255, 215, 0)`,
+            // fontFamily: `"JetBrains Mono", monospace`,
+            textShadow: `#333 2px 2px 3px`,
+          }}
+        >
+          GitHub Star Storyline
+        </span>
+      </div>
     </AbsoluteFill>
   )
 }

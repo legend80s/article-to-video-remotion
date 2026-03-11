@@ -132,8 +132,8 @@ const StarGrowthChart = () => {
           style={{
             // fontWeight: "bold",
             // margin: 0,
-            fontFamily: "'Architects Daughter', cursive",
-            // fontFamily: "'JetBrains Mono', monospace",
+            // fontFamily: "'Architects Daughter', cursive",
+            fontFamily: "'JetBrains Mono', monospace",
 
             color: "#333",
 
@@ -143,27 +143,30 @@ const StarGrowthChart = () => {
             // fontFamily: "'Cormorant Garamond', serif",
             // color: "#fff7e0",
             // textShadow: "0 0 40px rgba(12, 21, 11, 0.3)",
-            letterSpacing: "0.32em",
+            letterSpacing: "0.22em",
+            // letterSpacing: "0.32em",
             // textTransform: "uppercase",
           }}
         >
           OpenCode
         </h1>
         <p
-          className="text-2xl"
+          className="text-2xl text-gray-700"
           style={{
             fontWeight: "bold",
-            color: "#333",
+            // color: "#333",
             margin: "10px 0 0 0",
-            // fontFamily: "'Comic Neue', cursive",
-            textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
-            textTransform: "uppercase",
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Comic Neue', cursive",
+            // fontFamily: "'JetBrains Mono', monospace",
 
-            letterSpacing: "0.15em",
+            textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
+            // textTransform: "uppercase",
+            // fontFamily: "'Cormorant Garamond', serif",
+
+            letterSpacing: "0.05em",
           }}
         >
-          GitHub Star ⭐ 增长趋势
+          GitHub Star ⭐ Growth
         </p>
       </div>
 
@@ -465,7 +468,7 @@ const StarGrowthChart = () => {
               >
                 <foreignObject
                   x={x - baseFontSize / 2}
-                  y={y - 8 - baseFontSize}
+                  y={y - 18 - baseFontSize}
                   width={baseFontSize}
                   height={baseFontSize}
                 >
@@ -632,13 +635,18 @@ const StarGrowthChart = () => {
 }
 
 const StarGrowthChartWithIntro: React.FC = () => {
+  const rocketDuration = 70
+  const totalDuration = 495
   return (
     <>
-      <Sequence from={0} durationInFrames={45}>
+      <Sequence from={0} durationInFrames={rocketDuration}>
         <Rocket />
       </Sequence>
 
-      <Sequence from={45} durationInFrames={450}>
+      <Sequence
+        from={rocketDuration}
+        durationInFrames={totalDuration - rocketDuration}
+      >
         <StarGrowthChart />
       </Sequence>
     </>
