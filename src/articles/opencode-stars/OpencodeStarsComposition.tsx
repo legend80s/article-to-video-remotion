@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/nursery/useUniqueElementIds: <explanation> */
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import "./handwritten-fonts.css"
 import type React from "react"
@@ -8,7 +7,6 @@ import {
   interpolate,
   Sequence,
   spring,
-  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion"
@@ -21,19 +19,25 @@ const CHART_HEIGHT = 600
 const CHART_WIDTH = 1600
 const CHART_MARGIN = { top: 100, right: 100, bottom: 150, left: 150 }
 
-const formatNumber = (num: number): string => {
+const formatNumber = (
+  num: number,
+  { unit = true }: { unit?: boolean } = {},
+): string => {
+  if (!unit) return num.toLocaleString("en-US")
+
   if (num >= 1000000) {
     return `${(num / 1000000).toFixed(1)}M`
   }
   if (num >= 1000) {
     return `${(num / 1000).toFixed(0)}K`
   }
+
   return num.toString()
 }
 
 const milestones = opencodeMilestones
 
-const StarGrowthChart: React.FC = () => {
+const StarGrowthChart = () => {
   const frame = useCurrentFrame()
   const { fps, durationInFrames } = useVideoConfig()
 
@@ -133,8 +137,9 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          opencode GitHub Star ⭐ 增长趋势 {opencodeStarsDaily[0].year} 至{" "}
-          {opencodeStarsDaily.at(-1)?.year}
+          opencode GitHub Star ⭐ 增长趋势 {opencodeStarsDaily[0].year}-
+          {opencodeStarsDaily[0].month} 至 {opencodeStarsDaily.at(-1)?.year}-
+          {opencodeStarsDaily.at(-1)?.month}
         </h1>
         <p
           className="text-5xl"
@@ -146,11 +151,12 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          From 0 to{" "}
+          0 到{" "}
           {formatNumber(
             opencodeStarsDaily[opencodeStarsDaily.length - 1].stars,
+            { unit: false },
           )}{" "}
-          stars
+          星
         </p>
       </div>
 
@@ -452,12 +458,13 @@ const StarGrowthChart: React.FC = () => {
               >
                 <foreignObject
                   x={x - baseFontSize / 2}
-                  y={y - 15 - baseFontSize}
+                  y={y - 8 - baseFontSize}
                   width={baseFontSize}
                   height={baseFontSize}
                 >
                   <Img
-                    src={staticFile("imgs/opencode-logo.png")}
+                    // src={staticFile("imgs/opencode-logo.png")}
+                    src="https://opencode.ai/_build/assets/opencode-desktop-icon-OSkS5hfD.png"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -535,6 +542,7 @@ const StarGrowthChart: React.FC = () => {
           position: "absolute",
           bottom: 40,
           right: 100,
+          minWidth: "20rem",
           background: "rgba(0,0,0,0.6)",
           padding: "20px 30px",
           borderRadius: 12,
@@ -552,15 +560,15 @@ const StarGrowthChart: React.FC = () => {
         >
           {currentDate}
         </div>
-        <div
-          className="text-8xl"
+        <code
+          className="text-6xl"
           style={{
             fontWeight: "bold",
             color: "#ff6b6b",
           }}
         >
-          {formatNumber(currentStars)}
-        </div>
+          {formatNumber(currentStars, { unit: false })}
+        </code>
         <div
           className="text-[32px]"
           style={{ color: "#eee", fontWeight: "bold" }}
