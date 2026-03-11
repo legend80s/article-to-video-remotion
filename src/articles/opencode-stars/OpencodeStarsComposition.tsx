@@ -128,35 +128,42 @@ const StarGrowthChart = () => {
         }}
       >
         <h1
-          className="text-5xl"
+          className="text-6xl font-bold"
           style={{
-            fontWeight: "bold",
-            margin: 0,
+            // fontWeight: "bold",
+            // margin: 0,
             fontFamily: "'Architects Daughter', cursive",
+            // fontFamily: "'JetBrains Mono', monospace",
+
             color: "#333",
-            textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
+
+            // textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
+            // fontSize: 52,
+            margin: 0,
+            // fontFamily: "'Cormorant Garamond', serif",
+            // color: "#fff7e0",
+            // textShadow: "0 0 40px rgba(12, 21, 11, 0.3)",
+            letterSpacing: "0.32em",
+            // textTransform: "uppercase",
           }}
         >
-          opencode GitHub Star ⭐ 增长趋势 {opencodeStarsDaily[0].year}-
-          {opencodeStarsDaily[0].month} 至 {opencodeStarsDaily.at(-1)?.year}-
-          {opencodeStarsDaily.at(-1)?.month}
+          OpenCode
         </h1>
         <p
-          className="text-5xl"
+          className="text-2xl"
           style={{
             fontWeight: "bold",
             color: "#333",
             margin: "10px 0 0 0",
-            fontFamily: "'Comic Neue', cursive",
+            // fontFamily: "'Comic Neue', cursive",
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
+            textTransform: "uppercase",
+            fontFamily: "'Cormorant Garamond', serif",
+
+            letterSpacing: "0.15em",
           }}
         >
-          0 到{" "}
-          {formatNumber(
-            opencodeStarsDaily[opencodeStarsDaily.length - 1].stars,
-            { unit: false },
-          )}{" "}
-          星
+          GitHub Star ⭐ 增长趋势
         </p>
       </div>
 
@@ -556,6 +563,7 @@ const StarGrowthChart = () => {
             color: "#eee",
             marginBottom: 5,
             fontWeight: "bold",
+            fontFamily: "'JetBrains Mono', monospace",
           }}
         >
           {currentDate}
@@ -563,17 +571,29 @@ const StarGrowthChart = () => {
         <code
           className="text-6xl"
           style={{
-            fontWeight: "bold",
-            color: "#ff6b6b",
+            fontSize: 72,
+            fontWeight: 600,
+            color: "#ffd700",
+            fontFamily: "'JetBrains Mono', monospace",
+            textShadow: "0 0 30px rgba(255, 215, 0, 0.5)",
+            lineHeight: 1,
           }}
         >
           {formatNumber(currentStars, { unit: false })}
         </code>
         <div
           className="text-[32px]"
-          style={{ color: "#eee", fontWeight: "bold" }}
+          style={{
+            // fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'JetBrains Mono', monospace",
+
+            letterSpacing: "0.15em",
+
+            color: "#eee",
+            fontWeight: "bold",
+          }}
         >
-          stars
+          STARS
         </div>
       </div>
 
