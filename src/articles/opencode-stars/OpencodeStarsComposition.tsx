@@ -246,11 +246,11 @@ const StarGrowthChart: React.FC = () => {
                   y={
                     HEIGHT -
                     CHART_MARGIN.bottom +
-                    35 +
+                    55 +
                     (Math.random() - 0.5) * 2
                   }
                   fill="#333"
-                  className="text-[32px]"
+                  className="11 text-[32px]"
                   fontWeight="bold"
                   textAnchor="middle"
                   fontFamily="'Comic Neue', cursive"
@@ -278,7 +278,7 @@ const StarGrowthChart: React.FC = () => {
               <text
                 x={x + (Math.random() - 0.5) * 3}
                 y={
-                  HEIGHT - CHART_MARGIN.bottom + 35 + (Math.random() - 0.5) * 2
+                  HEIGHT - CHART_MARGIN.bottom + 55 + (Math.random() - 0.5) * 2
                 }
                 fill="#333"
                 className="text-[32px]"
@@ -291,6 +291,41 @@ const StarGrowthChart: React.FC = () => {
             </g>
           )
         })}
+
+        {/* 日期标记 - 天维度 */}
+        {opencodeStarsDaily
+          .map((d, i) => ({
+            date: d.date,
+            index: i,
+            month: d.month,
+            day: d.day,
+          }))
+          .filter((_, i) => i % 14 === 0)
+          .map(({ date, index, month, day }) => {
+            const x = CHART_MARGIN.left + index * xScale
+            const label = `${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
+            return (
+              <g key={date}>
+                <line
+                  x1={x}
+                  y1={HEIGHT - CHART_MARGIN.bottom}
+                  y2={HEIGHT - CHART_MARGIN.bottom + 4}
+                  stroke="#aaa"
+                  strokeWidth={1}
+                />
+                <text
+                  x={x}
+                  y={HEIGHT - CHART_MARGIN.bottom + 28}
+                  fill="#666"
+                  fontSize={22}
+                  textAnchor="middle"
+                  fontFamily="'Comic Neue', cursive"
+                >
+                  {label}
+                </text>
+              </g>
+            )
+          })}
 
         {visibleData.length > 1 && (
           <path
@@ -333,10 +368,17 @@ const StarGrowthChart: React.FC = () => {
           const y =
             HEIGHT - CHART_MARGIN.bottom - point.stars * yScale + randomY
           const isMilestone = milestones.some(
-            (m) => m.year === point.year && m.month === point.month,
+            (m) =>
+              m.year === point.year &&
+              m.month === point.month &&
+              m.day === point.day,
           )
+          // console.log("milestones:", milestones)
+          // if (isMilestone) {
+          //   console.log("Milestone found for point:", point)
+          // }
 
-          if (!isMilestone && i % 3 !== 0) return null
+          if (!isMilestone && i % 7 !== 0) return null
 
           return (
             <circle
@@ -344,6 +386,7 @@ const StarGrowthChart: React.FC = () => {
               cx={x}
               cy={y}
               r={isMilestone ? 6 : 3}
+              // fill={isMilestone ? "green" : "#ff6b6b"}
               fill={isMilestone ? "#ec1313" : "#ff6b6b"}
               stroke="#333"
               strokeWidth={1.5}
@@ -429,7 +472,10 @@ const StarGrowthChart: React.FC = () => {
 
         {milestones.map((milestone, i) => {
           const index = opencodeStarsDaily.findIndex(
-            (d) => d.year === milestone.year && d.month === milestone.month,
+            (d) =>
+              d.year === milestone.year &&
+              d.month === milestone.month &&
+              d.day === milestone.day,
           )
           if (index === -1 || index > visibleDataCount) return null
 
@@ -535,32 +581,18 @@ const StarGrowthChart: React.FC = () => {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div
-            style={{
-              width: 14,
-              height: 14,
-              borderRadius: "50%",
-              background: "#ff6b6b",
-            }}
-          />
+          <div className="flex rounded-full border border-[#ec1313] w-6 h-6 items-center justify-center">
+            <i
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: "50%",
+                background: "#ec1313",
+              }}
+            />
+          </div>
           <span
-            className="text-[32px]"
-            style={{ fontWeight: "bold", color: "#333" }}
-          >
-            星标增长
-          </span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div
-            style={{
-              width: 14,
-              height: 14,
-              borderRadius: "50%",
-              background: "#ff6b6b",
-            }}
-          />
-          <span
-            className="text-[32px]"
+            className="text-2xl"
             style={{ fontWeight: "bold", color: "#333" }}
           >
             重要里程碑
