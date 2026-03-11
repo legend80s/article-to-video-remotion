@@ -439,7 +439,7 @@ const StarGrowthChart: React.FC = () => {
             const finalScale = starsScale * pulseScale
 
             const baseFontSize = getFontSizeByStars(lastPoint.stars, {
-              minFont: 10,
+              minFont: 20,
               maxFont: 56,
             })
 
@@ -457,7 +457,7 @@ const StarGrowthChart: React.FC = () => {
                   height={baseFontSize}
                 >
                   <Img
-                    src={staticFile("imgs/opencode-logo.svg")}
+                    src={staticFile("imgs/opencode-logo.png")}
                     style={{
                       width: "100%",
                       height: "100%",
