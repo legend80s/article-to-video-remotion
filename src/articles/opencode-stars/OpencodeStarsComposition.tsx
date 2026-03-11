@@ -12,7 +12,6 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion"
-import { OutroScene } from "../components/OutroScene"
 import { Rocket } from "../compostions/Rocket/Rocket"
 import { opencodeStarsMonthly } from "./data/starData"
 
@@ -594,10 +593,6 @@ const StarGrowthChartWithIntro: React.FC = () => {
       <Sequence from={45} durationInFrames={450}>
         <StarGrowthChart />
       </Sequence>
-
-      <Sequence from={450 + 45} durationInFrames={100}>
-        <OutroScene src="imgs/opencode-star-history.png" />
-      </Sequence>
     </>
   )
 }
@@ -607,7 +602,7 @@ export const OpencodeStarsComposition: React.FC = () => {
     <Composition
       id="OpencodeStarsGrowth"
       component={StarGrowthChartWithIntro}
-      durationInFrames={45 + 550}
+      durationInFrames={45 + 450}
       fps={30}
       width={1920}
       height={1080}
