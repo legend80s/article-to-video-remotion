@@ -13,7 +13,7 @@ import {
   useVideoConfig,
 } from "remotion"
 import { Rocket } from "../compostions/Rocket/Rocket"
-import { opencodeStarsMonthly } from "./data/starData"
+import { opencodeMilestones, opencodeStarsDaily } from "./data/starData"
 
 const WIDTH = 1920
 const HEIGHT = 1080
@@ -31,26 +31,14 @@ const formatNumber = (num: number): string => {
   return num.toString()
 }
 
-interface IMilestone {
-  year: number
-  month: number
-  event: string
-}
-
-const milestones: IMilestone[] = opencodeStarsMonthly
-  .filter((d) => d.milestone)
-  .map((d) => ({
-    year: d.year,
-    month: d.month,
-    event: d.milestone?.event || "",
-  }))
+const milestones = opencodeMilestones
 
 const StarGrowthChart: React.FC = () => {
   const frame = useCurrentFrame()
   const { fps, durationInFrames } = useVideoConfig()
 
-  const maxStars = Math.max(...opencodeStarsMonthly.map((d) => d.stars))
-  const dataLength = opencodeStarsMonthly.length
+  const maxStars = Math.max(...opencodeStarsDaily.map((d) => d.stars))
+  const dataLength = opencodeStarsDaily.length
   const animationProgress = interpolate(
     frame,
     [0, durationInFrames * 0.85],
@@ -61,7 +49,7 @@ const StarGrowthChart: React.FC = () => {
   )
 
   const visibleDataCount = Math.floor(animationProgress * dataLength)
-  const visibleData = opencodeStarsMonthly.slice(0, visibleDataCount + 1)
+  const visibleData = opencodeStarsDaily.slice(0, visibleDataCount + 1)
 
   const xScale = CHART_WIDTH / (dataLength - 1)
   const yScale = CHART_HEIGHT / maxStars
@@ -145,8 +133,8 @@ const StarGrowthChart: React.FC = () => {
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
-          opencode GitHub Star ⭐ 增长趋势 {opencodeStarsMonthly[0].year} 至{" "}
-          {opencodeStarsMonthly.at(-1)?.year}
+          opencode GitHub Star ⭐ 增长趋势 {opencodeStarsDaily[0].year} 至{" "}
+          {opencodeStarsDaily.at(-1)?.year}
         </h1>
         <p
           className="text-5xl"
@@ -160,7 +148,7 @@ const StarGrowthChart: React.FC = () => {
         >
           From 0 to{" "}
           {formatNumber(
-            opencodeStarsMonthly[opencodeStarsMonthly.length - 1].stars,
+            opencodeStarsDaily[opencodeStarsDaily.length - 1].stars,
           )}{" "}
           stars
         </p>
@@ -227,11 +215,11 @@ const StarGrowthChart: React.FC = () => {
         })}
 
         {[2025, 2026].map((year) => {
-          const yearIndex = opencodeStarsMonthly.findIndex(
+          const yearIndex = opencodeStarsDaily.findIndex(
             (d) => d.year === year && d.month === 1,
           )
           if (yearIndex === -1) {
-            const yearStartIndex = opencodeStarsMonthly.findIndex(
+            const yearStartIndex = opencodeStarsDaily.findIndex(
               (d) => d.year === year,
             )
             if (yearStartIndex === -1) return null
@@ -440,7 +428,7 @@ const StarGrowthChart: React.FC = () => {
           })()}
 
         {milestones.map((milestone, i) => {
-          const index = opencodeStarsMonthly.findIndex(
+          const index = opencodeStarsDaily.findIndex(
             (d) => d.year === milestone.year && d.month === milestone.month,
           )
           if (index === -1 || index > visibleDataCount) return null
@@ -450,7 +438,7 @@ const StarGrowthChart: React.FC = () => {
           const y =
             HEIGHT -
             CHART_MARGIN.bottom -
-            opencodeStarsMonthly[index].stars * yScale +
+            opencodeStarsDaily[index].stars * yScale +
             randomY
 
           const milestoneAppearFrame =
@@ -614,8 +602,8 @@ function getFontSizeByStars(
   stars: number,
   { minFont = 20, maxFont = 80 }: { minFont: number; maxFont: number },
 ) {
-  const minStars = opencodeStarsMonthly[0].stars
-  const maxStars = opencodeStarsMonthly[opencodeStarsMonthly.length - 1].stars
+  const minStars = opencodeStarsDaily[0].stars
+  const maxStars = opencodeStarsDaily[opencodeStarsDaily.length - 1].stars
 
   if (stars <= minStars) return minFont
   if (stars >= maxStars) return maxFont
