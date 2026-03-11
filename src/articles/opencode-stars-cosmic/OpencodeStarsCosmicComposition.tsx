@@ -123,7 +123,7 @@ const StarGrowthChart: React.FC = () => {
       style={{
         width: WIDTH,
         height: HEIGHT,
-        background: "black",
+        background: "#222",
         // background:
         //   "linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0f0f23 100%)",
         position: "relative",
