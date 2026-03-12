@@ -347,7 +347,7 @@ const StarGrowthChart = () => {
             month: d.month,
             day: d.day,
           }))
-          .filter((_, i) => i % 14 === 0)
+          .filter((_, i) => i % 30 === 0)
           .map(({ date, index, month, day }) => {
             const x = CHART_MARGIN.left + index * xScale
             const label = `${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
@@ -452,7 +452,7 @@ const StarGrowthChart = () => {
                 textAnchor="middle"
                 fontFamily="'JetBrains Mono', monospace"
               >
-                单日最高获 star {highestPeak.dailyGrowth}
+                单日最高斩获 {highestPeak.dailyGrowth} star
               </text>
             </g>
           )

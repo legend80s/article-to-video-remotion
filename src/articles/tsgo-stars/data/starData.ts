@@ -30,4 +30,14 @@ interface IMilestone {
   reference?: string
 }
 
-export const tsgoMilestones: IMilestone[] = []
+export const tsgoMilestones: IMilestone[] = [
+  // 11-03-2025 已发布就当日就获得 5128
+  {
+    year: 2025,
+    month: 3,
+    day: 11,
+    event: "TypeScript Go 发布当日就获 5128 ⭐️",
+    eventDetails: "微软正式发布 TypeScript Go 版本，提供了对 Go 语言的支持。",
+    reference: "https://www.microsoft.com/tsgo-release",
+  },
+]
