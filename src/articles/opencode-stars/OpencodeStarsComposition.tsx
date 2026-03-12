@@ -250,55 +250,6 @@ const StarGrowthChart = () => {
           )
         })}
 
-        {/* Secondary Y-Axis (Daily Growth) */}
-        <line
-          x1={WIDTH - CHART_MARGIN.right}
-          y1={HEIGHT - CHART_MARGIN.bottom}
-          x2={WIDTH - CHART_MARGIN.right}
-          y2={CHART_MARGIN.top}
-          stroke="#444"
-          strokeWidth={1.2}
-          strokeLinecap="round"
-        />
-        {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => {
-          const y = HEIGHT - CHART_MARGIN.bottom - CHART_HEIGHT * ratio
-          const value = maxDailyGrowth * ratio
-          return (
-            <g key={`inc-${i}`}>
-              <line
-                x1={WIDTH - CHART_MARGIN.right - 5}
-                y1={y}
-                x2={WIDTH - CHART_MARGIN.right}
-                y2={y}
-                stroke="#444"
-                strokeWidth={1}
-              />
-              <text
-                x={WIDTH - CHART_MARGIN.right + 15}
-                y={y + 5}
-                fill="#333"
-                className="text-[24px]"
-                fontWeight="bold"
-                textAnchor="start"
-                fontFamily="'Comic Neue', cursive"
-              >
-                {formatNumber(value, { unit: false })}%
-              </text>
-            </g>
-          )
-        })}
-        <text
-          x={WIDTH - CHART_MARGIN.right}
-          y={CHART_MARGIN.top - 30}
-          fill="#4caf50"
-          className="text-[28px]"
-          fontWeight="bold"
-          textAnchor="middle"
-          fontFamily="'Comic Neue', cursive"
-        >
-          Daily Growth
-        </text>
-
         {[2025, 2026].map((year) => {
           const yearIndex = opencodeStarsDaily.findIndex(
             (d) => d.year === year && d.month === 1,
