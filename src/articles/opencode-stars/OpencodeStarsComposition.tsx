@@ -62,6 +62,18 @@ const StarGrowthChart = () => {
   const yScale = CHART_HEIGHT / maxStars
   const yScaleIncrement = CHART_HEIGHT / maxDailyGrowth
 
+  const highestPeak = [...opencodeStarsDaily].sort(
+    (a, b) => b.dailyGrowth - a.dailyGrowth,
+  )[0]
+
+  const firstPeak = [...opencodeStarsDaily]
+    .filter((d) => d.dailyGrowth > 1000)
+    .sort((a, b) => {
+      const dateA = new Date(a.year, a.month - 1, a.day).getTime()
+      const dateB = new Date(b.year, b.month - 1, b.day).getTime()
+      return dateA - dateB
+    })[0]
+
   const getRandomOffset = (index: number, range: number = 3) => {
     const randomX = ((Math.sin(index * 12.9898) + 1) / 2 - 0.5) * range
     const randomY = ((Math.sin(index * 78.233) + 1) / 2 - 0.5) * range
@@ -406,11 +418,49 @@ const StarGrowthChart = () => {
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
-            // style={{
-            //   opacity: 0.8,
-            // }}
+            style={{
+              opacity: 0.8,
+            }}
           />
         )}
+
+        {[
+          { point: highestPeak, label: "Highest Peak" },
+          { point: firstPeak, label: "First Peak" },
+        ].map(({ point, label }) => {
+          const index = opencodeStarsDaily.findIndex(
+            (d) =>
+              d.year === point.year &&
+              d.month === point.month &&
+              d.day === point.day,
+          )
+          if (index === -1 || index > visibleDataCount) return null
+
+          const { randomX, randomY } = getRandomOffset(index, 1)
+          const x = CHART_MARGIN.left + index * xScale + randomX
+          const y =
+            HEIGHT -
+            CHART_MARGIN.bottom -
+            point.dailyGrowth * yScaleIncrement +
+            randomY -
+            15
+
+          return (
+            <g key={label}>
+              <text
+                x={x}
+                y={y}
+                fill="#2e7d32"
+                className="text-[20px]"
+                fontWeight="bold"
+                textAnchor="middle"
+                fontFamily="'JetBrains Mono', monospace"
+              >
+                {point.dailyGrowth}
+              </text>
+            </g>
+          )
+        })}
 
         {visibleData.map((point, i) => {
           const { randomX, randomY } = getRandomOffset(i, 2)
