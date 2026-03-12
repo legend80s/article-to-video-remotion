@@ -64,14 +64,6 @@ const StarGrowthChart = () => {
     (a, b) => b.dailyGrowth - a.dailyGrowth,
   )[0]
 
-  const firstPeak = [...tsgoStarsDaily]
-    .filter((d) => d.dailyGrowth > 1000)
-    .sort((a, b) => {
-      const dateA = new Date(a.year, a.month - 1, a.day).getTime()
-      const dateB = new Date(b.year, b.month - 1, b.day).getTime()
-      return dateA - dateB
-    })[0]
-
   const getRandomOffset = (index: number, range: number = 3) => {
     const randomX = ((Math.sin(index * 12.9898) + 1) / 2 - 0.5) * range
     const randomY = ((Math.sin(index * 78.233) + 1) / 2 - 0.5) * range
@@ -426,20 +418,17 @@ const StarGrowthChart = () => {
             strokeLinecap="round"
             strokeLinejoin="round"
             style={{
-              opacity: 0.8,
+              opacity: 0.6,
             }}
           />
         )}
 
-        {[
-          { point: highestPeak, label: "Highest Peak" },
-          { point: firstPeak, label: "First Peak" },
-        ].map(({ point, label }) => {
+        {(() => {
           const index = tsgoStarsDaily.findIndex(
             (d) =>
-              d.year === point.year &&
-              d.month === point.month &&
-              d.day === point.day,
+              d.year === highestPeak.year &&
+              d.month === highestPeak.month &&
+              d.day === highestPeak.day,
           )
           if (index === -1 || index > visibleDataCount) return null
 
@@ -448,12 +437,12 @@ const StarGrowthChart = () => {
           const y =
             HEIGHT -
             CHART_MARGIN.bottom -
-            point.dailyGrowth * yScaleIncrement +
+            highestPeak.dailyGrowth * yScaleIncrement +
             randomY +
             18
 
           return (
-            <g key={label}>
+            <g key="highestPeak">
               <text
                 x={x}
                 y={y}
@@ -463,11 +452,11 @@ const StarGrowthChart = () => {
                 textAnchor="middle"
                 fontFamily="'JetBrains Mono', monospace"
               >
-                {point.dailyGrowth}
+                单日最高获 star {highestPeak.dailyGrowth}
               </text>
             </g>
           )
-        })}
+        })()}
 
         {visibleData.map((point, i) => {
           const { randomX, randomY } = getRandomOffset(i, 2)
