@@ -11,6 +11,15 @@ todo: 龙虾 icon 替换成动图 <https://www.star-history.com/assets/lobster-a
 
 ### 前端
 
+### AI 时代的 tools
+
+vite
+oxfmt
+
+<https://emafuma.mywire.org:8090/allStars?repo=microsoft/typescript-go>
+
+vitest
+
 - react
 - vue
 - angular

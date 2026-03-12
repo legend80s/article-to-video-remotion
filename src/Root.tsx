@@ -10,6 +10,7 @@ import { OpencodeStarsComposition } from "./articles/opencode-stars/OpencodeStar
 import { OpencodeStarsCosmicComposition } from "./articles/opencode-stars-cosmic/OpencodeStarsCosmicComposition"
 import { ReactStarsComposition } from "./articles/react-stars/ReactStarsComposition"
 import { ReactStarsComposition as ReactStarsHeightComposition } from "./articles/react-stars-height/ReactStarsHeightComposition"
+import { TsgoStarsComposition } from "./articles/tsgo-stars/TsgoStarsComposition"
 import { HelloWorld, myCompSchema } from "./HelloWorld"
 import { Logo, myCompSchema2 } from "./HelloWorld/Logo"
 import { MyComposition } from "./MyComposition"
@@ -71,6 +72,7 @@ export const RemotionRoot: React.FC = () => {
       <OpenClawStarsDouyinVideo />
       <OpencodeStarsComposition />
       <OpencodeStarsCosmicComposition />
+      <TsgoStarsComposition />
       <RocketComposition />
     </>
   )
