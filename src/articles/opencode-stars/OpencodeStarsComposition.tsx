@@ -403,16 +403,12 @@ const StarGrowthChart = () => {
             d={generateIncrementPath()}
             fill="none"
             stroke="#4caf50"
-            strokeWidth={4}
+            strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
-            style={{
-              opacity: spring({
-                frame,
-                fps,
-                config: { damping: 100, stiffness: 100 },
-              }),
-            }}
+            // style={{
+            //   opacity: 0.8,
+            // }}
           />
         )}
 
@@ -658,7 +654,7 @@ const StarGrowthChart = () => {
             className="text-2xl"
             style={{ fontWeight: "bold", color: "#333" }}
           >
-            Daily Growth
+            日增量
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
