@@ -536,6 +536,7 @@ export const Rocket: React.FC = () => {
           className="text-6xl"
           style={{
             fontWeight: "bold",
+            color: "#2e7d32",
             // color: "#333",
             // fontFamily: "sans-serif",
             fontFamily: "'Cormorant Garamond', serif",
@@ -548,7 +549,7 @@ export const Rocket: React.FC = () => {
             // font-weight: 600;
             // color: `rgb(255, 215, 0)`,
             // fontFamily: `"JetBrains Mono", monospace`,
-            textShadow: `#333 2px 2px 3px`,
+            // textShadow: `#333 2px 2px 3px`,
           }}
         >
           GitHub Star Storyline
