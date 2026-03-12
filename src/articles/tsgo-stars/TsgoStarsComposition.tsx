@@ -169,18 +169,24 @@ const StarGrowthChart = () => {
         }}
       >
         <h1
-          className="text-6xl font-bold"
+          className="text-6xl font-bold flex justify-center items-center"
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-
             color: "#333",
-
             margin: 0,
-
             letterSpacing: "0.22em",
           }}
         >
-          TSGO
+          TSGO{" "}
+          <Img
+            src="https://avatars.githubusercontent.com/u/6154722?v=4"
+            style={{
+              width: "0.9em",
+              height: "0.9em",
+              filter: "drop-shadow(0px 1px 0px rgba(0,0,0,0.4))",
+            }}
+            alt="TSGO Logo"
+          />
         </h1>
         <p
           className="text-2xl text-gray-700"
@@ -188,13 +194,12 @@ const StarGrowthChart = () => {
             fontWeight: "bold",
             margin: "10px 0 0 0",
             fontFamily: "'Comic Neue', cursive",
-
             textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
-
             letterSpacing: "0.05em",
           }}
         >
-          GitHub Star ⭐ Growth
+          GitHub Star ⭐ Growth ({toDateStr(tsgoStarsDaily[0].date)} 📈{" "}
+          {toDateStr(tsgoStarsDaily.at(-1)?.date || "")})
         </p>
       </div>
 
@@ -439,7 +444,7 @@ const StarGrowthChart = () => {
             CHART_MARGIN.bottom -
             highestPeak.dailyGrowth * yScaleIncrement +
             randomY +
-            18
+            26
 
           return (
             <g key="highestPeak">
@@ -447,7 +452,7 @@ const StarGrowthChart = () => {
                 x={x}
                 y={y}
                 fill="#2e7d32"
-                className="text-[20px]"
+                className="text-3xl"
                 fontWeight="bold"
                 textAnchor="middle"
                 fontFamily="'JetBrains Mono', monospace"
@@ -531,7 +536,7 @@ const StarGrowthChart = () => {
 
             const baseFontSize = getFontSizeByStars(lastPoint.stars, {
               minFont: 20,
-              maxFont: 56,
+              maxFont: 100,
             })
 
             return (
@@ -543,12 +548,12 @@ const StarGrowthChart = () => {
               >
                 <foreignObject
                   x={x - baseFontSize / 2}
-                  y={y - 18 - baseFontSize}
+                  y={y - 10 - baseFontSize}
                   width={baseFontSize}
                   height={baseFontSize}
                 >
                   <Img
-                    src="https://avatars.githubusercontent.com/u/6154722?v=4"
+                    src="https://go.dev/images/gophers/motorcycle.svg"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -607,7 +612,7 @@ const StarGrowthChart = () => {
               <text
                 x={x - 150}
                 y={y - 15 - (i === milestones.length - 1 ? 15 : 0)}
-                className="text-[24px] font-bold fill-[#ffx6b6b]"
+                className="text-3xl font-bold fill-[#ffx6b6b]"
                 fontFamily="'Comic Neue', cursive"
                 style={{
                   opacity: labelProgress,
@@ -763,4 +768,9 @@ function getFontSizeByStars(
 
   const ratio = (stars - minStars) / (maxStars - minStars)
   return Math.round(minFont + ratio * (maxFont - minFont))
+}
+
+function toDateStr(dateStr: string): string {
+  const [day, month, year] = dateStr.split("-").map(Number)
+  return [year, month, day].join("-")
 }

@@ -524,7 +524,7 @@ export const Rocket: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: "42%",
+          bottom: "48%",
           // right: "0%",
           left: "47%",
           textAlign: "center",
@@ -536,12 +536,15 @@ export const Rocket: React.FC = () => {
           className="text-6xl"
           style={{
             fontWeight: "bold",
-            color: "#2e7d32",
+            // color: "#2e7d32",
+            // color: "rgb(85 0 223)",
+            // color: "#ff3446",
+            color: "#ff5501",
             // color: "#333",
             // fontFamily: "sans-serif",
-            fontFamily: "'Cormorant Garamond', serif",
+            // fontFamily: "'Cormorant Garamond', serif",
             // fontFamily: "'Architects Daughter', cursive",
-            // fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "'JetBrains Mono', monospace",
 
             // letterSpacing: "0.1em",
             // textTransform: "uppercase",
