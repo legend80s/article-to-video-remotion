@@ -94,18 +94,37 @@ const StarGrowthChart = () => {
 
   const generateIncrementPath = () => {
     if (visibleData.length < 2) return ""
-    return visibleData
-      .map((point, i) => {
-        const { randomX, randomY } = getRandomOffset(i, 1)
-        const x = CHART_MARGIN.left + i * xScale + randomX
-        const y =
-          HEIGHT -
-          CHART_MARGIN.bottom -
-          point.dailyGrowth * yScaleIncrement +
-          randomY
-        return `${i === 0 ? "M" : "L"} ${x} ${y}`
-      })
-      .join(" ")
+
+    const points = visibleData.map((point, i) => {
+      const { randomX, randomY } = getRandomOffset(i, 1)
+      const x = CHART_MARGIN.left + i * xScale + randomX
+      const y =
+        HEIGHT -
+        CHART_MARGIN.bottom -
+        point.dailyGrowth * yScaleIncrement +
+        randomY
+      return { x, y }
+    })
+
+    let path = `M ${points[0].x} ${points[0].y}`
+
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1]
+      const curr = points[i]
+      const midX = (prev.x + curr.x) / 2
+      const midY = (prev.y + curr.y) / 2
+
+      if (i === 1) {
+        path += ` L ${midX} ${midY}`
+      } else {
+        path += ` Q ${prev.x} ${prev.y} ${midX} ${midY}`
+      }
+    }
+
+    const last = points[points.length - 1]
+    path += ` L ${last.x} ${last.y}`
+
+    return path
   }
 
   const generateAreaPath = () => {
@@ -226,6 +245,9 @@ const StarGrowthChart = () => {
               xChannelSelector="R"
               yChannelSelector="G"
             />
+          </filter>
+          <filter id="softBlur">
+            <feGaussianBlur stdDeviation="1.5" />
           </filter>
         </defs>
 
@@ -415,7 +437,7 @@ const StarGrowthChart = () => {
             d={generateIncrementPath()}
             fill="none"
             stroke="#4caf50"
-            strokeWidth={2}
+            strokeWidth={3}
             strokeLinecap="round"
             strokeLinejoin="round"
             style={{
@@ -442,8 +464,8 @@ const StarGrowthChart = () => {
             HEIGHT -
             CHART_MARGIN.bottom -
             point.dailyGrowth * yScaleIncrement +
-            randomY -
-            15
+            randomY +
+            18
 
           return (
             <g key={label}>
