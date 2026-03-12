@@ -55,3 +55,5 @@ todo: 龙虾 icon 替换成动图 <https://www.star-history.com/assets/lobster-a
 ## java
 
 ## go
+
+<https://www.star-history.com/?repos=kubernetes%2Fkubernetes&type=date&legend=top-left>
